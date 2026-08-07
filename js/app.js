@@ -209,36 +209,411 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderPortfolio() {
 
-        const selectedAccounts =
-            getSelectedAccounts(
-                selectedAccountIds
+    const selectedAccounts =
+        getSelectedAccounts(
+            selectedAccountIds
+        );
+
+
+    if(selectedAccounts.length === 0) {
+
+        document
+            .getElementById("score")
+            .textContent = "--";
+
+        document
+            .getElementById("recommendation")
+            .textContent =
+                "Keine Accounts ausgewählt.";
+
+        document
+            .getElementById("reasons")
+            .innerHTML = "";
+
+        document
+            .getElementById("riskFactors")
+            .innerHTML = "";
+
+        document
+            .getElementById("payout")
+            .innerHTML =
+                "Account auswählen.";
+
+        document
+            .getElementById("dailyPlan")
+            .innerHTML =
+                "Account auswählen.";
+
+        return;
+    }
+
+
+    /*
+    =========================================
+    EINZELACCOUNT
+    =========================================
+    */
+
+    if(selectedAccounts.length === 1) {
+
+        const account =
+            selectedAccounts[0];
+
+
+        const engineAccount = {
+
+            ...account,
+
+            buffer:
+                account.balance -
+                account.startingBalance,
+
+            nextPayoutAmount: 0
+
+        };
+
+
+        const result =
+            analyzeAccount(
+                engineAccount
             );
 
 
-        if(selectedAccounts.length === 0) {
-
-            document
-                .getElementById("score")
-                .textContent = "--";
-
-
-            document
-                .getElementById("recommendation")
-                .textContent =
-                    "Keine Accounts ausgewählt.";
+        const providerRules =
+            PROP_RULES[
+                account.provider
+            ]?.accounts[
+                account.accountType
+            ];
 
 
-            document
-                .getElementById("reasons")
-                .innerHTML = "";
+        let payout = null;
+        let dailyPlan = null;
 
 
-            document
-                .getElementById("riskFactors")
-                .innerHTML = "";
+        if(providerRules) {
 
-            return;
+            payout =
+                analyzePayout(
+                    engineAccount,
+                    providerRules
+                );
+
+
+            dailyPlan =
+                createDailyPlan(
+                    engineAccount,
+                    payout
+                );
+
         }
+
+
+
+        document
+            .getElementById("score")
+            .textContent =
+                result.score +
+                " / 100";
+
+
+        document
+            .getElementById(
+                "recommendation"
+            )
+            .textContent =
+                result.recommendation;
+
+
+
+        const reasons =
+            document.getElementById(
+                "reasons"
+            );
+
+
+        reasons.innerHTML = "";
+
+
+        result.reasons.forEach(reason => {
+
+            const item =
+                document.createElement("p");
+
+            item.textContent =
+                "• " + reason;
+
+            reasons.appendChild(item);
+
+        });
+
+
+
+        const riskBox =
+            document.getElementById(
+                "riskFactors"
+            );
+
+
+        riskBox.innerHTML = `
+
+            <p>
+                Account Risk:
+                ${result.risk.accountRisk}/100
+            </p>
+
+            <p>
+                Market Risk:
+                ${result.risk.marketRisk}/100
+            </p>
+
+            <p>
+                Performance Risk:
+                ${result.risk.performanceRisk}/100
+            </p>
+
+            <p>
+                Discipline Risk:
+                ${result.risk.disciplineRisk}/100
+            </p>
+
+        `;
+
+
+
+        const payoutBox =
+            document.getElementById(
+                "payout"
+            );
+
+
+        if(payout) {
+
+            payoutBox.innerHTML = `
+
+                <p>
+                    Account:
+                    <strong>
+                        ${account.accountName}
+                    </strong>
+                </p>
+
+                <p>
+                    Status:
+                    <strong>
+                        ${payout.status}
+                    </strong>
+                </p>
+
+                <p>
+                    ${payout.message}
+                </p>
+
+                <p>
+                    AI Empfehlung:
+                    <br>
+                    ${payout.action}
+                </p>
+
+            `;
+
+        }
+        else {
+
+            payoutBox.innerHTML =
+                "Für diesen Account sind noch keine Payout-Regeln hinterlegt.";
+
+        }
+
+
+
+        const dailyBox =
+            document.getElementById(
+                "dailyPlan"
+            );
+
+
+        if(dailyPlan) {
+
+            dailyBox.innerHTML = `
+
+                <p>
+                    Risk Mode:
+                    <strong>
+                        ${dailyPlan.mode}
+                    </strong>
+                </p>
+
+                <p>
+                    Tagesziel:
+                    ${dailyPlan.target}
+                </p>
+
+                <p>
+                    Max Loss:
+                    ${dailyPlan.maxLoss}
+                </p>
+
+                <p>
+                    AI Hinweise:
+                </p>
+
+                ${dailyPlan.advice
+                    .map(
+                        item =>
+                            "✓ " + item
+                    )
+                    .join("<br>")}
+
+            `;
+
+        }
+        else {
+
+            dailyBox.innerHTML =
+                "Noch kein Daily Plan verfügbar.";
+
+        }
+
+
+        return;
+    }
+
+
+
+    /*
+    =========================================
+    MEHRERE ACCOUNTS / PORTFOLIO
+    =========================================
+    */
+
+
+    const totalBalance =
+        selectedAccounts.reduce(
+            (sum, account) =>
+                sum + Number(account.balance),
+            0
+        );
+
+
+    const totalStartingBalance =
+        selectedAccounts.reduce(
+            (sum, account) =>
+                sum +
+                Number(account.startingBalance),
+            0
+        );
+
+
+    const totalProfit =
+        totalBalance -
+        totalStartingBalance;
+
+
+    const totalTrades =
+        selectedAccounts.reduce(
+            (sum, account) =>
+                sum +
+                account.trades.length,
+            0
+        );
+
+
+    document
+        .getElementById("score")
+        .textContent =
+            selectedAccounts.length +
+            " Accounts";
+
+
+    document
+        .getElementById(
+            "recommendation"
+        )
+        .textContent =
+            "Portfolio Ansicht";
+
+
+    document
+        .getElementById("reasons")
+        .innerHTML = `
+
+            <p>
+                Gesamt Balance:
+                <strong>
+                    $${totalBalance.toLocaleString()}
+                </strong>
+            </p>
+
+            <p>
+                Gesamt P&L:
+                <strong>
+                    ${totalProfit >= 0 ? "+" : ""}
+                    $${totalProfit.toLocaleString()}
+                </strong>
+            </p>
+
+            <p>
+                Gesamt Trades:
+                <strong>
+                    ${totalTrades}
+                </strong>
+            </p>
+
+        `;
+
+
+    document
+        .getElementById("riskFactors")
+        .innerHTML = `
+
+            <p>
+                Portfolio Analyse aktiv
+            </p>
+
+            <p>
+                Einzelne Payout-Regeln
+                bleiben accountbezogen.
+            </p>
+
+        `;
+
+
+    document
+        .getElementById("payout")
+        .innerHTML = `
+
+            <p>
+                ${selectedAccounts.length}
+                Accounts ausgewählt.
+            </p>
+
+            <p>
+                Payout-Status wird im
+                nächsten Schritt pro
+                Account zusammengeführt.
+            </p>
+
+        `;
+
+
+    document
+        .getElementById("dailyPlan")
+        .innerHTML = `
+
+            <p>
+                Portfolio Mode
+            </p>
+
+            <p>
+                Gemeinsamer Daily Plan
+                folgt nach der
+                Account-Auswertung.
+            </p>
+
+        `;
+
+}
 
 
         /*
