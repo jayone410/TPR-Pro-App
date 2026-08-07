@@ -1,10 +1,26 @@
-const result = analyzeAccount(accounts[0]);
+document.addEventListener("DOMContentLoaded", () => {
 
-console.log("ENGINE RESULT:");
-console.log(result);
+    const result = analyzeAccount(accounts[0]);
 
-document.getElementById("score").textContent =
-    result.score;
+    console.log("ENGINE RESULT:", result);
 
-document.getElementById("recommendation").textContent =
-    result.recommendation;
+
+    const scoreElement = document.getElementById("score");
+    const recommendationElement = document.getElementById("recommendation");
+
+
+    if(scoreElement){
+
+        scoreElement.textContent = result.score;
+
+    }
+
+
+    if(recommendationElement){
+
+        recommendationElement.textContent =
+            result.recommendation;
+
+    }
+
+});
