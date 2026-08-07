@@ -453,40 +453,135 @@
         ====================================== -->
 
         <div
-            class="card"
-            id="cardReadiness"
+        class="card readiness-card"
+        id="cardReadiness"
         >
-
-
+        
             <div class="card-title">
                 Trading Readiness
             </div>
-
-
-            <div
-                id="score"
-                class="big-number"
-            >
-                --
+        
+        
+            <div class="readiness-hero">
+        
+                <div id="readinessStatus"
+                     class="readiness-status">
+        
+                    ACCOUNT AUSWÄHLEN
+        
+                </div>
+        
+        
+                <div id="score"
+                     class="readiness-score">
+        
+                    --
+        
+                </div>
+        
+        
+                <div id="recommendation"
+                     class="readiness-recommendation">
+        
+                    Keine Analyse verfügbar.
+        
+                </div>
+        
             </div>
-
-
-            <br>
-
-
-            <div id="recommendation">
-                Keine Accounts ausgewählt.
+        
+        
+            <div class="readiness-grid">
+        
+        
+                <div class="readiness-item">
+        
+                    <span>
+                        💰 Buffer
+                    </span>
+        
+                    <strong id="readinessBuffer">
+                        --
+                    </strong>
+        
+                    <small id="readinessBufferDetail">
+                        --
+                    </small>
+        
+                </div>
+        
+        
+                <div class="readiness-item">
+        
+                    <span>
+                        💵 Payout
+                    </span>
+        
+                    <strong id="readinessPayout">
+                        --
+                    </strong>
+        
+                    <small id="readinessPayoutDetail">
+                        --
+                    </small>
+        
+                </div>
+        
+        
+                <div class="readiness-item">
+        
+                    <span>
+                        🎯 Today's Goal
+                    </span>
+        
+                    <strong id="readinessGoal">
+                        --
+                    </strong>
+        
+                </div>
+        
+        
+                <div class="readiness-item">
+        
+                    <span>
+                        🛑 Today's Stop
+                    </span>
+        
+                    <strong id="readinessStop">
+                        --
+                    </strong>
+        
+                </div>
+        
             </div>
-
-
-            <div id="reasons">
+        
+        
+            <div class="readiness-ai">
+        
+                <strong>
+                    🤖 AI Decision
+                </strong>
+        
+                <div id="readinessAI">
+                    Account auswählen.
+                </div>
+        
             </div>
-
-
-            <div id="riskFactors">
-            </div>
-
-
+        
+        
+            <details class="readiness-details">
+        
+                <summary>
+                    Risk Breakdown
+                </summary>
+        
+                <div id="reasons">
+                </div>
+        
+                <div id="riskFactors">
+                </div>
+        
+            </details>
+        
         </div>
 
 
