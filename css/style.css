@@ -274,3 +274,20 @@ button:hover{
     height: 360px;
     width: 100%;
 }
+
+.layout-presets {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+#dashboardSettingsPanel label {
+    display: inline-block;
+    margin: 6px 0;
+    cursor: pointer;
+}
+
+#dashboardSettingsPanel input[type="checkbox"] {
+    margin-right: 8px;
+}
