@@ -11,28 +11,36 @@ function analyzePayout(account, rules){
 
     let status = "";
     let message = "";
+    let action = "";
 
 
-    const buffer =
-        account.buffer;
+    const missingDays =
+        rules.minTradingDays - account.daysTraded;
 
 
-    if(account.daysTraded < rules.minTradingDays){
+
+    if(missingDays > 0){
 
         status = "WAIT";
 
         message =
-        "Noch nicht genügend Handelstage.";
+        `Noch ${missingDays} Handelstag(e) bis Payout.`;
+
+        action =
+        "Account schützen. Kein unnötiges Risiko.";
 
     }
 
 
-    else if(buffer < rules.recommendedBuffer){
+    else if(account.buffer < rules.recommendedBuffer){
 
         status = "RISK";
 
         message =
-        "Buffer vor Payout zu gering.";
+        "Buffer vor Payout kritisch.";
+
+        action =
+        "Risiko reduzieren.";
 
     }
 
@@ -44,6 +52,9 @@ function analyzePayout(account, rules){
         message =
         "Payout wahrscheinlich möglich.";
 
+        action =
+        "Payout prüfen.";
+
     }
 
 
@@ -54,6 +65,9 @@ function analyzePayout(account, rules){
         message =
         "Weiter Kapital aufbauen.";
 
+        action =
+        "Normales Trading.";
+
     }
 
 
@@ -61,7 +75,9 @@ function analyzePayout(account, rules){
 
         status,
 
-        message
+        message,
+
+        action
 
     };
 
