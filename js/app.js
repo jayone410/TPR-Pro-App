@@ -74,6 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>
         ${payout.message}
         </p>
+
+        <p>
+        AI Empfehlung:
+        <br>
+        ${payout.action}
+        </p>
         
         `;
 
