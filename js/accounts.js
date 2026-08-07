@@ -128,3 +128,34 @@ function updateAccount(account){
     saveAccounts();
 
 }
+
+function loadSelectedAccountIds() {
+
+    const saved =
+        localStorage.getItem("tpr_selected_accounts");
+
+    if(saved) {
+        return JSON.parse(saved);
+    }
+
+    return [];
+}
+
+
+function saveSelectedAccountIds(ids) {
+
+    localStorage.setItem(
+        "tpr_selected_accounts",
+        JSON.stringify(ids)
+    );
+
+}
+
+
+function getSelectedAccounts(ids) {
+
+    return accounts.filter(
+        account => ids.includes(account.id)
+    );
+
+}
