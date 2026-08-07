@@ -401,3 +401,120 @@ function renderAdvancedAnalytics(
     `;
 
 }
+
+function renderReadinessDecision(
+    decision
+) {
+
+    const status =
+        document.getElementById(
+            "readinessStatus"
+        );
+
+    const score =
+        document.getElementById(
+            "score"
+        );
+
+    const recommendation =
+        document.getElementById(
+            "recommendation"
+        );
+
+    const buffer =
+        document.getElementById(
+            "readinessBuffer"
+        );
+
+    const bufferDetail =
+        document.getElementById(
+            "readinessBufferDetail"
+        );
+
+    const payout =
+        document.getElementById(
+            "readinessPayout"
+        );
+
+    const payoutDetail =
+        document.getElementById(
+            "readinessPayoutDetail"
+        );
+
+    const goal =
+        document.getElementById(
+            "readinessGoal"
+        );
+
+    const stop =
+        document.getElementById(
+            "readinessStop"
+        );
+
+    const ai =
+        document.getElementById(
+            "readinessAI"
+        );
+
+
+    if(!status) {
+        return;
+    }
+
+
+    status.textContent =
+        decision.status;
+
+
+    status.className =
+        "readiness-status " +
+        "readiness-" +
+        decision.level;
+
+
+    score.textContent =
+        decision.score +
+        " / 100";
+
+
+    recommendation.textContent =
+        decision.status;
+
+
+    buffer.textContent =
+        "$" +
+        decision.buffer
+            .toLocaleString();
+
+
+    bufferDetail.textContent =
+        decision.bufferStatus +
+        " · " +
+        decision.bufferDetail;
+
+
+    payout.textContent =
+        decision.payoutText;
+
+
+    payoutDetail.textContent =
+        decision.payoutDetail;
+
+
+    goal.textContent =
+        decision.goal;
+
+
+    stop.textContent =
+        decision.stop;
+
+
+    ai.innerHTML =
+        decision.ai
+            .map(
+                item =>
+                    "✓ " + item
+            )
+            .join("<br>");
+
+}
