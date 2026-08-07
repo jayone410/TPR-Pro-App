@@ -1,3 +1,11 @@
+/*
+=========================================
+TPR PRO AI
+Dashboard Layout Manager
+=========================================
+*/
+
+
 const DASHBOARD_CARDS = {
 
     cardAccountManager: true,
@@ -32,13 +40,29 @@ function loadDashboardLayout() {
     }
 
 
-    return {
+    try {
 
-        ...DASHBOARD_CARDS,
+        return {
 
-        ...JSON.parse(saved)
+            ...DASHBOARD_CARDS,
+            ...JSON.parse(saved)
 
-    };
+        };
+
+    }
+    catch(error) {
+
+        console.error(
+            "Dashboard Layout konnte nicht geladen werden:",
+            error
+        );
+
+
+        return {
+            ...DASHBOARD_CARDS
+        };
+
+    }
 
 }
 
@@ -84,6 +108,34 @@ function applyDashboardLayout() {
             }
         );
 
+
+    syncDashboardCheckboxes(
+        layout
+    );
+
+}
+
+
+
+function syncDashboardCheckboxes(layout) {
+
+    document
+        .querySelectorAll(
+            "[data-card-toggle]"
+        )
+        .forEach(
+            checkbox => {
+
+                const cardId =
+                    checkbox.dataset.cardToggle;
+
+
+                checkbox.checked =
+                    layout[cardId] !== false;
+
+            }
+        );
+
 }
 
 
@@ -104,6 +156,170 @@ function setCardVisibility(
     saveDashboardLayout(
         layout
     );
+
+
+    applyDashboardLayout();
+
+}
+
+
+
+function setDashboardPreset(preset) {
+
+    let layout = {
+        ...DASHBOARD_CARDS
+    };
+
+
+    if(preset === "compact") {
+
+        layout = {
+
+            cardAccountManager: true,
+
+            cardReadiness: true,
+
+            cardPayout: true,
+
+            cardDailyPlan: true,
+
+            cardNews: true,
+
+            cardAiCoach: true,
+
+            cardPerformance: false,
+
+            cardAdvancedAnalytics: false,
+
+            cardEquity: false,
+
+            cardDrawdown: false,
+
+            cardHourly: false
+
+        };
+
+    }
+
+
+    if(preset === "standard") {
+
+        layout = {
+
+            cardAccountManager: true,
+
+            cardReadiness: true,
+
+            cardPayout: true,
+
+            cardDailyPlan: true,
+
+            cardNews: true,
+
+            cardAiCoach: true,
+
+            cardPerformance: true,
+
+            cardAdvancedAnalytics: true,
+
+            cardEquity: false,
+
+            cardDrawdown: false,
+
+            cardHourly: true
+
+        };
+
+    }
+
+
+    if(preset === "analytics") {
+
+        layout = {
+
+            ...DASHBOARD_CARDS
+
+        };
+
+    }
+
+
+    saveDashboardLayout(
+        layout
+    );
+
+
+    applyDashboardLayout();
+
+}
+
+
+
+function initDashboardLayout() {
+
+    const settingsButton =
+        document.getElementById(
+            "dashboardSettingsButton"
+        );
+
+
+    const settingsPanel =
+        document.getElementById(
+            "dashboardSettingsPanel"
+        );
+
+
+    if(
+        settingsButton &&
+        settingsPanel
+    ) {
+
+        settingsButton.addEventListener(
+            "click",
+            () => {
+
+                const hidden =
+                    settingsPanel.style.display ===
+                    "none";
+
+
+                settingsPanel.style.display =
+                    hidden
+                        ? "block"
+                        : "none";
+
+            }
+        );
+
+    }
+
+
+
+    document
+        .querySelectorAll(
+            "[data-card-toggle]"
+        )
+        .forEach(
+            checkbox => {
+
+                checkbox.addEventListener(
+                    "change",
+                    event => {
+
+                        const cardId =
+                            event.target.dataset.cardToggle;
+
+
+                        setCardVisibility(
+                            cardId,
+                            event.target.checked
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 
     applyDashboardLayout();
