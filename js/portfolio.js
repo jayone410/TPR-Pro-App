@@ -13,6 +13,10 @@ function renderPortfolio() {
             selectedAccounts
         );
 
+        renderEquityChart(
+        selectedAccounts
+        );
+
     if(selectedAccounts.length === 0) {
 
         document.getElementById(
