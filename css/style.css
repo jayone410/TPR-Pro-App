@@ -291,3 +291,99 @@ button:hover{
 #dashboardSettingsPanel input[type="checkbox"] {
     margin-right: 8px;
 }
+
+
+.readiness-card {
+    grid-column: span 1;
+}
+
+.readiness-hero {
+    text-align: center;
+    padding: 20px 0 24px;
+}
+
+.readiness-status {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    margin-bottom: 10px;
+}
+
+.readiness-score {
+    font-size: 54px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.readiness-recommendation {
+    color: var(--text-muted);
+}
+
+.readiness-green {
+    color: var(--green);
+}
+
+.readiness-yellow {
+    color: var(--yellow);
+}
+
+.readiness-red {
+    color: var(--red);
+}
+
+.readiness-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.readiness-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.readiness-item span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.readiness-item strong {
+    display: block;
+    font-size: 19px;
+}
+
+.readiness-item small {
+    display: block;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.readiness-ai {
+    margin-top: 16px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    line-height: 1.7;
+}
+
+.readiness-ai strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.readiness-details {
+    margin-top: 16px;
+}
+
+.readiness-details summary {
+    cursor: pointer;
+    color: var(--text-muted);
+}
