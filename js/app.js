@@ -1,81 +1,103 @@
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-
-    let selectedAccountId =
-        localStorage.getItem(
-            "tpr_selected_account"
-        );
+    let selectedAccountIds =
+        loadSelectedAccountIds();
 
 
     const accountList =
-        document.getElementById(
-            "accountList"
-        );
+        document.getElementById("accountList");
 
+    const selectedAccountCount =
+        document.getElementById("selectedAccountCount");
 
     const addAccountButton =
-        document.getElementById(
-            "addAccountButton"
-        );
+        document.getElementById("addAccountButton");
+
+    const selectAllButton =
+        document.getElementById("selectAllAccounts");
+
+    const clearSelectionButton =
+        document.getElementById("clearAccountSelection");
 
 
+    function updateSelectionCount() {
 
-    function renderAccounts(){
+        selectedAccountCount.textContent =
+            selectedAccountIds.length +
+            " Account(s) ausgewählt";
+
+    }
 
 
-        if(accounts.length === 0){
-
-            accountList.innerHTML =
-                "Noch keine Accounts angelegt.";
-
-            return;
-
-        }
-
+    function renderAccounts() {
 
         accountList.innerHTML = "";
 
 
-        accounts.forEach(account=>{
+        if(accounts.length === 0) {
 
+            accountList.innerHTML = `
+
+                <tr>
+                    <td colspan="6">
+                        Noch keine Accounts angelegt.
+                    </td>
+                </tr>
+
+            `;
+
+            updateSelectionCount();
+
+            return;
+        }
+
+
+        accounts.forEach(account => {
 
             const row =
-                document.createElement("div");
+                document.createElement("tr");
 
 
-            row.className =
-                "account-row";
+            const checked =
+                selectedAccountIds.includes(account.id)
+                    ? "checked"
+                    : "";
 
 
             row.innerHTML = `
 
-                <strong>
-                    ${account.accountName}
-                </strong>
+                <td>
 
-                <br>
+                    <input
+                        type="checkbox"
+                        class="accountCheckbox"
+                        data-account-id="${account.id}"
+                        ${checked}
+                    >
 
-                ${account.provider.toUpperCase()}
-                ·
-                ${account.accountType}
+                </td>
 
-                <br>
+                <td>
+                    <strong>
+                        ${account.accountName}
+                    </strong>
+                </td>
 
-                Balance:
-                $${account.balance.toLocaleString()}
+                <td>
+                    ${account.provider.toUpperCase()}
+                </td>
 
-                <br><br>
+                <td>
+                    ${account.accountType}
+                </td>
 
-                <button
-                    data-account="${account.id}"
-                    class="selectAccountButton"
-                >
-                    Account auswählen
-                </button>
+                <td>
+                    $${account.balance.toLocaleString()}
+                </td>
 
-                <hr>
+                <td>
+                    ${account.trades.length}
+                </td>
 
             `;
 
@@ -85,69 +107,102 @@ document.addEventListener(
         });
 
 
-
         document
-            .querySelectorAll(
-                ".selectAccountButton"
-            )
-            .forEach(button=>{
+            .querySelectorAll(".accountCheckbox")
+            .forEach(checkbox => {
+
+                checkbox.addEventListener(
+                    "change",
+                    event => {
+
+                        const id =
+                            event.target.dataset.accountId;
 
 
-                button.addEventListener(
-                    "click",
-                    ()=>{
+                        if(event.target.checked) {
+
+                            if(!selectedAccountIds.includes(id)) {
+
+                                selectedAccountIds.push(id);
+
+                            }
+
+                        }
+                        else {
+
+                            selectedAccountIds =
+                                selectedAccountIds.filter(
+                                    accountId =>
+                                        accountId !== id
+                                );
+
+                        }
 
 
-                        selectedAccountId =
-                            button.dataset.account;
-
-
-                        localStorage.setItem(
-                            "tpr_selected_account",
-                            selectedAccountId
+                        saveSelectedAccountIds(
+                            selectedAccountIds
                         );
 
 
-                        renderSelectedAccount();
+                        updateSelectionCount();
+
+                        renderPortfolio();
 
                     }
                 );
 
-
             });
+
+
+        updateSelectionCount();
 
     }
 
 
+    function renderPortfolio() {
 
-    function renderSelectedAccount(){
-
-
-        if(!selectedAccountId){
-
-            return;
-
-        }
-
-
-        const account =
-            getAccount(
-                selectedAccountId
+        const selectedAccounts =
+            getSelectedAccounts(
+                selectedAccountIds
             );
 
 
-        if(!account){
+        if(selectedAccounts.length === 0) {
+
+            document
+                .getElementById("score")
+                .textContent = "--";
+
+
+            document
+                .getElementById("recommendation")
+                .textContent =
+                    "Keine Accounts ausgewählt.";
+
+
+            document
+                .getElementById("reasons")
+                .innerHTML = "";
+
+
+            document
+                .getElementById("riskFactors")
+                .innerHTML = "";
 
             return;
-
         }
 
 
         /*
-        Temporäre Engine-Werte.
-        Später werden diese aus CSV
-        und Prop-Regeln berechnet.
+        Vorerst analysieren wir den ersten
+        ausgewählten Account für Readiness.
+
+        Portfolio-Statistiken bauen wir
+        im nächsten Schritt.
         */
+
+        const account =
+            selectedAccounts[0];
 
 
         const engineAccount = {
@@ -177,43 +232,31 @@ document.addEventListener(
 
 
         document
-            .getElementById(
-                "recommendation"
-            )
+            .getElementById("recommendation")
             .textContent =
                 result.recommendation;
 
 
-
         const reasons =
-            document.getElementById(
-                "reasons"
-            );
+            document.getElementById("reasons");
 
 
         reasons.innerHTML = "";
 
 
-        result.reasons.forEach(
-            reason=>{
+        result.reasons.forEach(reason => {
+
+            const item =
+                document.createElement("p");
 
 
-                const item =
-                    document.createElement(
-                        "p"
-                    );
+            item.textContent =
+                "• " + reason;
 
 
-                item.textContent =
-                    "• " + reason;
+            reasons.appendChild(item);
 
-
-                reasons.appendChild(
-                    item
-                );
-
-            }
-        );
+        });
 
 
         const riskBox =
@@ -249,44 +292,50 @@ document.addEventListener(
     }
 
 
-
     addAccountButton.addEventListener(
         "click",
-        ()=>{
-
+        () => {
 
             const provider =
-                document.getElementById(
-                    "accountProvider"
-                ).value;
+                document
+                    .getElementById(
+                        "accountProvider"
+                    )
+                    .value;
 
 
             const accountType =
-                document.getElementById(
-                    "accountType"
-                ).value;
+                document
+                    .getElementById(
+                        "accountType"
+                    )
+                    .value;
 
 
             const accountName =
-                document.getElementById(
-                    "accountName"
-                ).value.trim();
+                document
+                    .getElementById(
+                        "accountName"
+                    )
+                    .value
+                    .trim();
 
 
             const startingBalance =
-                document.getElementById(
-                    "startingBalance"
-                ).value;
+                document
+                    .getElementById(
+                        "startingBalance"
+                    )
+                    .value;
 
 
-            if(!accountName){
+            if(!accountName) {
 
                 alert(
                     "Bitte einen Account-Namen eingeben."
                 );
 
                 return;
-
             }
 
 
@@ -299,31 +348,77 @@ document.addEventListener(
                 );
 
 
-            selectedAccountId =
-                account.id;
-
-
-            localStorage.setItem(
-                "tpr_selected_account",
-                selectedAccountId
+            selectedAccountIds.push(
+                account.id
             );
 
 
-            document.getElementById(
-                "accountName"
-            ).value = "";
+            saveSelectedAccountIds(
+                selectedAccountIds
+            );
+
+
+            document
+                .getElementById(
+                    "accountName"
+                )
+                .value = "";
 
 
             renderAccounts();
 
-            renderSelectedAccount();
+            renderPortfolio();
 
-    });
+        }
+    );
 
+
+    selectAllButton.addEventListener(
+        "click",
+        () => {
+
+            selectedAccountIds =
+                accounts.map(
+                    account =>
+                        account.id
+                );
+
+
+            saveSelectedAccountIds(
+                selectedAccountIds
+            );
+
+
+            renderAccounts();
+
+            renderPortfolio();
+
+        }
+    );
+
+
+    clearSelectionButton.addEventListener(
+        "click",
+        () => {
+
+            selectedAccountIds = [];
+
+
+            saveSelectedAccountIds(
+                selectedAccountIds
+            );
+
+
+            renderAccounts();
+
+            renderPortfolio();
+
+        }
+    );
 
 
     renderAccounts();
 
-    renderSelectedAccount();
+    renderPortfolio();
 
 });
