@@ -1,34 +1,130 @@
 /*
 =========================================
 TPR PRO AI
-Account Model
+Account Manager
 =========================================
 */
 
-const accounts = [
 
-    {
-        id: "topstep_01",
+let accounts = loadAccounts();
 
-        provider: "Topstep",
 
-        accountSize: "50k",
+function loadAccounts(){
 
-        balance: 53420,
+    const saved =
+        localStorage.getItem("tpr_accounts");
 
-        startingBalance: 50000,
+    if(saved){
 
-        todayPnL: 180,
+        return JSON.parse(saved);
 
-        totalPnL: 3420,
-
-        buffer: 2420,
-
-        payoutEligible: false,
-
-        daysTraded: 2,
-
-        nextPayoutAmount: 580
     }
 
-];
+    return [];
+
+}
+
+
+
+function saveAccounts(){
+
+    localStorage.setItem(
+        "tpr_accounts",
+        JSON.stringify(accounts)
+    );
+
+}
+
+
+
+function createAccount(
+    provider,
+    accountType,
+    accountName,
+    startingBalance
+){
+
+    const account = {
+
+        id:
+            "TPR-" +
+            Date.now(),
+
+        provider,
+
+        accountType,
+
+        accountName,
+
+        startingBalance:
+            Number(startingBalance),
+
+        balance:
+            Number(startingBalance),
+
+        daysTraded: 0,
+
+        trades: [],
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    accounts.push(account);
+
+    saveAccounts();
+
+    return account;
+
+}
+
+
+
+function deleteAccount(accountId){
+
+    accounts =
+        accounts.filter(
+            account =>
+            account.id !== accountId
+        );
+
+    saveAccounts();
+
+}
+
+
+
+function getAccount(accountId){
+
+    return accounts.find(
+        account =>
+        account.id === accountId
+    );
+
+}
+
+
+
+function updateAccount(account){
+
+    const index =
+        accounts.findIndex(
+            item =>
+            item.id === account.id
+        );
+
+
+    if(index === -1){
+
+        return;
+
+    }
+
+
+    accounts[index] = account;
+
+    saveAccounts();
+
+}
