@@ -1,5 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const importCsvButton =
+    document.getElementById("importCsvButton");
+
+    const csvFile =
+        document.getElementById("csvFile");
+    
+    const csvStatus =
+        document.getElementById("csvStatus");
+    
+    
+    importCsvButton.addEventListener(
+        "click",
+        () => {
+            csvFile.click();
+        }
+    );
+    
+    
+    csvFile.addEventListener(
+        "change",
+        async event => {
+    
+            const file =
+                event.target.files[0];
+    
+            if(!file) return;
+    
+    
+            const trades =
+                await parseCSV(file);
+    
+    
+            csvStatus.innerHTML = `
+                Datei:
+                <strong>${file.name}</strong>
+                ·
+                ${trades.length} Zeilen geladen
+            `;
+    
+    
+            console.log(
+                "CSV IMPORT:",
+                trades
+            );
+    
+        }
+    );
+    
     let selectedAccountIds =
         loadSelectedAccountIds();
 
