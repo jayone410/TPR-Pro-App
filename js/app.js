@@ -28,6 +28,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         reasons.appendChild(item);
 
+        const riskBox =
+        document.getElementById("riskFactors");
+
+
+            riskBox.innerHTML = `
+            
+            <p>
+            Account Risk:
+            ${result.risk.accountRisk}/100
+            </p>
+            
+            <p>
+            Market Risk:
+            ${result.risk.marketRisk}/100
+            </p>
+            
+            <p>
+            Performance Risk:
+            ${result.risk.performanceRisk}/100
+            </p>
+            
+            <p>
+            Discipline Risk:
+            ${result.risk.disciplineRisk}/100
+            </p>
+            
+            `;
+
     });
 
 
