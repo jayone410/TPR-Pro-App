@@ -48,10 +48,6 @@ function initAccountManager() {
         );
 
 
-    /*
-    Account Formular beim Start ausblenden
-    */
-
     if(accountForm) {
 
         accountForm.style.display =
@@ -62,7 +58,7 @@ function initAccountManager() {
 
 
     /*
-    Account Formular öffnen / schließen
+    ACCOUNT FORMULAR
     */
 
     if(
@@ -76,25 +72,20 @@ function initAccountManager() {
                 () => {
 
                     const hidden =
-                        accountForm
-                            .style
-                            .display ===
+                        accountForm.style.display ===
                         "none";
 
 
-                    accountForm
-                        .style
-                        .display =
-                            hidden
-                                ? "block"
-                                : "none";
+                    accountForm.style.display =
+                        hidden
+                            ? "block"
+                            : "none";
 
 
-                    toggleAccountFormButton
-                        .textContent =
-                            hidden
-                                ? "− Account Formular"
-                                : "+ Account";
+                    toggleAccountFormButton.textContent =
+                        hidden
+                            ? "− Account Formular"
+                            : "+ Account";
 
                 }
             );
@@ -104,9 +95,7 @@ function initAccountManager() {
 
 
     /*
-    =========================================
     ACCOUNT HINZUFÜGEN
-    =========================================
     */
 
     if(addAccountButton) {
@@ -117,36 +106,27 @@ function initAccountManager() {
                 () => {
 
                     const provider =
-                        document
-                            .getElementById(
-                                "accountProvider"
-                            )
-                            .value;
+                        document.getElementById(
+                            "accountProvider"
+                        ).value;
 
 
                     const accountType =
-                        document
-                            .getElementById(
-                                "accountType"
-                            )
-                            .value;
+                        document.getElementById(
+                            "accountType"
+                        ).value;
 
 
                     const accountName =
-                        document
-                            .getElementById(
-                                "accountName"
-                            )
-                            .value
-                            .trim();
+                        document.getElementById(
+                            "accountName"
+                        ).value.trim();
 
 
                     const startingBalance =
-                        document
-                            .getElementById(
-                                "startingBalance"
-                            )
-                            .value;
+                        document.getElementById(
+                            "startingBalance"
+                        ).value;
 
 
                     if(!accountName) {
@@ -187,20 +167,21 @@ function initAccountManager() {
                     );
 
 
-                    document
-                        .getElementById(
-                            "accountName"
-                        )
-                        .value = "";
+                    document.getElementById(
+                        "accountName"
+                    ).value = "";
 
 
                     accountForm.style.display =
                         "none";
 
 
-                    toggleAccountFormButton
-                        .textContent =
+                    if(toggleAccountFormButton) {
+
+                        toggleAccountFormButton.textContent =
                             "+ Account";
+
+                    }
 
 
                     renderAccounts();
@@ -215,9 +196,7 @@ function initAccountManager() {
 
 
     /*
-    =========================================
-    ALLE ACCOUNTS AUSWÄHLEN
-    =========================================
+    ALLE AUSWÄHLEN
     */
 
     if(selectAllButton) {
@@ -251,9 +230,7 @@ function initAccountManager() {
 
 
     /*
-    =========================================
     AUSWAHL LÖSCHEN
-    =========================================
     */
 
     if(clearSelectionButton) {
@@ -263,8 +240,7 @@ function initAccountManager() {
                 "click",
                 () => {
 
-                    selectedAccountIds =
-                        [];
+                    selectedAccountIds = [];
 
 
                     saveSelectedAccountIds(
@@ -282,7 +258,6 @@ function initAccountManager() {
     }
 
 
-
     renderAccounts();
 
 }
@@ -291,7 +266,243 @@ function initAccountManager() {
 
 /*
 =========================================
-ACCOUNT TABELLE RENDERN
+BUFFER
+=========================================
+*/
+
+function getAccountBuffer(account) {
+
+    return (
+        Number(account.balance) -
+        Number(account.startingBalance)
+    );
+
+}
+
+
+
+/*
+=========================================
+PAYOUT STATUS
+=========================================
+*/
+
+function getAccountPayoutInfo(account) {
+
+    const providerRules =
+        PROP_RULES?.[
+            account.provider
+        ]?.accounts?.[
+            account.accountType
+        ];
+
+
+    if(!providerRules) {
+
+        return {
+            status: "--",
+            label: "Keine Regeln"
+        };
+
+    }
+
+
+    try {
+
+        const engineAccount = {
+
+            ...account,
+
+            buffer:
+                getAccountBuffer(
+                    account
+                ),
+
+            nextPayoutAmount:
+                account.nextPayoutAmount ??
+                0
+
+        };
+
+
+        const payout =
+            analyzePayout(
+                engineAccount,
+                providerRules
+            );
+
+
+        return {
+
+            status:
+                payout.status,
+
+            label:
+                payout.status
+
+        };
+
+    }
+    catch(error) {
+
+        console.error(
+            "Payout konnte nicht berechnet werden:",
+            error
+        );
+
+
+        return {
+
+            status: "--",
+
+            label: "--"
+
+        };
+
+    }
+
+}
+
+
+
+/*
+=========================================
+STATUS AMPEL
+=========================================
+*/
+
+function getAccountStatus(account) {
+
+    const buffer =
+        getAccountBuffer(
+            account
+        );
+
+
+    try {
+
+        const engineAccount = {
+
+            ...account,
+
+            buffer,
+
+            nextPayoutAmount:
+                account.nextPayoutAmount ??
+                0
+
+        };
+
+
+        const result =
+            analyzeAccount(
+                engineAccount
+            );
+
+
+        const recommendation =
+            String(
+                result.recommendation ??
+                ""
+            ).toUpperCase();
+
+
+        if(
+            recommendation.includes(
+                "DON'T"
+            ) ||
+            recommendation.includes(
+                "STOP"
+            )
+        ) {
+
+            return {
+
+                level: "red",
+
+                icon: "🔴",
+
+                text: "STOP"
+
+            };
+
+        }
+
+
+        if(
+            recommendation.includes(
+                "LOW RISK"
+            ) ||
+            recommendation.includes(
+                "CAUTION"
+            )
+        ) {
+
+            return {
+
+                level: "yellow",
+
+                icon: "🟡",
+
+                text: "LOW RISK"
+
+            };
+
+        }
+
+
+        return {
+
+            level: "green",
+
+            icon: "🟢",
+
+            text: "ACTIVE"
+
+        };
+
+    }
+    catch(error) {
+
+        /*
+        Fallback falls Risk Engine
+        einmal nicht verfügbar ist.
+        */
+
+        if(buffer <= 0) {
+
+            return {
+
+                level: "red",
+
+                icon: "🔴",
+
+                text: "RISK"
+
+            };
+
+        }
+
+
+        return {
+
+            level: "yellow",
+
+            icon: "🟡",
+
+            text: "CHECK"
+
+        };
+
+    }
+
+}
+
+
+
+/*
+=========================================
+ACCOUNT TABELLE
 =========================================
 */
 
@@ -316,12 +527,13 @@ function renderAccounts() {
     }
 
 
-    accountList.innerHTML = "";
+    accountList.innerHTML =
+        "";
 
 
 
     /*
-    Keine Accounts vorhanden
+    KEINE ACCOUNTS
     */
 
     if(accounts.length === 0) {
@@ -330,7 +542,7 @@ function renderAccounts() {
 
             <tr>
 
-                <td colspan="7">
+                <td colspan="10">
 
                     Noch keine Accounts angelegt.
 
@@ -343,9 +555,8 @@ function renderAccounts() {
 
         if(selectedAccountCount) {
 
-            selectedAccountCount
-                .textContent =
-                    "0 Accounts ausgewählt";
+            selectedAccountCount.textContent =
+                "0 Accounts ausgewählt";
 
         }
 
@@ -357,7 +568,7 @@ function renderAccounts() {
 
 
     /*
-    Account Zeilen erstellen
+    ACCOUNT ZEILEN
     */
 
     accounts.forEach(
@@ -370,10 +581,9 @@ function renderAccounts() {
 
 
             const checked =
-                selectedAccountIds
-                    .includes(
-                        account.id
-                    )
+                selectedAccountIds.includes(
+                    account.id
+                )
                     ? "checked"
                     : "";
 
@@ -384,6 +594,30 @@ function renderAccounts() {
                 )
                     ? account.trades.length
                     : 0;
+
+
+            const buffer =
+                getAccountBuffer(
+                    account
+                );
+
+
+            const payout =
+                getAccountPayoutInfo(
+                    account
+                );
+
+
+            const status =
+                getAccountStatus(
+                    account
+                );
+
+
+            const bufferPrefix =
+                buffer > 0
+                    ? "+"
+                    : "";
 
 
             row.innerHTML = `
@@ -425,11 +659,61 @@ function renderAccounts() {
                 </td>
 
 
+                <td class="balance-cell">
+
+                    <strong>
+
+                        $${Number(
+                            account.balance
+                        ).toLocaleString(
+                            "en-US",
+                            {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }
+                        )}
+
+                    </strong>
+
+                    <button
+                        class="editBalanceButton"
+                        data-account-id="${account.id}"
+                        title="Balance ändern"
+                    >
+                        ✏️
+                    </button>
+
+                </td>
+
+
                 <td>
 
-                    $${Number(
-                        account.balance
-                    ).toLocaleString()}
+                    <span
+                        class="${
+                            buffer >= 0
+                                ? "positive-value"
+                                : "negative-value"
+                        }"
+                    >
+
+                        ${bufferPrefix}$${buffer.toLocaleString(
+                            "en-US",
+                            {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }
+                        )}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <strong>
+                        ${payout.label}
+                    </strong>
 
                 </td>
 
@@ -441,12 +725,26 @@ function renderAccounts() {
                 </td>
 
 
+                <td>
+
+                    <span
+                        class="account-status account-status-${status.level}"
+                    >
+
+                        ${status.icon}
+                        ${status.text}
+
+                    </span>
+
+                </td>
+
+
                 <td class="account-actions-cell">
 
                     <button
                         class="editAccountButton"
                         data-account-id="${account.id}"
-                        title="Bearbeiten"
+                        title="Account bearbeiten"
                     >
                         ✏️
                     </button>
@@ -455,7 +753,7 @@ function renderAccounts() {
                     <button
                         class="duplicateAccountButton"
                         data-account-id="${account.id}"
-                        title="Duplizieren"
+                        title="Account duplizieren"
                     >
                         📄
                     </button>
@@ -464,7 +762,7 @@ function renderAccounts() {
                     <button
                         class="deleteAccountButton"
                         data-account-id="${account.id}"
-                        title="Löschen"
+                        title="Account löschen"
                     >
                         🗑️
                     </button>
@@ -485,7 +783,7 @@ function renderAccounts() {
 
     /*
     =========================================
-    CHECKBOX EVENTS
+    ACCOUNT AUSWAHL
     =========================================
     */
 
@@ -496,62 +794,54 @@ function renderAccounts() {
         .forEach(
             checkbox => {
 
-                checkbox
-                    .addEventListener(
-                        "change",
-                        event => {
+                checkbox.addEventListener(
+                    "change",
+                    event => {
 
-                            const id =
-                                event
-                                    .target
-                                    .dataset
-                                    .accountId;
+                        const id =
+                            event.target.dataset
+                                .accountId;
 
+
+                        if(
+                            event.target.checked
+                        ) {
 
                             if(
-                                event.target
-                                    .checked
+                                !selectedAccountIds
+                                    .includes(id)
                             ) {
 
-                                if(
-                                    !selectedAccountIds
-                                        .includes(
-                                            id
-                                        )
-                                ) {
-
-                                    selectedAccountIds
-                                        .push(
-                                            id
-                                        );
-
-                                }
-
-                            }
-                            else {
-
-                                selectedAccountIds =
-                                    selectedAccountIds
-                                        .filter(
-                                            accountId =>
-                                                accountId !==
-                                                id
-                                        );
-
-                            }
-
-
-                            saveSelectedAccountIds(
                                 selectedAccountIds
-                            );
+                                    .push(id);
 
-
-                            renderAccounts();
-
-                            renderPortfolio();
+                            }
 
                         }
-                    );
+                        else {
+
+                            selectedAccountIds =
+                                selectedAccountIds
+                                    .filter(
+                                        accountId =>
+                                            accountId !==
+                                            id
+                                    );
+
+                        }
+
+
+                        saveSelectedAccountIds(
+                            selectedAccountIds
+                        );
+
+
+                        renderAccounts();
+
+                        renderPortfolio();
+
+                    }
+                );
 
             }
         );
@@ -560,7 +850,107 @@ function renderAccounts() {
 
     /*
     =========================================
-    ACCOUNT BEARBEITEN
+    BALANCE MANUELL ÄNDERN
+    =========================================
+    */
+
+    document
+        .querySelectorAll(
+            ".editBalanceButton"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const id =
+                            button.dataset
+                                .accountId;
+
+
+                        const account =
+                            getAccount(id);
+
+
+                        if(!account) {
+
+                            return;
+
+                        }
+
+
+                        const input =
+                            prompt(
+                                `Aktuelle Balance für "${account.accountName}":`,
+                                Number(
+                                    account.balance
+                                ).toFixed(2)
+                            );
+
+
+                        if(input === null) {
+
+                            return;
+
+                        }
+
+
+                        const newBalance =
+                            Number(
+                                String(input)
+                                    .replace(
+                                        ",",
+                                        "."
+                                    )
+                            );
+
+
+                        if(
+                            !Number.isFinite(
+                                newBalance
+                            )
+                        ) {
+
+                            alert(
+                                "Bitte eine gültige Balance eingeben."
+                            );
+
+                            return;
+
+                        }
+
+
+                        account.balance =
+                            newBalance;
+
+
+                        account.balanceUpdatedAt =
+                            new Date()
+                                .toISOString();
+
+
+                        updateAccount(
+                            account
+                        );
+
+
+                        renderAccounts();
+
+                        renderPortfolio();
+
+                    }
+                );
+
+            }
+        );
+
+
+
+    /*
+    =========================================
+    ACCOUNT NAME BEARBEITEN
     =========================================
     */
 
@@ -571,124 +961,70 @@ function renderAccounts() {
         .forEach(
             button => {
 
-                button
-                    .addEventListener(
-                        "click",
-                        () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                            const id =
-                                button
-                                    .dataset
-                                    .accountId;
+                        const id =
+                            button.dataset
+                                .accountId;
 
 
-                            const account =
-                                getAccount(
-                                    id
-                                );
+                        const account =
+                            getAccount(id);
 
 
-                            if(!account) {
+                        if(!account) {
 
-                                return;
-
-                            }
-
-
-                            const newName =
-                                prompt(
-                                    "Account-Name:",
-                                    account.accountName
-                                );
-                            if(newName === null) {
-                                return;
-                            }
-                            
-                            
-                            const newBalance =
-                                prompt(
-                                    "Aktuelle Account Balance:",
-                                    account.balance
-                                );
-                            
-                            
-                            if(newBalance === null) {
-                                return;
-                            }
-                            
-                            
-                            const parsedBalance =
-                                Number(
-                                    String(newBalance)
-                                        .replace(",", ".")
-                                );
-                            
-                            
-                            if(!Number.isFinite(parsedBalance)) {
-                            
-                                alert(
-                                    "Bitte eine gültige Balance eingeben."
-                                );
-                            
-                                return;
-                            }
-                            
-                            
-                            account.accountName =
-                                newName.trim();
-                            
-                            
-                            account.balance =
-                                parsedBalance;
-                            
-                            
-                            updateAccount(
-                                account
-                            );
-                            
-                            
-                            renderAccounts();
-                            
-                            renderPortfolio();
-
-
-                            if(
-                                newName === null
-                            ) {
-
-                                return;
-
-                            }
-
-
-                            if(
-                                !newName.trim()
-                            ) {
-
-                                alert(
-                                    "Der Account-Name darf nicht leer sein."
-                                );
-
-                                return;
-
-                            }
-
-
-                            account.accountName =
-                                newName.trim();
-
-
-                            updateAccount(
-                                account
-                            );
-
-
-                            renderAccounts();
-
-                            renderPortfolio();
+                            return;
 
                         }
-                    );
+
+
+                        const newName =
+                            prompt(
+                                "Account-Name:",
+                                account.accountName
+                            );
+
+
+                        if(
+                            newName === null
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        if(
+                            !newName.trim()
+                        ) {
+
+                            alert(
+                                "Der Account-Name darf nicht leer sein."
+                            );
+
+                            return;
+
+                        }
+
+
+                        account.accountName =
+                            newName.trim();
+
+
+                        updateAccount(
+                            account
+                        );
+
+
+                        renderAccounts();
+
+                        renderPortfolio();
+
+                    }
+                );
 
             }
         );
@@ -697,7 +1033,7 @@ function renderAccounts() {
 
     /*
     =========================================
-    ACCOUNT DUPLIZIEREN
+    DUPLIZIEREN
     =========================================
     */
 
@@ -708,56 +1044,41 @@ function renderAccounts() {
         .forEach(
             button => {
 
-                button
-                    .addEventListener(
-                        "click",
-                        () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                            const id =
-                                button
-                                    .dataset
-                                    .accountId;
-
-
-                            const copy =
-                                duplicateAccount(
-                                    id
-                                );
-
-
-                            if(!copy) {
-
-                                return;
-
-                            }
-
-
-                            if(
-                                !selectedAccountIds
-                                    .includes(
-                                        copy.id
-                                    )
-                            ) {
-
-                                selectedAccountIds
-                                    .push(
-                                        copy.id
-                                    );
-
-                            }
-
-
-                            saveSelectedAccountIds(
-                                selectedAccountIds
+                        const copy =
+                            duplicateAccount(
+                                button.dataset
+                                    .accountId
                             );
 
 
-                            renderAccounts();
+                        if(!copy) {
 
-                            renderPortfolio();
+                            return;
 
                         }
-                    );
+
+
+                        selectedAccountIds
+                            .push(
+                                copy.id
+                            );
+
+
+                        saveSelectedAccountIds(
+                            selectedAccountIds
+                        );
+
+
+                        renderAccounts();
+
+                        renderPortfolio();
+
+                    }
+                );
 
             }
         );
@@ -766,7 +1087,7 @@ function renderAccounts() {
 
     /*
     =========================================
-    ACCOUNT LÖSCHEN
+    LÖSCHEN
     =========================================
     */
 
@@ -777,72 +1098,69 @@ function renderAccounts() {
         .forEach(
             button => {
 
-                button
-                    .addEventListener(
-                        "click",
-                        () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                            const id =
-                                button
-                                    .dataset
-                                    .accountId;
+                        const id =
+                            button.dataset
+                                .accountId;
 
 
-                            const account =
-                                getAccount(
-                                    id
-                                );
-
-
-                            if(!account) {
-
-                                return;
-
-                            }
-
-
-                            const confirmed =
-                                confirm(
-
-                                    `Account "${account.accountName}" wirklich löschen?\n\n` +
-
-                                    `Alle gespeicherten Trades dieses Accounts werden ebenfalls gelöscht.`
-
-                                );
-
-
-                            if(!confirmed) {
-
-                                return;
-
-                            }
-
-
-                            removeAccount(
+                        const account =
+                            getAccount(
                                 id
                             );
 
 
-                            selectedAccountIds =
-                                selectedAccountIds
-                                    .filter(
-                                        accountId =>
-                                            accountId !==
-                                            id
-                                    );
+                        if(!account) {
+
+                            return;
+
+                        }
 
 
-                            saveSelectedAccountIds(
-                                selectedAccountIds
+                        const confirmed =
+                            confirm(
+
+                                `Account "${account.accountName}" wirklich löschen?\n\n` +
+
+                                `Alle gespeicherten Trades dieses Accounts werden ebenfalls gelöscht.`
+
                             );
 
 
-                            renderAccounts();
+                        if(!confirmed) {
 
-                            renderPortfolio();
+                            return;
 
                         }
-                    );
+
+
+                        removeAccount(
+                            id
+                        );
+
+
+                        selectedAccountIds =
+                            selectedAccountIds
+                                .filter(
+                                    accountId =>
+                                        accountId !== id
+                                );
+
+
+                        saveSelectedAccountIds(
+                            selectedAccountIds
+                        );
+
+
+                        renderAccounts();
+
+                        renderPortfolio();
+
+                    }
+                );
 
             }
         );
@@ -851,7 +1169,7 @@ function renderAccounts() {
 
     /*
     =========================================
-    AUSWAHLZÄHLER
+    AUSWAHL ZÄHLEN
     =========================================
     */
 
@@ -859,7 +1177,9 @@ function renderAccounts() {
 
         selectedAccountCount
             .textContent =
+
                 selectedAccountIds.length +
+
                 " Account(s) ausgewählt";
 
     }
