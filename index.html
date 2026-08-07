@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>TPR PRO AI</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+          href="css/style.css">
+
 </head>
+
 
 <body>
 
+
 <div class="container">
+
+
+    <!-- HEADER -->
 
     <div class="header">
 
@@ -27,63 +38,270 @@
 
         </div>
 
-        <button>
-            + Account
-        </button>
-
     </div>
+
+
 
     <div class="grid">
 
+
+        <!-- ACCOUNT MANAGER -->
+
+        <div class="card full-width">
+
+
+            <div class="account-header">
+
+                <div>
+
+                    <div class="card-title">
+                        Account Manager
+                    </div>
+
+                    <div id="selectedAccountCount">
+                        0 Accounts ausgewählt
+                    </div>
+
+                </div>
+
+
+                <div class="account-actions">
+
+                    <button id="selectAllAccounts">
+                        Alle auswählen
+                    </button>
+
+                    <button id="clearAccountSelection">
+                        Auswahl löschen
+                    </button>
+
+                    <button id="toggleAccountForm">
+                        + Account
+                    </button>
+
+                    <button id="importCsvButton">
+                        📂 CSV importieren
+                    </button>
+
+
+                    <input
+                        type="file"
+                        id="csvFile"
+                        accept=".csv"
+                        style="display:none;"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACCOUNT FORM -->
+
+            <div id="accountForm">
+
+                <select id="accountProvider">
+
+                    <option value="topstep">
+                        Topstep
+                    </option>
+
+                    <option value="lucid">
+                        Lucid
+                    </option>
+
+                    <option value="apex">
+                        Apex
+                    </option>
+
+                </select>
+
+
+                <select id="accountType">
+
+                    <option value="25k">
+                        25k
+                    </option>
+
+                    <option value="50k"
+                            selected>
+                        50k
+                    </option>
+
+                    <option value="100k">
+                        100k
+                    </option>
+
+                    <option value="150k">
+                        150k
+                    </option>
+
+                </select>
+
+
+                <input
+                    id="accountName"
+                    type="text"
+                    placeholder="z.B. Lucid Pro #1"
+                >
+
+
+                <input
+                    id="startingBalance"
+                    type="number"
+                    placeholder="Startbalance"
+                    value="50000"
+                >
+
+
+                <button id="addAccountButton">
+                    + Account hinzufügen
+                </button>
+
+            </div>
+
+
+
+            <br>
+
+
+            <!-- ACCOUNT TABLE -->
+
+            <div class="account-table-wrapper">
+
+                <table class="account-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th></th>
+
+                            <th>
+                                Account
+                            </th>
+
+                            <th>
+                                Firma
+                            </th>
+
+                            <th>
+                                Typ
+                            </th>
+
+                            <th>
+                                Balance
+                            </th>
+
+                            <th>
+                                Trades
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="accountList">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <div id="csvStatus"
+                 class="csv-inline-status">
+
+                Noch keine CSV importiert.
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- TRADING READINESS -->
+
         <div class="card">
-        
+
             <div class="card-title">
                 Trading Readiness
             </div>
-        
-            <div id="score" class="big-number">
+
+            <div id="score"
+                 class="big-number">
+
                 --
+
             </div>
-        
+
+
             <br>
-        
+
+
             <div id="recommendation">
-                Lade Analyse...
+
+                Keine Accounts ausgewählt.
+
             </div>
+
 
             <div id="reasons">
 
             </div>
 
+
             <div id="riskFactors">
 
             </div>
+
         </div>
+
+
+
+        <!-- PAYOUT INTELLIGENCE -->
 
         <div class="card">
 
             <div class="card-title">
                 Payout Intelligence
             </div>
-        
+
             <div id="payout">
-                Analyse läuft...
+
+                Account auswählen.
+
             </div>
-    
+
         </div>
 
+
+
+        <!-- DAILY TRADING PLAN -->
+
         <div class="card">
-        
+
             <div class="card-title">
                 Daily Trading Plan
             </div>
-        
+
             <div id="dailyPlan">
-                Analyse läuft...
+
+                Account auswählen.
+
             </div>
-        
+
         </div>
-        
+
+
+
+        <!-- NEWS -->
+
         <div class="card">
 
             <div class="card-title">
@@ -112,6 +330,10 @@
 
         </div>
 
+
+
+        <!-- AI COACH -->
+
         <div class="card">
 
             <div class="card-title">
@@ -124,232 +346,50 @@
 
             <br>
 
-            <p>✔ Nur NY Session</p>
-            <p>✔ Maximal 2 Trades</p>
-            <p>✔ Keine Revenge Trades</p>
-            <p>✔ A+ Setups handeln</p>
+            <p>
+                ✔ Nur NY Session
+            </p>
+
+            <p>
+                ✔ Maximal 2 Trades
+            </p>
+
+            <p>
+                ✔ Keine Revenge Trades
+            </p>
+
+            <p>
+                ✔ A+ Setups handeln
+            </p>
 
         </div>
 
-        <div class="card">
-
-            <div class="card-title">
-                Topstep 50k
-            </div>
-
-            <h2>
-                $53.420
-            </h2>
-
-            <br>
-
-            <p>Buffer: $2.420</p>
-            <p>Bis Payout: $580</p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="card-title">
-                Lucid 50k
-            </div>
-
-            <h2>
-                $52.870
-            </h2>
-
-            <br>
-
-            <p>Payout möglich</p>
-
-        </div>
-
-        <div class="card full-width">
-        
-            <div class="card-title">
-                Account Manager
-            </div>
-
-            <div class="account-header">
-                <div>
-                    <div class="card-title">
-                        Account Manager
-                    </div>
-            
-                    <div id="selectedAccountCount">
-                        0 Accounts ausgewählt
-                    </div>
-                </div>
-            
-                <div class="account-actions">
-            
-                    <button id="selectAllAccounts">
-                        Alle auswählen
-                    </button>
-            
-                    <button id="clearAccountSelection">
-                        Auswahl löschen
-                    </button>
-            
-                    <button id="toggleAccountForm">
-                        + Account
-                    </button>
-            
-                    <button id="importCsvButton">
-                        📂 CSV importieren
-                    </button>
-            
-                    <input
-                        type="file"
-                        id="csvFile"
-                        accept=".csv"
-                        style="display:none;"
-                    >
-            
-                </div>
-            
-            </div>
-        
-            <div id="accountForm">
-        
-                <select id="accountProvider">
-        
-                    <option value="topstep">
-                        Topstep
-                    </option>
-        
-                    <option value="lucid">
-                        Lucid
-                    </option>
-        
-                    <option value="apex">
-                        Apex
-                    </option>
-        
-                </select>
-        
-        
-                <br><br>
-        
-        
-                <select id="accountType">
-        
-                    <option value="50k">
-                        50k
-                    </option>
-        
-                    <option value="25k">
-                        25k
-                    </option>
-        
-                    <option value="100k">
-                        100k
-                    </option>
-        
-                    <option value="150k">
-                        150k
-                    </option>
-        
-                </select>
-        
-        
-                <br><br>
-        
-        
-                <input
-                    id="accountName"
-                    type="text"
-                    placeholder="z.B. Lucid Pro #1"
-                >
-        
-        
-                <br><br>
-        
-        
-                <input
-                    id="startingBalance"
-                    type="number"
-                    placeholder="Startbalance"
-                    value="50000"
-                >
-        
-        
-                <br><br>
-        
-        
-                <button id="addAccountButton">
-                    + Account hinzufügen
-                </button>
-        
-            </div>
-        
-        
-            <br>
-        
-        
-            <div class="account-toolbar">
-
-                    <button id="selectAllAccounts">
-                        Alle auswählen
-                    </button>
-                
-                    <button id="clearAccountSelection">
-                        Auswahl löschen
-                    </button>
-                
-                    <span id="selectedAccountCount">
-                        0 Accounts ausgewählt
-                    </span>
-                
-                </div>
-                
-                <br>
-                
-                <div class="account-table-wrapper">
-                
-                    <table class="account-table">
-                
-                        <thead>
-                
-                            <tr>
-                
-                                <th></th>
-                                <th>Account</th>
-                                <th>Firma</th>
-                                <th>Typ</th>
-                                <th>Balance</th>
-                                <th>Trades</th>
-                
-                            </tr>
-                
-                        </thead>
-                
-                        <tbody id="accountList">
-                
-                        </tbody>
-                
-                    </table>
-                
-                </div>
-        
-            </div>
-        
-        </div>
-        
-        </div>
 
     </div>
 
 </div>
 
+
+
+<!-- SCRIPTS -->
+
 <script src="js/rules.js"></script>
+
 <script src="js/accounts.js"></script>
+
 <script src="js/csv.js"></script>
+
 <script src="js/risk.js"></script>
+
 <script src="js/payout.js"></script>
+
 <script src="js/daily.js"></script>
+
 <script src="js/decision.js"></script>
+
 <script src="js/app.js"></script>
-    
+
+
 </body>
+
 </html>
