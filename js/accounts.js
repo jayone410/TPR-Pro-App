@@ -159,3 +159,121 @@ function getSelectedAccounts(ids) {
     );
 
 }
+
+function createTradeFingerprint(trade) {
+
+    /*
+    Eindeutige IDs bevorzugen:
+    Topstep: Id
+    Lucid: buyFillId + sellFillId
+    */
+
+    if(trade.Id) {
+        return "TOPSTEP_" + trade.Id;
+    }
+
+    if(trade.buyFillId || trade.sellFillId) {
+
+        return (
+            "LUCID_" +
+            (trade.buyFillId || "") +
+            "_" +
+            (trade.sellFillId || "")
+        );
+
+    }
+
+
+    /*
+    Fallback, falls eine CSV keine Trade-ID enthält
+    */
+
+    return JSON.stringify(trade);
+}
+
+
+
+function importTradesToAccount(accountId, rawTrades) {
+
+    const account =
+        getAccount(accountId);
+
+
+    if(!account) {
+
+        throw new Error(
+            "Account wurde nicht gefunden."
+        );
+
+    }
+
+
+    if(!Array.isArray(account.trades)) {
+
+        account.trades = [];
+
+    }
+
+
+    const existingFingerprints =
+        new Set(
+            account.trades.map(
+                trade =>
+                    trade._fingerprint ||
+                    createTradeFingerprint(trade)
+            )
+        );
+
+
+    let added = 0;
+    let duplicates = 0;
+
+
+    rawTrades.forEach(trade => {
+
+        const fingerprint =
+            createTradeFingerprint(trade);
+
+
+        if(existingFingerprints.has(fingerprint)) {
+
+            duplicates++;
+
+            return;
+
+        }
+
+
+        account.trades.push({
+
+            ...trade,
+
+            _fingerprint: fingerprint
+
+        });
+
+
+        existingFingerprints.add(
+            fingerprint
+        );
+
+
+        added++;
+
+    });
+
+
+    updateAccount(account);
+
+
+    return {
+
+        added,
+
+        duplicates,
+
+        total: account.trades.length
+
+    };
+
+}
