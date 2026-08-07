@@ -168,3 +168,37 @@ button:hover{
 
     opacity:.9;
 }
+
+.account-toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.account-table-wrapper {
+    overflow-x: auto;
+}
+
+.account-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.account-table th,
+.account-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+
+.account-table th {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.account-table tr:hover {
+    background: var(--surface-2);
+}
