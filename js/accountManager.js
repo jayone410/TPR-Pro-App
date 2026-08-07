@@ -600,6 +600,56 @@ function renderAccounts() {
                                     "Account-Name:",
                                     account.accountName
                                 );
+                            if(newName === null) {
+                                return;
+                            }
+                            
+                            
+                            const newBalance =
+                                prompt(
+                                    "Aktuelle Account Balance:",
+                                    account.balance
+                                );
+                            
+                            
+                            if(newBalance === null) {
+                                return;
+                            }
+                            
+                            
+                            const parsedBalance =
+                                Number(
+                                    String(newBalance)
+                                        .replace(",", ".")
+                                );
+                            
+                            
+                            if(!Number.isFinite(parsedBalance)) {
+                            
+                                alert(
+                                    "Bitte eine gültige Balance eingeben."
+                                );
+                            
+                                return;
+                            }
+                            
+                            
+                            account.accountName =
+                                newName.trim();
+                            
+                            
+                            account.balance =
+                                parsedBalance;
+                            
+                            
+                            updateAccount(
+                                account
+                            );
+                            
+                            
+                            renderAccounts();
+                            
+                            renderPortfolio();
 
 
                             if(
