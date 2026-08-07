@@ -364,3 +364,61 @@ return {
 };
 
 }
+
+function removeAccount(accountId) {
+
+    accounts =
+        accounts.filter(
+            account =>
+                account.id !== accountId
+        );
+
+    saveAccounts();
+
+}
+
+
+function duplicateAccount(accountId) {
+
+    const source =
+        getAccount(accountId);
+
+
+    if(!source) {
+        return null;
+    }
+
+
+    const copy = {
+
+        ...source,
+
+        id:
+            "TPR-" +
+            Date.now(),
+
+        accountName:
+            source.accountName +
+            " Copy",
+
+        trades: [],
+
+        balance:
+            Number(
+                source.startingBalance
+            ),
+
+        daysTraded: 0,
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    accounts.push(copy);
+
+    saveAccounts();
+
+    return copy;
+}
