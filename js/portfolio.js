@@ -193,6 +193,19 @@ function renderSingleAccount(account) {
             payout
         );
 
+    const readinessDecision =
+    buildReadinessDecision(
+        engineAccount,
+        result,
+        payout,
+        dailyPlan,
+        providerRules
+    );
+
+
+renderReadinessDecision(
+    readinessDecision
+);
 
     document.getElementById(
         "payout"
