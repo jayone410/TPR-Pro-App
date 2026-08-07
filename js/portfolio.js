@@ -8,7 +8,10 @@ function renderPortfolio() {
         renderPerformanceAnalytics(
             selectedAccounts
         );
-
+    
+        renderAdvancedAnalytics(
+            selectedAccounts
+        );
 
     if(selectedAccounts.length === 0) {
 
