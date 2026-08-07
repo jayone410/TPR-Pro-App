@@ -1,56 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const importCsvButton =
-    document.getElementById("importCsvButton");
-
-    const csvFile =
-        document.getElementById("csvFile");
-    
-    const csvStatus =
-        document.getElementById("csvStatus");
-    
-    
-    importCsvButton.addEventListener(
-        "click",
-        () => {
-            csvFile.click();
-        }
-    );
-    
-    
-    csvFile.addEventListener(
-        "change",
-        async event => {
-    
-            const file =
-                event.target.files[0];
-    
-            if(!file) return;
-    
-    
-            const trades =
-                await parseCSV(file);
-    
-    
-            csvStatus.innerHTML = `
-                Datei:
-                <strong>${file.name}</strong>
-                ·
-                ${trades.length} Zeilen geladen
-            `;
-    
-    
-            console.log(
-                "CSV IMPORT:",
-                trades
-            );
-    
-        }
-    );
-    
-    let selectedAccountIds =
-        loadSelectedAccountIds();
-
+    /*
+    =========================================
+    ELEMENTE
+    =========================================
+    */
 
     const accountList =
         document.getElementById("accountList");
@@ -67,8 +21,84 @@ document.addEventListener("DOMContentLoaded", () => {
     const clearSelectionButton =
         document.getElementById("clearAccountSelection");
 
+    const toggleAccountFormButton =
+        document.getElementById("toggleAccountForm");
+
+    const accountForm =
+        document.getElementById("accountForm");
+
+    const importCsvButton =
+        document.getElementById("importCsvButton");
+
+    const csvFile =
+        document.getElementById("csvFile");
+
+    const csvStatus =
+        document.getElementById("csvStatus");
+
+
+    /*
+    =========================================
+    AUSWAHL LADEN
+    =========================================
+    */
+
+    let selectedAccountIds =
+        loadSelectedAccountIds();
+
+
+    /*
+    =========================================
+    ACCOUNT FORM EIN-/AUSBLENDEN
+    =========================================
+    */
+
+    if(accountForm) {
+        accountForm.style.display = "none";
+    }
+
+
+    if(toggleAccountFormButton && accountForm) {
+
+        toggleAccountFormButton.addEventListener(
+            "click",
+            () => {
+
+                if(accountForm.style.display === "none") {
+
+                    accountForm.style.display = "block";
+
+                    toggleAccountFormButton.textContent =
+                        "− Account Formular";
+
+                }
+                else {
+
+                    accountForm.style.display = "none";
+
+                    toggleAccountFormButton.textContent =
+                        "+ Account";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+    =========================================
+    AUSWAHLZÄHLER
+    =========================================
+    */
 
     function updateSelectionCount() {
+
+        if(!selectedAccountCount) {
+            return;
+        }
+
 
         selectedAccountCount.textContent =
             selectedAccountIds.length +
@@ -77,7 +107,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /*
+    =========================================
+    ACCOUNT TABELLE
+    =========================================
+    */
+
     function renderAccounts() {
+
+        if(!accountList) {
+            console.error(
+                "TPR PRO: #accountList wurde nicht gefunden."
+            );
+            return;
+        }
+
 
         accountList.innerHTML = "";
 
@@ -85,18 +129,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if(accounts.length === 0) {
 
             accountList.innerHTML = `
-
                 <tr>
                     <td colspan="6">
                         Noch keine Accounts angelegt.
                     </td>
                 </tr>
-
             `;
 
             updateSelectionCount();
 
             return;
+
         }
 
 
@@ -115,14 +158,12 @@ document.addEventListener("DOMContentLoaded", () => {
             row.innerHTML = `
 
                 <td>
-
                     <input
                         type="checkbox"
                         class="accountCheckbox"
                         data-account-id="${account.id}"
                         ${checked}
                     >
-
                 </td>
 
                 <td>
@@ -140,11 +181,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 </td>
 
                 <td>
-                    $${account.balance.toLocaleString()}
+                    $${Number(account.balance)
+                        .toLocaleString()}
                 </td>
 
                 <td>
-                    ${account.trades.length}
+                    ${
+                        Array.isArray(account.trades)
+                            ? account.trades.length
+                            : 0
+                    }
                 </td>
 
             `;
@@ -169,7 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         if(event.target.checked) {
 
-                            if(!selectedAccountIds.includes(id)) {
+                            if(
+                                !selectedAccountIds
+                                    .includes(id)
+                            ) {
 
                                 selectedAccountIds.push(id);
 
@@ -207,339 +256,304 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /*
+    =========================================
+    PORTFOLIO / EINZELACCOUNT
+    =========================================
+    */
+
     function renderPortfolio() {
 
-    const selectedAccounts =
-        getSelectedAccounts(
-            selectedAccountIds
-        );
+        const selectedAccounts =
+            getSelectedAccounts(
+                selectedAccountIds
+            );
 
 
-    if(selectedAccounts.length === 0) {
+        if(selectedAccounts.length === 0) {
 
-        document
-            .getElementById("score")
-            .textContent = "--";
+            document.getElementById("score").textContent =
+                "--";
 
-        document
-            .getElementById("recommendation")
-            .textContent =
+            document.getElementById("recommendation").textContent =
                 "Keine Accounts ausgewählt.";
 
-        document
-            .getElementById("reasons")
-            .innerHTML = "";
+            document.getElementById("reasons").innerHTML =
+                "";
 
-        document
-            .getElementById("riskFactors")
-            .innerHTML = "";
+            document.getElementById("riskFactors").innerHTML =
+                "";
 
-        document
-            .getElementById("payout")
-            .innerHTML =
+            document.getElementById("payout").innerHTML =
                 "Account auswählen.";
 
-        document
-            .getElementById("dailyPlan")
-            .innerHTML =
+            document.getElementById("dailyPlan").innerHTML =
                 "Account auswählen.";
 
-        return;
-    }
-
-
-    /*
-    =========================================
-    EINZELACCOUNT
-    =========================================
-    */
-
-    if(selectedAccounts.length === 1) {
-
-        const account =
-            selectedAccounts[0];
-
-
-        const engineAccount = {
-
-            ...account,
-
-            buffer:
-                account.balance -
-                account.startingBalance,
-
-            nextPayoutAmount: 0
-
-        };
-
-
-        const result =
-            analyzeAccount(
-                engineAccount
-            );
-
-
-        const providerRules =
-            PROP_RULES[
-                account.provider
-            ]?.accounts[
-                account.accountType
-            ];
-
-
-        let payout = null;
-        let dailyPlan = null;
-
-
-        if(providerRules) {
-
-            payout =
-                analyzePayout(
-                    engineAccount,
-                    providerRules
-                );
-
-
-            dailyPlan =
-                createDailyPlan(
-                    engineAccount,
-                    payout
-                );
+            return;
 
         }
 
 
+        /*
+        =====================================
+        EIN ACCOUNT
+        =====================================
+        */
 
-        document
-            .getElementById("score")
-            .textContent =
-                result.score +
-                " / 100";
+        if(selectedAccounts.length === 1) {
 
-
-        document
-            .getElementById(
-                "recommendation"
-            )
-            .textContent =
-                result.recommendation;
+            const account =
+                selectedAccounts[0];
 
 
+            const engineAccount = {
 
-        const reasons =
-            document.getElementById(
-                "reasons"
-            );
+                ...account,
 
+                buffer:
+                    Number(account.balance) -
+                    Number(account.startingBalance),
 
-        reasons.innerHTML = "";
+                nextPayoutAmount:
+                    account.nextPayoutAmount || 0
 
-
-        result.reasons.forEach(reason => {
-
-            const item =
-                document.createElement("p");
-
-            item.textContent =
-                "• " + reason;
-
-            reasons.appendChild(item);
-
-        });
+            };
 
 
-
-        const riskBox =
-            document.getElementById(
-                "riskFactors"
-            );
+            const result =
+                analyzeAccount(engineAccount);
 
 
-        riskBox.innerHTML = `
-
-            <p>
-                Account Risk:
-                ${result.risk.accountRisk}/100
-            </p>
-
-            <p>
-                Market Risk:
-                ${result.risk.marketRisk}/100
-            </p>
-
-            <p>
-                Performance Risk:
-                ${result.risk.performanceRisk}/100
-            </p>
-
-            <p>
-                Discipline Risk:
-                ${result.risk.disciplineRisk}/100
-            </p>
-
-        `;
+            document.getElementById("score").textContent =
+                result.score + " / 100";
 
 
+            document
+                .getElementById("recommendation")
+                .textContent =
+                    result.recommendation;
 
-        const payoutBox =
-            document.getElementById(
-                "payout"
-            );
+
+            const reasons =
+                document.getElementById("reasons");
 
 
-        if(payout) {
+            reasons.innerHTML = "";
 
-            payoutBox.innerHTML = `
+
+            result.reasons.forEach(reason => {
+
+                const item =
+                    document.createElement("p");
+
+                item.textContent =
+                    "• " + reason;
+
+                reasons.appendChild(item);
+
+            });
+
+
+            document
+                .getElementById("riskFactors")
+                .innerHTML = `
 
                 <p>
-                    Account:
-                    <strong>
-                        ${account.accountName}
-                    </strong>
+                    Account Risk:
+                    ${result.risk.accountRisk}/100
                 </p>
 
                 <p>
-                    Status:
-                    <strong>
-                        ${payout.status}
-                    </strong>
+                    Market Risk:
+                    ${result.risk.marketRisk}/100
                 </p>
 
                 <p>
-                    ${payout.message}
+                    Performance Risk:
+                    ${result.risk.performanceRisk}/100
                 </p>
 
                 <p>
-                    AI Empfehlung:
-                    <br>
-                    ${payout.action}
+                    Discipline Risk:
+                    ${result.risk.disciplineRisk}/100
                 </p>
 
             `;
 
+
+            /*
+            PROP RULES
+            */
+
+            const providerRules =
+                PROP_RULES[
+                    account.provider
+                ]?.accounts[
+                    account.accountType
+                ];
+
+
+            if(providerRules) {
+
+                const payout =
+                    analyzePayout(
+                        engineAccount,
+                        providerRules
+                    );
+
+
+                const dailyPlan =
+                    createDailyPlan(
+                        engineAccount,
+                        payout
+                    );
+
+
+                document
+                    .getElementById("payout")
+                    .innerHTML = `
+
+                    <p>
+                        Account:
+                        <strong>
+                            ${account.accountName}
+                        </strong>
+                    </p>
+
+                    <p>
+                        Payout Status:
+                        <strong>
+                            ${payout.status}
+                        </strong>
+                    </p>
+
+                    <p>
+                        ${payout.message}
+                    </p>
+
+                    <p>
+                        AI Empfehlung:
+                        <br>
+                        ${payout.action}
+                    </p>
+
+                `;
+
+
+                document
+                    .getElementById("dailyPlan")
+                    .innerHTML = `
+
+                    <p>
+                        Risk Mode:
+                        <strong>
+                            ${dailyPlan.mode}
+                        </strong>
+                    </p>
+
+                    <p>
+                        Tagesziel:
+                        ${dailyPlan.target}
+                    </p>
+
+                    <p>
+                        Max Loss:
+                        ${dailyPlan.maxLoss}
+                    </p>
+
+                    <p>
+                        AI Hinweise:
+                    </p>
+
+                    ${dailyPlan.advice
+                        .map(
+                            item =>
+                                "✓ " + item
+                        )
+                        .join("<br>")}
+
+                `;
+
+            }
+            else {
+
+                document
+                    .getElementById("payout")
+                    .innerHTML =
+                        "Noch keine Regeln für diesen Account hinterlegt.";
+
+                document
+                    .getElementById("dailyPlan")
+                    .innerHTML =
+                        "Noch kein Daily Plan verfügbar.";
+
+            }
+
+
+            return;
+
         }
-        else {
-
-            payoutBox.innerHTML =
-                "Für diesen Account sind noch keine Payout-Regeln hinterlegt.";
-
-        }
 
 
+        /*
+        =====================================
+        MEHRERE ACCOUNTS
+        =====================================
+        */
 
-        const dailyBox =
-            document.getElementById(
-                "dailyPlan"
+        const totalBalance =
+            selectedAccounts.reduce(
+                (sum, account) =>
+                    sum + Number(account.balance),
+                0
             );
 
 
-        if(dailyPlan) {
-
-            dailyBox.innerHTML = `
-
-                <p>
-                    Risk Mode:
-                    <strong>
-                        ${dailyPlan.mode}
-                    </strong>
-                </p>
-
-                <p>
-                    Tagesziel:
-                    ${dailyPlan.target}
-                </p>
-
-                <p>
-                    Max Loss:
-                    ${dailyPlan.maxLoss}
-                </p>
-
-                <p>
-                    AI Hinweise:
-                </p>
-
-                ${dailyPlan.advice
-                    .map(
-                        item =>
-                            "✓ " + item
-                    )
-                    .join("<br>")}
-
-            `;
-
-        }
-        else {
-
-            dailyBox.innerHTML =
-                "Noch kein Daily Plan verfügbar.";
-
-        }
+        const totalStartingBalance =
+            selectedAccounts.reduce(
+                (sum, account) =>
+                    sum +
+                    Number(account.startingBalance),
+                0
+            );
 
 
-        return;
-    }
+        const totalProfit =
+            totalBalance -
+            totalStartingBalance;
 
 
-
-    /*
-    =========================================
-    MEHRERE ACCOUNTS / PORTFOLIO
-    =========================================
-    */
-
-
-    const totalBalance =
-        selectedAccounts.reduce(
-            (sum, account) =>
-                sum + Number(account.balance),
-            0
-        );
+        const totalTrades =
+            selectedAccounts.reduce(
+                (sum, account) =>
+                    sum +
+                    (
+                        Array.isArray(account.trades)
+                            ? account.trades.length
+                            : 0
+                    ),
+                0
+            );
 
 
-    const totalStartingBalance =
-        selectedAccounts.reduce(
-            (sum, account) =>
-                sum +
-                Number(account.startingBalance),
-            0
-        );
-
-
-    const totalProfit =
-        totalBalance -
-        totalStartingBalance;
-
-
-    const totalTrades =
-        selectedAccounts.reduce(
-            (sum, account) =>
-                sum +
-                account.trades.length,
-            0
-        );
-
-
-    document
-        .getElementById("score")
-        .textContent =
+        document.getElementById("score").textContent =
             selectedAccounts.length +
             " Accounts";
 
 
-    document
-        .getElementById(
-            "recommendation"
-        )
-        .textContent =
-            "Portfolio Ansicht";
+        document
+            .getElementById("recommendation")
+            .textContent =
+                "Portfolio Ansicht";
 
 
-    document
-        .getElementById("reasons")
-        .innerHTML = `
+        document
+            .getElementById("reasons")
+            .innerHTML = `
 
             <p>
-                Gesamt Balance:
+                Gesamtbalance:
                 <strong>
                     $${totalBalance.toLocaleString()}
                 </strong>
@@ -563,280 +577,284 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
 
-    document
-        .getElementById("riskFactors")
-        .innerHTML = `
-
-            <p>
-                Portfolio Analyse aktiv
-            </p>
-
-            <p>
-                Einzelne Payout-Regeln
-                bleiben accountbezogen.
-            </p>
-
-        `;
+        document
+            .getElementById("riskFactors")
+            .innerHTML =
+                "<p>Portfolio-Analyse aktiv.</p>";
 
 
-    document
-        .getElementById("payout")
-        .innerHTML = `
-
-            <p>
+        document
+            .getElementById("payout")
+            .innerHTML = `
                 ${selectedAccounts.length}
                 Accounts ausgewählt.
-            </p>
-
-            <p>
-                Payout-Status wird im
-                nächsten Schritt pro
-                Account zusammengeführt.
-            </p>
-
-        `;
-
-
-    document
-        .getElementById("dailyPlan")
-        .innerHTML = `
-
-            <p>
-                Portfolio Mode
-            </p>
-
-            <p>
-                Gemeinsamer Daily Plan
-                folgt nach der
-                Account-Auswertung.
-            </p>
-
-        `;
-
-}
-
-
-        /*
-        Vorerst analysieren wir den ersten
-        ausgewählten Account für Readiness.
-
-        Portfolio-Statistiken bauen wir
-        im nächsten Schritt.
-        */
-
-        const account =
-            selectedAccounts[0];
-
-
-        const engineAccount = {
-
-            ...account,
-
-            buffer:
-                account.balance -
-                account.startingBalance,
-
-            nextPayoutAmount: 0
-
-        };
-
-
-        const result =
-            analyzeAccount(
-                engineAccount
-            );
+                <br><br>
+                Payouts werden weiterhin
+                pro Account bewertet.
+            `;
 
 
         document
-            .getElementById("score")
-            .textContent =
-                result.score +
-                " / 100";
-
-
-        document
-            .getElementById("recommendation")
-            .textContent =
-                result.recommendation;
-
-
-        const reasons =
-            document.getElementById("reasons");
-
-
-        reasons.innerHTML = "";
-
-
-        result.reasons.forEach(reason => {
-
-            const item =
-                document.createElement("p");
-
-
-            item.textContent =
-                "• " + reason;
-
-
-            reasons.appendChild(item);
-
-        });
-
-
-        const riskBox =
-            document.getElementById(
-                "riskFactors"
-            );
-
-
-        riskBox.innerHTML = `
-
-            <p>
-            Account Risk:
-            ${result.risk.accountRisk}/100
-            </p>
-
-            <p>
-            Market Risk:
-            ${result.risk.marketRisk}/100
-            </p>
-
-            <p>
-            Performance Risk:
-            ${result.risk.performanceRisk}/100
-            </p>
-
-            <p>
-            Discipline Risk:
-            ${result.risk.disciplineRisk}/100
-            </p>
-
-        `;
+            .getElementById("dailyPlan")
+            .innerHTML =
+                "Portfolio Daily Plan folgt.";
 
     }
 
 
-    addAccountButton.addEventListener(
-        "click",
-        () => {
+    /*
+    =========================================
+    ACCOUNT HINZUFÜGEN
+    =========================================
+    */
 
-            const provider =
-                document
-                    .getElementById(
-                        "accountProvider"
-                    )
-                    .value;
+    if(addAccountButton) {
+
+        addAccountButton.addEventListener(
+            "click",
+            () => {
+
+                const provider =
+                    document
+                        .getElementById(
+                            "accountProvider"
+                        )
+                        .value;
 
 
-            const accountType =
-                document
-                    .getElementById(
-                        "accountType"
-                    )
-                    .value;
+                const accountType =
+                    document
+                        .getElementById(
+                            "accountType"
+                        )
+                        .value;
 
 
-            const accountName =
+                const accountName =
+                    document
+                        .getElementById(
+                            "accountName"
+                        )
+                        .value
+                        .trim();
+
+
+                const startingBalance =
+                    document
+                        .getElementById(
+                            "startingBalance"
+                        )
+                        .value;
+
+
+                if(!accountName) {
+
+                    alert(
+                        "Bitte einen Account-Namen eingeben."
+                    );
+
+                    return;
+
+                }
+
+
+                const account =
+                    createAccount(
+                        provider,
+                        accountType,
+                        accountName,
+                        startingBalance
+                    );
+
+
+                selectedAccountIds.push(
+                    account.id
+                );
+
+
+                saveSelectedAccountIds(
+                    selectedAccountIds
+                );
+
+
                 document
                     .getElementById(
                         "accountName"
                     )
-                    .value
-                    .trim();
+                    .value = "";
 
 
-            const startingBalance =
-                document
-                    .getElementById(
-                        "startingBalance"
-                    )
-                    .value;
+                accountForm.style.display =
+                    "none";
 
 
-            if(!accountName) {
+                renderAccounts();
 
-                alert(
-                    "Bitte einen Account-Namen eingeben."
-                );
+                renderPortfolio();
 
-                return;
             }
+        );
+
+    }
 
 
-            const account =
-                createAccount(
-                    provider,
-                    accountType,
-                    accountName,
-                    startingBalance
+    /*
+    =========================================
+    ALLE AUSWÄHLEN
+    =========================================
+    */
+
+    if(selectAllButton) {
+
+        selectAllButton.addEventListener(
+            "click",
+            () => {
+
+                selectedAccountIds =
+                    accounts.map(
+                        account =>
+                            account.id
+                    );
+
+
+                saveSelectedAccountIds(
+                    selectedAccountIds
                 );
 
 
-            selectedAccountIds.push(
-                account.id
-            );
+                renderAccounts();
+
+                renderPortfolio();
+
+            }
+        );
+
+    }
 
 
-            saveSelectedAccountIds(
-                selectedAccountIds
-            );
+    /*
+    =========================================
+    AUSWAHL LÖSCHEN
+    =========================================
+    */
+
+    if(clearSelectionButton) {
+
+        clearSelectionButton.addEventListener(
+            "click",
+            () => {
+
+                selectedAccountIds = [];
 
 
-            document
-                .getElementById(
-                    "accountName"
-                )
-                .value = "";
-
-
-            renderAccounts();
-
-            renderPortfolio();
-
-        }
-    );
-
-
-    selectAllButton.addEventListener(
-        "click",
-        () => {
-
-            selectedAccountIds =
-                accounts.map(
-                    account =>
-                        account.id
+                saveSelectedAccountIds(
+                    selectedAccountIds
                 );
 
 
-            saveSelectedAccountIds(
-                selectedAccountIds
-            );
+                renderAccounts();
+
+                renderPortfolio();
+
+            }
+        );
+
+    }
 
 
-            renderAccounts();
+    /*
+    =========================================
+    CSV IMPORT
+    =========================================
+    */
 
-            renderPortfolio();
+    if(importCsvButton && csvFile) {
 
-        }
-    );
+        importCsvButton.addEventListener(
+            "click",
+            () => {
+
+                if(selectedAccountIds.length !== 1) {
+
+                    alert(
+                        "Bitte genau einen Account auswählen, bevor du eine CSV importierst."
+                    );
+
+                    return;
+
+                }
 
 
-    clearSelectionButton.addEventListener(
-        "click",
-        () => {
+                csvFile.click();
 
-            selectedAccountIds = [];
-
-
-            saveSelectedAccountIds(
-                selectedAccountIds
-            );
+            }
+        );
 
 
-            renderAccounts();
+        csvFile.addEventListener(
+            "change",
+            async event => {
 
-            renderPortfolio();
+                const file =
+                    event.target.files[0];
 
-        }
+
+                if(!file) {
+                    return;
+                }
+
+
+                const trades =
+                    await parseCSV(file);
+
+
+                if(csvStatus) {
+
+                    csvStatus.innerHTML = `
+
+                        Datei:
+                        <strong>
+                            ${file.name}
+                        </strong>
+
+                        ·
+
+                        ${trades.length}
+                        Zeilen erkannt
+
+                    `;
+
+                }
+
+
+                console.log(
+                    "CSV IMPORT:",
+                    trades
+                );
+
+
+                /*
+                Gleiche Datei später erneut
+                auswählbar machen
+                */
+
+                csvFile.value = "";
+
+            }
+        );
+
+    }
+
+
+    /*
+    =========================================
+    START
+    =========================================
+    */
+
+    console.log(
+        "TPR PRO Accounts:",
+        accounts
     );
 
 
