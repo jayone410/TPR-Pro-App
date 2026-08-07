@@ -7,6 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
     PROP_RULES.topstep.accounts["50k"]
     );
 
+    const dailyPlan = createDailyPlan(
+    accounts[0],
+    payout
+    );
+
+console.log("DAILY PLAN:", dailyPlan);
+
     console.log("ENGINE RESULT:", result);
 
 
