@@ -5,45 +5,30 @@ Decision Engine
 =========================================
 */
 
+
 function analyzeAccount(account){
 
-    let score = 100;
 
-    const reasons = [];
+    const risk = calculateRisk(account);
 
-    if(account.buffer < 1500){
 
-        score -= 25;
+    let score = Math.round(
 
-        reasons.push("Buffer unter Empfehlung.");
+        (
+            risk.accountRisk * 0.30
+            +
+            risk.marketRisk * 0.30
+            +
+            risk.performanceRisk * 0.25
+            +
+            risk.disciplineRisk * 0.15
+        )
 
-    } else{
+    );
 
-        reasons.push("Buffer ausreichend.");
-
-    }
-
-    if(account.daysTraded < 3){
-
-        score -= 15;
-
-        reasons.push("Payout noch nicht möglich.");
-
-    } else{
-
-        reasons.push("Payout grundsätzlich möglich.");
-
-    }
-
-    if(account.nextPayoutAmount < 500){
-
-        score -= 10;
-
-        reasons.push("Payoutbetrag noch zu gering.");
-
-    }
 
     let recommendation = "GO";
+
 
     if(score < 80){
 
@@ -51,20 +36,55 @@ function analyzeAccount(account){
 
     }
 
+
     if(score < 60){
 
         recommendation = "DON'T TRADE";
 
     }
 
-    return{
+
+    const reasons = [];
+
+
+    if(risk.accountRisk >= 80){
+
+        reasons.push("Account Risiko kontrolliert.");
+
+    }
+    else{
+
+        reasons.push("Account Risiko erhöht.");
+
+    }
+
+
+
+    if(risk.marketRisk >= 80){
+
+        reasons.push("Marktumfeld günstig.");
+
+    }
+    else{
+
+        reasons.push("Marktrisiko erhöht.");
+
+    }
+
+
+
+    return {
+
 
         score,
 
         recommendation,
 
-        reasons
+        reasons,
+
+        risk
 
     };
+
 
 }
