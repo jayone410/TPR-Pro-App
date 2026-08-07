@@ -14,6 +14,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 console.log("DAILY PLAN:", dailyPlan);
 
+    const dailyBox =
+    document.getElementById("dailyPlan");
+
+
+    dailyBox.innerHTML = `
+    
+    <p>
+    Risk Mode:
+    <strong>${dailyPlan.mode}</strong>
+    </p>
+    
+    
+    <p>
+    Tagesziel:
+    ${dailyPlan.target}
+    </p>
+    
+        
+    <p>
+    Max Loss:
+    ${dailyPlan.maxLoss}
+    </p>
+    
+    
+    <p>
+    AI Hinweise:
+    </p>
+    
+    ${dailyPlan.advice
+    .map(item => "✓ " + item)
+    .join("<br>")}
+    
+    `;    
+
     console.log("ENGINE RESULT:", result);
 
 
