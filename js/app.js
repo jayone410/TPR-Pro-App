@@ -153,5 +153,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
     `;
 
+const fileInput =
+    document.getElementById("csvFile");
 
+
+const csvStatus =
+    document.getElementById("csvStatus");
+
+
+
+fileInput.addEventListener(
+"change",
+async (event)=>{
+
+
+    const file =
+        event.target.files[0];
+
+
+    if(!file) return;
+
+
+    const trades =
+        await parseCSV(file);
+
+
+
+    console.log(
+        "CSV IMPORT:",
+        trades
+    );
+
+
+    csvStatus.innerHTML = `
+
+    Datei:
+    <strong>${file.name}</strong>
+
+    <br><br>
+
+    Trades geladen:
+    <strong>${trades.length}</strong>
+
+    `;
+
+
+});
+    
 });
