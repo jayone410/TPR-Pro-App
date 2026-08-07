@@ -1,7 +1,8 @@
+```javascript
 /*
 =========================================
 TPR PRO AI
-Account Manager
+Account Data & Storage
 =========================================
 */
 
@@ -9,24 +10,46 @@ Account Manager
 let accounts = loadAccounts();
 
 
-function loadAccounts(){
+
+/*
+=========================================
+ACCOUNTS LADEN / SPEICHERN
+=========================================
+*/
+
+function loadAccounts() {
 
     const saved =
-        localStorage.getItem("tpr_accounts");
+        localStorage.getItem(
+            "tpr_accounts"
+        );
 
-    if(saved){
 
-        return JSON.parse(saved);
+    if(saved) {
+
+        try {
+
+            return JSON.parse(saved);
+
+        }
+        catch(error) {
+
+            console.error(
+                "Accounts konnten nicht geladen werden:",
+                error
+            );
+
+        }
 
     }
 
-    return [];
 
+    return [];
 }
 
 
 
-function saveAccounts(){
+function saveAccounts() {
 
     localStorage.setItem(
         "tpr_accounts",
@@ -37,12 +60,18 @@ function saveAccounts(){
 
 
 
+/*
+=========================================
+ACCOUNT ERSTELLEN
+=========================================
+*/
+
 function createAccount(
     provider,
     accountType,
     accountName,
     startingBalance
-){
+) {
 
     const account = {
 
@@ -62,6 +91,10 @@ function createAccount(
         balance:
             Number(startingBalance),
 
+        totalTradingPnL: 0,
+
+        totalPayouts: 0,
+
         daysTraded: 0,
 
         trades: [],
@@ -76,70 +109,185 @@ function createAccount(
 
     saveAccounts();
 
+
     return account;
 
 }
 
 
 
-function deleteAccount(accountId){
+/*
+=========================================
+ACCOUNT SUCHEN
+=========================================
+*/
 
-    accounts =
-        accounts.filter(
-            account =>
-            account.id !== accountId
-        );
-
-    saveAccounts();
-
-}
-
-
-
-function getAccount(accountId){
+function getAccount(accountId) {
 
     return accounts.find(
         account =>
-        account.id === accountId
+            account.id === accountId
     );
 
 }
 
 
 
-function updateAccount(account){
+/*
+=========================================
+ACCOUNT AKTUALISIEREN
+=========================================
+*/
+
+function updateAccount(account) {
 
     const index =
         accounts.findIndex(
             item =>
-            item.id === account.id
+                item.id === account.id
         );
 
 
-    if(index === -1){
-
+    if(index === -1) {
         return;
-
     }
 
 
-    accounts[index] = account;
+    accounts[index] =
+        account;
+
 
     saveAccounts();
 
 }
 
+
+
+/*
+=========================================
+ACCOUNT LÖSCHEN
+=========================================
+*/
+
+function removeAccount(accountId) {
+
+    accounts =
+        accounts.filter(
+            account =>
+                account.id !==
+                accountId
+        );
+
+
+    saveAccounts();
+
+}
+
+
+
+/*
+=========================================
+ACCOUNT DUPLIZIEREN
+=========================================
+*/
+
+function duplicateAccount(accountId) {
+
+    const source =
+        getAccount(accountId);
+
+
+    if(!source) {
+
+        return null;
+
+    }
+
+
+    const copy = {
+
+        ...source,
+
+
+        id:
+            "TPR-" +
+            Date.now(),
+
+
+        accountName:
+            source.accountName +
+            " Copy",
+
+
+        balance:
+            Number(
+                source.startingBalance
+            ),
+
+
+        totalTradingPnL: 0,
+
+        totalPayouts: 0,
+
+        daysTraded: 0,
+
+        trades: [],
+
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    accounts.push(copy);
+
+    saveAccounts();
+
+
+    return copy;
+
+}
+
+
+
+/*
+=========================================
+ACCOUNT AUSWAHL
+=========================================
+*/
+
 function loadSelectedAccountIds() {
 
     const saved =
-        localStorage.getItem("tpr_selected_accounts");
+        localStorage.getItem(
+            "tpr_selected_accounts"
+        );
+
 
     if(saved) {
-        return JSON.parse(saved);
+
+        try {
+
+            return JSON.parse(saved);
+
+        }
+        catch(error) {
+
+            console.error(
+                "Account Auswahl konnte nicht geladen werden:",
+                error
+            );
+
+        }
+
     }
 
+
     return [];
+
 }
+
 
 
 function saveSelectedAccountIds(ids) {
@@ -152,63 +300,132 @@ function saveSelectedAccountIds(ids) {
 }
 
 
+
 function getSelectedAccounts(ids) {
 
     return accounts.filter(
-        account => ids.includes(account.id)
+        account =>
+            ids.includes(
+                account.id
+            )
     );
 
 }
 
-function createTradeFingerprint(trade) {
+
+
+/*
+=========================================
+TRADE FINGERPRINT
+=========================================
+*/
+
+function createTradeFingerprint(
+    trade
+) {
 
     /*
-    Eindeutige IDs bevorzugen:
-    Topstep: Id
-    Lucid: buyFillId + sellFillId
+    Topstep:
+    eindeutige Trade ID
     */
 
     if(trade.Id) {
-        return "TOPSTEP_" + trade.Id;
-    }
-
-    if(trade.buyFillId || trade.sellFillId) {
 
         return (
-            "LUCID_" +
-            (trade.buyFillId || "") +
-            "_" +
-            (trade.sellFillId || "")
+            "TOPSTEP_" +
+            trade.Id
         );
 
     }
 
 
     /*
-    Fallback, falls eine CSV keine Trade-ID enthält
+    Lucid:
+    Buy + Sell Fill IDs
     */
 
-    return JSON.stringify(trade);
+    if(
+        trade.buyFillId ||
+        trade.sellFillId
+    ) {
+
+        return (
+
+            "LUCID_" +
+
+            (
+                trade.buyFillId ||
+                ""
+            ) +
+
+            "_" +
+
+            (
+                trade.sellFillId ||
+                ""
+            )
+
+        );
+
+    }
+
+
+    /*
+    Fallback
+    */
+
+    return JSON.stringify(
+        trade
+    );
+
 }
 
-function getTradePnLForBalance(trade) {
+
+
+/*
+=========================================
+TRADE P&L LESEN
+=========================================
+*/
+
+function getTradePnLForBalance(
+    trade
+) {
 
     const value =
+
         trade.PnL ??
+
         trade.pnl ??
+
         trade["Profit/Loss"] ??
+
         0;
 
 
-    if(typeof value === "number") {
+    if(
+        typeof value ===
+        "number"
+    ) {
+
         return value;
+
     }
 
 
     const cleaned =
         String(value)
-            .replace(/\$/g, "")
-            .replace(/,/g, "")
+
+            .replace(
+                /\$/g,
+                ""
+            )
+
+            .replace(
+                /,/g,
+                ""
+            )
+
             .trim();
 
 
@@ -216,38 +433,52 @@ function getTradePnLForBalance(trade) {
         Number(cleaned);
 
 
-    return Number.isFinite(number)
+    return Number.isFinite(
+        number
+    )
         ? number
         : 0;
+
 }
 
 
 
-function recalculateAccountBalance(account) {
+/*
+=========================================
+ACCOUNT BALANCE NEU BERECHNEN
+=========================================
+*/
+
+function recalculateAccountBalance(
+    account
+) {
 
     const trades =
-        Array.isArray(account.trades)
+        Array.isArray(
+            account.trades
+        )
             ? account.trades
             : [];
 
 
     const tradingPnL =
         trades.reduce(
+
             (sum, trade) =>
+
                 sum +
-                getTradePnLForBalance(trade),
+                getTradePnLForBalance(
+                    trade
+                ),
+
             0
         );
 
 
-    /*
-    Payouts bauen wir später
-    als eigene Historie ein.
-    */
-
     const totalPayouts =
         Number(
-            account.totalPayouts ?? 0
+            account.totalPayouts ??
+            0
         );
 
 
@@ -256,10 +487,17 @@ function recalculateAccountBalance(account) {
 
 
     account.balance =
-        Number(account.startingBalance)
+
+        Number(
+            account.startingBalance
+        )
+
         +
+
         tradingPnL
+
         -
+
         totalPayouts;
 
 
@@ -267,7 +505,18 @@ function recalculateAccountBalance(account) {
 
 }
 
-function importTradesToAccount(accountId, rawTrades) {
+
+
+/*
+=========================================
+TRADES IN ACCOUNT IMPORTIEREN
+=========================================
+*/
+
+function importTradesToAccount(
+    accountId,
+    rawTrades
+) {
 
     const account =
         getAccount(accountId);
@@ -282,143 +531,129 @@ function importTradesToAccount(accountId, rawTrades) {
     }
 
 
-    if(!Array.isArray(account.trades)) {
+    if(
+        !Array.isArray(
+            account.trades
+        )
+    ) {
 
         account.trades = [];
 
     }
 
 
+
+    /*
+    Bereits bekannte Trades
+    */
+
     const existingFingerprints =
         new Set(
+
             account.trades.map(
+
                 trade =>
+
                     trade._fingerprint ||
-                    createTradeFingerprint(trade)
+
+                    createTradeFingerprint(
+                        trade
+                    )
+
             )
+
         );
 
 
     let added = 0;
+
     let duplicates = 0;
 
 
-    rawTrades.forEach(trade => {
 
-        const fingerprint =
-            createTradeFingerprint(trade);
+    /*
+    Neue Trades prüfen
+    */
+
+    rawTrades.forEach(
+        trade => {
+
+            const fingerprint =
+                createTradeFingerprint(
+                    trade
+                );
 
 
-        if(existingFingerprints.has(fingerprint)) {
+            if(
+                existingFingerprints
+                    .has(
+                        fingerprint
+                    )
+            ) {
 
-            duplicates++;
+                duplicates++;
 
-            return;
+                return;
+
+            }
+
+
+            account.trades.push({
+
+                ...trade,
+
+                _fingerprint:
+                    fingerprint
+
+            });
+
+
+            existingFingerprints.add(
+                fingerprint
+            );
+
+
+            added++;
 
         }
+    );
 
 
-        account.trades.push({
 
-            ...trade,
+    /*
+    Balance neu berechnen
+    */
 
-            _fingerprint: fingerprint
-
-        });
-
-
-        existingFingerprints.add(
-            fingerprint
-        );
+    recalculateAccountBalance(
+        account
+    );
 
 
-        added++;
+    /*
+    Account speichern
+    */
 
-    });
-
-
-recalculateAccountBalance(
-    account
-);
-
-
-updateAccount(
-    account
-);
+    updateAccount(
+        account
+    );
 
 
-return {
+    return {
 
-    added,
+        added,
 
-    duplicates,
+        duplicates,
 
-    total: account.trades.length,
+        total:
+            account.trades.length,
 
-    tradingPnL:
-        account.totalTradingPnL,
-
-    balance:
-        account.balance
-
-};
-
-}
-
-function removeAccount(accountId) {
-
-    accounts =
-        accounts.filter(
-            account =>
-                account.id !== accountId
-        );
-
-    saveAccounts();
-
-}
-
-
-function duplicateAccount(accountId) {
-
-    const source =
-        getAccount(accountId);
-
-
-    if(!source) {
-        return null;
-    }
-
-
-    const copy = {
-
-        ...source,
-
-        id:
-            "TPR-" +
-            Date.now(),
-
-        accountName:
-            source.accountName +
-            " Copy",
-
-        trades: [],
+        tradingPnL:
+            account.totalTradingPnL,
 
         balance:
-            Number(
-                source.startingBalance
-            ),
-
-        daysTraded: 0,
-
-        createdAt:
-            new Date().toISOString()
+            account.balance
 
     };
 
-
-    accounts.push(copy);
-
-    saveAccounts();
-
-    return copy;
 }
+```
