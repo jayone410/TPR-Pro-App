@@ -12,31 +12,54 @@ function calculateRisk(account){
     let accountRisk = 100;
 
 
-    if(account.buffer < 1500){
+    /*
+    Buffer Analyse
+    */
 
-        accountRisk -= 30;
+    if(account.buffer < 1000){
+
+        accountRisk -= 40;
+
+    }
+    else if(account.buffer < 1500){
+
+        accountRisk -= 20;
 
     }
 
 
-    let performanceRisk = 100;
+    /*
+    Payout Situation
+    */
+
+    if(account.nextPayoutAmount >= 500){
+
+        accountRisk -= 10;
+
+    }
 
 
-    let disciplineRisk = 100;
+    /*
+    Trading Days
+    */
 
+    if(account.daysTraded < 3){
 
-    let marketRisk = 100;
+        accountRisk -= 5;
+
+    }
+
 
 
     return {
 
         accountRisk,
 
-        performanceRisk,
+        marketRisk:100,
 
-        disciplineRisk,
+        performanceRisk:100,
 
-        marketRisk
+        disciplineRisk:100
 
     };
 
