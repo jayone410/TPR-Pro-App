@@ -658,9 +658,9 @@ function importTradesToAccount(
     Balance neu berechnen
     */
 
-    recalculateAccountBalance(
+    /*recalculateAccountBalance(
         account
-    );
+    );*/
 
 
     /*
