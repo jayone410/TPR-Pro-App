@@ -794,43 +794,138 @@ document.addEventListener("DOMContentLoaded", () => {
         csvFile.addEventListener(
             "change",
             async event => {
-
+        
                 const file =
                     event.target.files[0];
-
-
+        
+        
                 if(!file) {
                     return;
                 }
-
-
-                const trades =
-                    await parseCSV(file);
-
-
-                if(csvStatus) {
-
-                    csvStatus.innerHTML = `
-
-                        Datei:
-                        <strong>
-                            ${file.name}
-                        </strong>
-
-                        ·
-
-                        ${trades.length}
-                        Zeilen erkannt
-
-                    `;
-
+        
+        
+                if(selectedAccountIds.length !== 1) {
+        
+                    alert(
+                        "Bitte genau einen Account auswählen."
+                    );
+        
+                    csvFile.value = "";
+        
+                    return;
+        
                 }
-
-
-                console.log(
-                    "CSV IMPORT:",
-                    trades
-                );
+        
+        
+                const accountId =
+                    selectedAccountIds[0];
+        
+        
+                const account =
+                    getAccount(accountId);
+        
+        
+                if(!account) {
+        
+                    alert(
+                        "Der ausgewählte Account wurde nicht gefunden."
+                    );
+        
+                    csvFile.value = "";
+        
+                    return;
+        
+                }
+        
+        
+                try {
+        
+                    const trades =
+                        await parseCSV(file);
+        
+        
+                    const importResult =
+                        importTradesToAccount(
+                            accountId,
+                            trades
+                        );
+        
+        
+                    csvStatus.innerHTML = `
+        
+                        <strong>
+                            ${account.accountName}
+                        </strong>
+        
+                        <br>
+        
+                        Datei:
+                        ${file.name}
+        
+                        <br><br>
+        
+                        Neue Trades:
+                        <strong>
+                            ${importResult.added}
+                        </strong>
+        
+                        <br>
+        
+                        Duplikate übersprungen:
+                        <strong>
+                            ${importResult.duplicates}
+                        </strong>
+        
+                        <br>
+        
+                        Trades im Account:
+                        <strong>
+                            ${importResult.total}
+                        </strong>
+        
+                    `;
+        
+        
+                    console.log(
+                        "CSV IMPORT RESULT:",
+                        importResult
+                    );
+        
+        
+                    renderAccounts();
+        
+                    renderPortfolio();
+        
+                }
+                catch(error) {
+        
+                    console.error(
+                        "CSV IMPORT ERROR:",
+                        error
+                    );
+        
+        
+                    csvStatus.innerHTML = `
+        
+                        ❌ Import fehlgeschlagen
+        
+                        <br>
+        
+                        ${error.message}
+        
+                    `;
+        
+                }
+        
+        
+                /*
+                Gleiche Datei erneut auswählbar machen
+                */
+        
+                csvFile.value = "";
+        
+            }
+        );
 
 
                 /*
