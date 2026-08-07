@@ -248,9 +248,50 @@
             <br>
         
         
-            <div id="accountList">
-        
-                Noch keine Accounts angelegt.
+            <div class="account-toolbar">
+
+                    <button id="selectAllAccounts">
+                        Alle auswählen
+                    </button>
+                
+                    <button id="clearAccountSelection">
+                        Auswahl löschen
+                    </button>
+                
+                    <span id="selectedAccountCount">
+                        0 Accounts ausgewählt
+                    </span>
+                
+                </div>
+                
+                <br>
+                
+                <div class="account-table-wrapper">
+                
+                    <table class="account-table">
+                
+                        <thead>
+                
+                            <tr>
+                
+                                <th></th>
+                                <th>Account</th>
+                                <th>Firma</th>
+                                <th>Typ</th>
+                                <th>Balance</th>
+                                <th>Trades</th>
+                
+                            </tr>
+                
+                        </thead>
+                
+                        <tbody id="accountList">
+                
+                        </tbody>
+                
+                    </table>
+                
+                </div>
         
             </div>
         
