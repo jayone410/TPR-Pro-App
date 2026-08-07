@@ -191,7 +191,81 @@ function createTradeFingerprint(trade) {
     return JSON.stringify(trade);
 }
 
+function getTradePnLForBalance(trade) {
 
+    const value =
+        trade.PnL ??
+        trade.pnl ??
+        trade["Profit/Loss"] ??
+        0;
+
+
+    if(typeof value === "number") {
+        return value;
+    }
+
+
+    const cleaned =
+        String(value)
+            .replace(/\$/g, "")
+            .replace(/,/g, "")
+            .trim();
+
+
+    const number =
+        Number(cleaned);
+
+
+    return Number.isFinite(number)
+        ? number
+        : 0;
+}
+
+
+
+function recalculateAccountBalance(account) {
+
+    const trades =
+        Array.isArray(account.trades)
+            ? account.trades
+            : [];
+
+
+    const tradingPnL =
+        trades.reduce(
+            (sum, trade) =>
+                sum +
+                getTradePnLForBalance(trade),
+            0
+        );
+
+
+    /*
+    Payouts bauen wir später
+    als eigene Historie ein.
+    */
+
+    const totalPayouts =
+        Number(
+            account.totalPayouts ?? 0
+        );
+
+
+    account.totalTradingPnL =
+        tradingPnL;
+
+
+    account.balance =
+        Number(account.startingBalance)
+        +
+        tradingPnL
+        -
+        totalPayouts;
+
+
+    return account;
+
+}
 
 function importTradesToAccount(accountId, rawTrades) {
 
