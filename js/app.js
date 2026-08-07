@@ -5,22 +5,30 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("ENGINE RESULT:", result);
 
 
-    const scoreElement = document.getElementById("score");
-    const recommendationElement = document.getElementById("recommendation");
+    document.getElementById("score").textContent =
+        result.score + " / 100";
 
 
-    if(scoreElement){
-
-        scoreElement.textContent = result.score;
-
-    }
+    document.getElementById("recommendation").textContent =
+        result.recommendation;
 
 
-    if(recommendationElement){
+    const reasons =
+        document.getElementById("reasons");
 
-        recommendationElement.textContent =
-            result.recommendation;
 
-    }
+    reasons.innerHTML = "";
+
+
+    result.reasons.forEach(reason => {
+
+        const item = document.createElement("p");
+
+        item.textContent = "• " + reason;
+
+        reasons.appendChild(item);
+
+    });
+
 
 });
