@@ -337,17 +337,30 @@ function importTradesToAccount(accountId, rawTrades) {
     });
 
 
-    updateAccount(account);
+recalculateAccountBalance(
+    account
+);
 
 
-    return {
+updateAccount(
+    account
+);
 
-        added,
 
-        duplicates,
+return {
 
-        total: account.trades.length
+    added,
 
-    };
+    duplicates,
+
+    total: account.trades.length,
+
+    tradingPnL:
+        account.totalTradingPnL,
+
+    balance:
+        account.balance
+
+};
 
 }
