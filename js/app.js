@@ -1,1 +1,3 @@
-console.log("TPR Pro gestartet");
+const result = analyzeAccount(accounts[0]);
+
+console.log(result);
