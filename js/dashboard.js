@@ -206,3 +206,198 @@ function renderPerformanceAnalytics(
     `;
 
 }
+
+function renderAdvancedAnalytics(
+    selectedAccounts
+) {
+
+    const box =
+        document.getElementById(
+            "advancedAnalytics"
+        );
+
+
+    if(!box) {
+        return;
+    }
+
+
+    if(
+        !selectedAccounts ||
+        selectedAccounts.length === 0
+    ) {
+
+        box.innerHTML =
+            "Keine Accounts ausgewählt.";
+
+        return;
+    }
+
+
+    const rawTrades =
+        selectedAccounts.flatMap(
+            account =>
+                Array.isArray(account.trades)
+                    ? account.trades
+                    : []
+        );
+
+
+    if(rawTrades.length === 0) {
+
+        box.innerHTML =
+            "Noch keine Trades importiert.";
+
+        return;
+    }
+
+
+    const analytics =
+        calculateAdvancedAnalytics(
+            rawTrades
+        );
+
+
+    const bestHour =
+        analytics.bestHour;
+
+    const worstHour =
+        analytics.worstHour;
+
+
+    const bestHourText =
+        bestHour
+            ? `${bestHour[0]}:00 · ${formatMoney(
+                bestHour[1].pnl
+              )}`
+            : "--";
+
+
+    const worstHourText =
+        worstHour
+            ? `${worstHour[0]}:00 · ${formatMoney(
+                worstHour[1].pnl
+              )}`
+            : "--";
+
+
+    box.innerHTML = `
+
+        <div class="stats-grid">
+
+            <div class="stat-item">
+
+                <span>
+                    Max Drawdown
+                </span>
+
+                <strong>
+                    ${formatMoney(
+                        analytics.maxDrawdown
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span>
+                    Beste Stunde
+                </span>
+
+                <strong>
+                    ${bestHourText}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span>
+                    Schlechteste Stunde
+                </span>
+
+                <strong>
+                    ${worstHourText}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span>
+                    Long P&L
+                </span>
+
+                <strong>
+                    ${formatMoney(
+                        analytics.longStats.pnl
+                    )}
+                </strong>
+
+                <small>
+                    ${analytics.longStats.trades}
+                    Trades ·
+                    ${formatNumber(
+                        analytics.longStats.winRate,
+                        1
+                    )}% WR
+                </small>
+
+            </div>
+
+
+            <div class="stat-item">
+
+                <span>
+                    Short P&L
+                </span>
+
+                <strong>
+                    ${formatMoney(
+                        analytics.shortStats.pnl
+                    )}
+                </strong>
+
+                <small>
+                    ${analytics.shortStats.trades}
+                    Trades ·
+                    ${formatNumber(
+                        analytics.shortStats.winRate,
+                        1
+                    )}% WR
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="analytics-insight">
+
+            <strong>
+                Erste Erkenntnis:
+            </strong>
+
+            <br><br>
+
+            ${
+                analytics.longStats.pnl >
+                analytics.shortStats.pnl
+
+                    ? "Long-Trades performen aktuell besser als Short-Trades."
+
+                    : "Short-Trades performen aktuell besser als Long-Trades."
+            }
+
+        </div>
+
+    `;
+
+}
