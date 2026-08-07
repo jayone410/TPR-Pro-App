@@ -387,57 +387,92 @@ TRADE P&L LESEN
 =========================================
 */
 
-function getTradePnLForBalance(
-    trade
-) {
+function parseMoney(value) {
 
-    const value =
-
-        trade.PnL ??
-
-        trade.pnl ??
-
-        trade["Profit/Loss"] ??
-
-        0;
-
-
-    if(
-        typeof value ===
-        "number"
-    ) {
-
-        return value;
-
+    if(value === null || value === undefined) {
+        return 0;
     }
 
+    if(typeof value === "number") {
+        return value;
+    }
 
-    const cleaned =
-        String(value)
+    let text =
+        String(value).trim();
 
-            .replace(
-                /\$/g,
-                ""
-            )
+    /*
+    Beispiele:
+    $590.00
+    $(460.00)
+    -290.000000
+    */
+    const isParenthesesNegative =
+        text.includes("(") &&
+        text.includes(")");
 
-            .replace(
-                /,/g,
-                ""
-            )
-
+    text =
+        text
+            .replace(/\$/g, "")
+            .replace(/,/g, "")
+            .replace(/\(/g, "")
+            .replace(/\)/g, "")
             .trim();
 
+    let number =
+        Number(text);
 
-    const number =
-        Number(cleaned);
+    if(!Number.isFinite(number)) {
+        return 0;
+    }
+
+    if(isParenthesesNegative) {
+        number =
+            -Math.abs(number);
+    }
+
+    return number;
+}
 
 
-    return Number.isFinite(
-        number
-    )
-        ? number
-        : 0;
+function getTradePnLForBalance(trade) {
 
+    const pnl =
+        parseMoney(
+            trade.PnL ??
+            trade.pnl ??
+            trade["Profit/Loss"] ??
+            0
+        );
+
+    /*
+    Tradovate / Topstep:
+    PnL ist Gross P/L.
+    Gebühren separat abziehen.
+    */
+    if(trade.PnL !== undefined) {
+
+        const fees =
+            parseMoney(
+                trade.Fees ?? 0
+            );
+
+        const commissions =
+            parseMoney(
+                trade.Commissions ?? 0
+            );
+
+        return (
+            pnl
+            - Math.abs(fees)
+            - Math.abs(commissions)
+        );
+    }
+
+    /*
+    Lucid:
+    pnl ist bereits der Ergebniswert
+    */
+    return pnl;
 }
 
 
