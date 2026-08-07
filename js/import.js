@@ -106,6 +106,23 @@ function initCsvImport() {
                         <br>
 
                         Gesamt:
+                        <br><br>
+
+                        Trading P&L:
+                        <strong>
+                            ${formatMoney(
+                                result.tradingPnL
+                            )}
+                        </strong>
+                        
+                        <br>
+                        
+                        Aktuelle Balance:
+                        <strong>
+                            ${formatMoney(
+                                result.balance
+                            )}
+                        </strong>
                         <strong>
                             ${result.total}
                         </strong>
