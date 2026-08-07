@@ -14,9 +14,17 @@ function renderPortfolio() {
         );
 
         renderEquityChart(
-        selectedAccounts
+            selectedAccounts
         );
 
+        renderDrawdownChart(
+            selectedAccounts
+        );
+    
+        renderHourlyChart(
+            selectedAccounts
+        );
+    
     if(selectedAccounts.length === 0) {
 
         document.getElementById(
