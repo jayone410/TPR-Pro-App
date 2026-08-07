@@ -27,22 +27,29 @@ function analyzeAccount(account){
     );
 
 
-    let recommendation = "GO";
+let recommendation = "";
 
 
-    if(score < 80){
+if(score >= 85){
 
-        recommendation = "LOW RISK";
+    recommendation = "🟢 TRADE NORMAL";
 
-    }
+}
+else if(score >= 70){
 
+    recommendation = "🟡 REDUCE RISK";
 
-    if(score < 60){
+}
+else if(score >= 50){
 
-        recommendation = "DON'T TRADE";
+    recommendation = "🟠 ONLY A+ SETUPS";
 
-    }
+}
+else{
 
+    recommendation = "🔴 DON'T TRADE";
+
+}
 
     const reasons = [];
 
