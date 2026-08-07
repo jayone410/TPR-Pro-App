@@ -25,9 +25,11 @@ function createDailyPlan(account, payout){
 
         maxLoss = "$300";
 
+
         advice.push(
             "Nur A+ Setups handeln."
         );
+
 
         advice.push(
             "Keine Recovery Trades."
@@ -43,6 +45,7 @@ function createDailyPlan(account, payout){
         target = "$200";
 
         maxLoss = "$200";
+
 
         advice.push(
             "Account Buffer schützen."
