@@ -1,4 +1,3 @@
-```javascript
 /*
 =========================================
 TPR PRO AI
@@ -816,4 +815,3 @@ function renderAccounts() {
     }
 
 }
-```
