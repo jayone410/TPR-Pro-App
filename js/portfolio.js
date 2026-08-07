@@ -5,6 +5,10 @@ function renderPortfolio() {
             selectedAccountIds
         );
 
+        renderPerformanceAnalytics(
+            selectedAccounts
+        );
+
 
     if(selectedAccounts.length === 0) {
 
