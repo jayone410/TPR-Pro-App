@@ -164,12 +164,51 @@
 
         </div>
 
-        <div class="card">
+        <div class="card full-width">
         
             <div class="card-title">
                 Account Manager
             </div>
-        
+
+            <div class="account-header">
+                <div>
+                    <div class="card-title">
+                        Account Manager
+                    </div>
+            
+                    <div id="selectedAccountCount">
+                        0 Accounts ausgewählt
+                    </div>
+                </div>
+            
+                <div class="account-actions">
+            
+                    <button id="selectAllAccounts">
+                        Alle auswählen
+                    </button>
+            
+                    <button id="clearAccountSelection">
+                        Auswahl löschen
+                    </button>
+            
+                    <button id="toggleAccountForm">
+                        + Account
+                    </button>
+            
+                    <button id="importCsvButton">
+                        📂 CSV importieren
+                    </button>
+            
+                    <input
+                        type="file"
+                        id="csvFile"
+                        accept=".csv"
+                        style="display:none;"
+                    >
+            
+                </div>
+            
+            </div>
         
             <div id="accountForm">
         
@@ -296,39 +335,6 @@
             </div>
         
         </div>
-        
-        <div class="card">
-        
-            <div class="card-title">
-                Import Trading Data
-            </div>
-        
-        
-            <div id="dropZone">
-        
-                📂 CSV hier ablegen
-        
-                <br><br>
-        
-                oder
-        
-                <br><br>
-        
-                <input 
-                type="file" 
-                id="csvFile"
-                accept=".csv">
-        
-        
-            </div>
-        
-        
-            <div id="csvStatus">
-        
-                Noch keine Datei geladen.
-        
-            </div>
-        
         
         </div>
 
