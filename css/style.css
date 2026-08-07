@@ -1,3 +1,170 @@
-body {
-    margin: 0;
+/* ========================================
+   TPR PRO AI - Design System v1.0
+======================================== */
+
+:root {
+
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-2: #21262d;
+
+    --border: #30363d;
+
+    --text: #f0f6fc;
+    --text-muted: #8b949e;
+
+    --green: #3fb950;
+    --yellow: #d29922;
+    --red: #f85149;
+    --blue: #58a6ff;
+
+    --radius: 14px;
+
+    --shadow:
+        0 8px 24px rgba(0,0,0,.35);
+
+    --transition: .25s ease;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        Inter,
+        Segoe UI,
+        Arial,
+        sans-serif;
+
+    min-height:100vh;
+}
+
+.container{
+
+    width:min(1400px,94%);
+
+    margin:auto;
+
+    padding:30px;
+}
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.logo{
+
+    font-size:32px;
+
+    font-weight:700;
+}
+
+.subtitle{
+
+    color:var(--text-muted);
+
+    margin-top:4px;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(320px,1fr));
+
+    gap:24px;
+}
+
+.card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:24px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:var(--blue);
+}
+
+.card-title{
+
+    color:var(--text-muted);
+
+    font-size:14px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    margin-bottom:14px;
+}
+
+.big-number{
+
+    font-size:46px;
+
+    font-weight:700;
+}
+
+.status-green{
+    color:var(--green);
+}
+
+.status-yellow{
+    color:var(--yellow);
+}
+
+.status-red{
+    color:var(--red);
+}
+
+button{
+
+    background:var(--blue);
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px 18px;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+    font-size:15px;
+}
+
+button:hover{
+
+    opacity:.9;
 }
