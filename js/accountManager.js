@@ -249,6 +249,34 @@ function renderAccounts() {
                         : 0
                 }
             </td>
+
+            <td class="account-actions-cell">
+
+                <button
+                    class="editAccountButton"
+                    data-account-id="${account.id}"
+                    title="Bearbeiten"
+                >
+                    ✏️
+                </button>
+            
+                <button
+                    class="duplicateAccountButton"
+                    data-account-id="${account.id}"
+                    title="Duplizieren"
+                >
+                    📄
+                </button>
+            
+                <button
+                    class="deleteAccountButton"
+                    data-account-id="${account.id}"
+                    title="Löschen"
+                >
+                    🗑️
+                </button>
+            
+            </td>
         `;
 
 
