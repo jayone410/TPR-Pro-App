@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const result = analyzeAccount(accounts[0]);
 
+    const payout = analyzePayout(
+    accounts[0],
+    PROP_RULES.topstep.accounts["50k"]
+    );
+
     console.log("ENGINE RESULT:", result);
 
 
@@ -55,6 +60,22 @@ document.addEventListener("DOMContentLoaded", () => {
             </p>
             
             `;
+
+        const payoutBox = document.getElementById("payout");
+
+
+        payoutBox.innerHTML = `
+        
+        <p>
+        Payout Status:
+        <strong>${payout.status}</strong>
+        </p>
+        
+        <p>
+        ${payout.message}
+        </p>
+        
+        `;
 
     });
 
