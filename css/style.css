@@ -202,3 +202,28 @@ button:hover{
 .account-table tr:hover {
     background: var(--surface-2);
 }
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.account-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.csv-inline-status {
+    margin-top: 12px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
