@@ -16,6 +16,8 @@ document.addEventListener(
 
         initCsvImport();
 
+        initDashboardLayout();
+
         renderPortfolio();
 
     }
