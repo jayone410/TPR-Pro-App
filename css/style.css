@@ -254,3 +254,17 @@ button:hover{
 .stat-item strong {
     font-size: 22px;
 }
+
+
+.stat-item small {
+    display: block;
+    margin-top: 8px;
+    color: var(--text-muted);
+}
+
+.analytics-insight {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+}
