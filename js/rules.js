@@ -26,6 +26,8 @@ const PROP_RULES = {
 
                 minTradingDays: 3,
 
+                consistencyLimit: 40,
+
                 maxDailyProfitTarget: 400,
 
                 maxDailyLoss: 400,
