@@ -1,38 +1,551 @@
 /*
-====================================================
-
+=========================================
 TPR PRO AI
-Prop Firm Rule Engine
-Version 1.0
+Official Prop Rules v2
+=========================================
 
-====================================================
+Struktur:
+
+PROP_RULES
+    provider
+        program
+            accountSize
+
+Später können pro Account Overrides
+darübergelegt werden.
+
+=========================================
 */
 
+
 const PROP_RULES = {
+
+
+    /*
+    =====================================
+    TOPSTEP
+    =====================================
+    */
 
     topstep: {
 
         name: "Topstep",
 
-        accounts: {
 
-            "50k": {
+        /*
+        =================================
+        XFA STANDARD
+        =================================
+        */
 
-                startingBalance: 50000,
+        xfaStandard: {
 
-                recommendedBuffer: 1500,
+            label:
+                "XFA Standard",
 
-                minPayout: 500,
+            stage:
+                "funded",
 
-                minTradingDays: 3,
+            balanceMode:
+                "profitBalance",
 
-                consistencyLimit: 40,
+            payoutCycleResets:
+                true,
 
-                maxDailyProfitTarget: 400,
+            sizes: {
 
-                maxDailyLoss: 400,
 
-                currency: "USD"
+                "50k": {
+
+                    accountSize:
+                        50000,
+
+                    /*
+                    XFA Balance startet bei 0.
+                    50K = Buying Power.
+                    */
+
+                    startingBalance:
+                        0,
+
+                    buyingPower:
+                        50000,
+
+
+                    /*
+                    Maximum Loss Limit
+                    */
+
+                    maxLossLimit:
+                        2000,
+
+                    initialMLL:
+                        -2000,
+
+                    lockedMLL:
+                        0,
+
+                    mllType:
+                        "eodTrailing",
+
+                    mllLocksAt:
+                        0,
+
+                    mllLocksAfterProfit:
+                        2000,
+
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+
+
+                    /*
+                    Optional DLL
+                    */
+
+                    dllOptional:
+                        true,
+
+                    dll:
+                        1000,
+
+
+                    /*
+                    Payout
+                    */
+
+                    payoutMode:
+                        "winningDays",
+
+                    minWinningDays:
+                        5,
+
+                    winningDayMinProfit:
+                        150,
+
+                    consistencyLimit:
+                        null,
+
+                    minPayout:
+                        125,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        2000,
+
+                    maxPayoutWithDLL:
+                        4000,
+
+                    profitSplitTrader:
+                        90,
+
+
+                    /*
+                    Kein fixer Profit Target
+                    im XFA.
+                    */
+
+                    profitTarget:
+                        null,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "100k": {
+
+                    accountSize:
+                        100000,
+
+                    startingBalance:
+                        0,
+
+                    buyingPower:
+                        100000,
+
+                    maxLossLimit:
+                        3000,
+
+                    initialMLL:
+                        -3000,
+
+                    lockedMLL:
+                        0,
+
+                    mllType:
+                        "eodTrailing",
+
+                    mllLocksAt:
+                        0,
+
+                    mllLocksAfterProfit:
+                        3000,
+
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+
+                    dllOptional:
+                        true,
+
+                    dll:
+                        2000,
+
+                    payoutMode:
+                        "winningDays",
+
+                    minWinningDays:
+                        5,
+
+                    winningDayMinProfit:
+                        150,
+
+                    consistencyLimit:
+                        null,
+
+                    minPayout:
+                        125,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        3000,
+
+                    maxPayoutWithDLL:
+                        6000,
+
+                    profitSplitTrader:
+                        90,
+
+                    profitTarget:
+                        null,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "150k": {
+
+                    accountSize:
+                        150000,
+
+                    startingBalance:
+                        0,
+
+                    buyingPower:
+                        150000,
+
+                    maxLossLimit:
+                        4500,
+
+                    initialMLL:
+                        -4500,
+
+                    lockedMLL:
+                        0,
+
+                    mllType:
+                        "eodTrailing",
+
+                    mllLocksAt:
+                        0,
+
+                    mllLocksAfterProfit:
+                        4500,
+
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+
+                    dllOptional:
+                        true,
+
+                    dll:
+                        3000,
+
+                    payoutMode:
+                        "winningDays",
+
+                    minWinningDays:
+                        5,
+
+                    winningDayMinProfit:
+                        150,
+
+                    consistencyLimit:
+                        null,
+
+                    minPayout:
+                        125,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        5000,
+
+                    maxPayoutWithDLL:
+                        10000,
+
+                    profitSplitTrader:
+                        90,
+
+                    profitTarget:
+                        null,
+
+                    currency:
+                        "USD"
+
+                }
+
+            }
+
+        },
+
+
+        /*
+        =================================
+        XFA CONSISTENCY
+        =================================
+        */
+
+        xfaConsistency: {
+
+            label:
+                "XFA Consistency",
+
+            stage:
+                "funded",
+
+            balanceMode:
+                "profitBalance",
+
+            payoutCycleResets:
+                true,
+
+            sizes: {
+
+
+                "50k": {
+
+                    accountSize:
+                        50000,
+
+                    startingBalance:
+                        0,
+
+                    buyingPower:
+                        50000,
+
+                    maxLossLimit:
+                        2000,
+
+                    initialMLL:
+                        -2000,
+
+                    lockedMLL:
+                        0,
+
+                    mllType:
+                        "eodTrailing",
+
+                    mllLocksAt:
+                        0,
+
+                    mllLocksAfterProfit:
+                        2000,
+
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+
+                    dllOptional:
+                        true,
+
+                    dll:
+                        1000,
+
+
+                    /*
+                    Payout
+                    */
+
+                    payoutMode:
+                        "consistency",
+
+                    minTradingDays:
+                        3,
+
+                    consistencyLimit:
+                        40,
+
+                    minPayout:
+                        125,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        3000,
+
+                    maxPayoutWithDLL:
+                        6000,
+
+                    profitSplitTrader:
+                        90,
+
+                    profitTarget:
+                        null,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "100k": {
+
+                    accountSize:
+                        100000,
+
+                    startingBalance:
+                        0,
+
+                    buyingPower:
+                        100000,
+
+                    maxLossLimit:
+                        3000,
+
+                    initialMLL:
+                        -3000,
+
+                    lockedMLL:
+                        0,
+
+                    mllType:
+                        "eodTrailing",
+
+                    mllLocksAt:
+                        0,
+
+                    mllLocksAfterProfit:
+                        3000,
+
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+
+                    dllOptional:
+                        true,
+
+                    dll:
+                        2000,
+
+                    payoutMode:
+                        "consistency",
+
+                    minTradingDays:
+                        3,
+
+                    consistencyLimit:
+                        40,
+
+                    minPayout:
+                        125,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        4000,
+
+                    maxPayoutWithDLL:
+                        8000,
+
+                    profitSplitTrader:
+                        90,
+
+                    profitTarget:
+                        null,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "150k": {
+
+                    accountSize:
+                        150000,
+
+                    startingBalance:
+                        0,
+
+                    buyingPower:
+                        150000,
+
+                    maxLossLimit:
+                        4500,
+
+                    initialMLL:
+                        -4500,
+
+                    lockedMLL:
+                        0,
+
+                    mllType:
+                        "eodTrailing",
+
+                    mllLocksAt:
+                        0,
+
+                    mllLocksAfterProfit:
+                        4500,
+
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+
+                    dllOptional:
+                        true,
+
+                    dll:
+                        3000,
+
+                    payoutMode:
+                        "consistency",
+
+                    minTradingDays:
+                        3,
+
+                    consistencyLimit:
+                        40,
+
+                    minPayout:
+                        125,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        6000,
+
+                    maxPayoutWithDLL:
+                        12000,
+
+                    profitSplitTrader:
+                        90,
+
+                    profitTarget:
+                        null,
+
+                    currency:
+                        "USD"
+
+                }
 
             }
 
@@ -40,27 +553,831 @@ const PROP_RULES = {
 
     },
 
+
+    /*
+    =====================================
+    LUCID
+    =====================================
+    */
+
     lucid: {
 
-        name: "Lucid",
+        name:
+            "Lucid Trading",
 
-        accounts: {
 
-            "50k": {
+        /*
+        =================================
+        LUCID PRO EVALUATION
+        =================================
+        */
 
-                startingBalance: 50000,
+        proEvaluation: {
 
-                recommendedBuffer: 2100,
+            label:
+                "LucidPro Evaluation",
 
-                minPayout: 500,
+            stage:
+                "evaluation",
 
-                payoutFrequency: "daily",
+            sizes: {
 
-                maxDailyProfitTarget: 400,
 
-                maxDailyLoss: 400,
+                "25k": {
 
-                currency: "USD"
+                    accountSize:
+                        25000,
+
+                    startingBalance:
+                        25000,
+
+                    profitTarget:
+                        1250,
+
+                    maxLossLimit:
+                        1000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    dll:
+                        null,
+
+                    consistencyLimit:
+                        null,
+
+                    maxMinis:
+                        2,
+
+                    maxMicros:
+                        20,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "50k": {
+
+                    accountSize:
+                        50000,
+
+                    startingBalance:
+                        50000,
+
+                    profitTarget:
+                        3000,
+
+                    maxLossLimit:
+                        2000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    dll:
+                        1200,
+
+                    consistencyLimit:
+                        null,
+
+                    maxMinis:
+                        4,
+
+                    maxMicros:
+                        40,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "100k": {
+
+                    accountSize:
+                        100000,
+
+                    startingBalance:
+                        100000,
+
+                    profitTarget:
+                        6000,
+
+                    maxLossLimit:
+                        3000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    dll:
+                        1800,
+
+                    consistencyLimit:
+                        null,
+
+                    maxMinis:
+                        6,
+
+                    maxMicros:
+                        60,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "150k": {
+
+                    accountSize:
+                        150000,
+
+                    startingBalance:
+                        150000,
+
+                    profitTarget:
+                        9000,
+
+                    maxLossLimit:
+                        4500,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    dll:
+                        2700,
+
+                    consistencyLimit:
+                        null,
+
+                    maxMinis:
+                        10,
+
+                    maxMicros:
+                        100,
+
+                    currency:
+                        "USD"
+
+                }
+
+            }
+
+        },
+
+
+        /*
+        =================================
+        LUCID PRO FUNDED
+        =================================
+        */
+
+        proFunded: {
+
+            label:
+                "LucidPro Funded",
+
+            stage:
+                "funded",
+
+            payoutCycleResets:
+                true,
+
+            sizes: {
+
+
+                "25k": {
+
+                    accountSize:
+                        25000,
+
+                    startingBalance:
+                        25000,
+
+                    maxLossLimit:
+                        1000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        26100,
+
+                    lockedMLLBalance:
+                        25100,
+
+                    fixedDLL:
+                        null,
+
+                    scalingDLLPercent:
+                        null,
+
+                    payoutProfitGoal:
+                        500,
+
+                    consistencyLimit:
+                        40,
+
+                    legacyConsistencyLimit:
+                        35,
+
+                    bufferBalance:
+                        26100,
+
+                    minPayout:
+                        500,
+
+                    maxPayoutFirst:
+                        1000,
+
+                    maxPayoutLater:
+                        1500,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "50k": {
+
+                    accountSize:
+                        50000,
+
+                    startingBalance:
+                        50000,
+
+                    maxLossLimit:
+                        2000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        52100,
+
+                    lockedMLLBalance:
+                        50100,
+
+                    fixedDLL:
+                        1200,
+
+                    scalingDLLPercent:
+                        60,
+
+                    payoutProfitGoal:
+                        500,
+
+                    consistencyLimit:
+                        40,
+
+                    legacyConsistencyLimit:
+                        35,
+
+                    bufferBalance:
+                        52100,
+
+                    minPayout:
+                        500,
+
+                    maxPayoutFirst:
+                        2000,
+
+                    maxPayoutLater:
+                        2500,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "100k": {
+
+                    accountSize:
+                        100000,
+
+                    startingBalance:
+                        100000,
+
+                    maxLossLimit:
+                        3000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        103100,
+
+                    lockedMLLBalance:
+                        100100,
+
+                    fixedDLL:
+                        1800,
+
+                    scalingDLLPercent:
+                        60,
+
+                    payoutProfitGoal:
+                        750,
+
+                    consistencyLimit:
+                        40,
+
+                    legacyConsistencyLimit:
+                        35,
+
+                    bufferBalance:
+                        103100,
+
+                    minPayout:
+                        500,
+
+                    maxPayoutFirst:
+                        2500,
+
+                    maxPayoutLater:
+                        3000,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "150k": {
+
+                    accountSize:
+                        150000,
+
+                    startingBalance:
+                        150000,
+
+                    maxLossLimit:
+                        4500,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        154600,
+
+                    lockedMLLBalance:
+                        150100,
+
+                    fixedDLL:
+                        2700,
+
+                    scalingDLLPercent:
+                        60,
+
+                    payoutProfitGoal:
+                        1000,
+
+                    consistencyLimit:
+                        40,
+
+                    legacyConsistencyLimit:
+                        35,
+
+                    bufferBalance:
+                        154600,
+
+                    minPayout:
+                        500,
+
+                    maxPayoutFirst:
+                        3000,
+
+                    maxPayoutLater:
+                        3500,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                }
+
+            }
+
+        },
+
+
+        /*
+        =================================
+        LUCID FLEX EVALUATION
+        =================================
+        */
+
+        flexEvaluation: {
+
+            label:
+                "LucidFlex Evaluation",
+
+            stage:
+                "evaluation",
+
+            sizes: {
+
+
+                "25k": {
+
+                    accountSize:
+                        25000,
+
+                    startingBalance:
+                        25000,
+
+                    profitTarget:
+                        1250,
+
+                    maxLossLimit:
+                        1000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    consistencyLimit:
+                        50,
+
+                    dll:
+                        null,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "50k": {
+
+                    accountSize:
+                        50000,
+
+                    startingBalance:
+                        50000,
+
+                    profitTarget:
+                        3000,
+
+                    maxLossLimit:
+                        2000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    consistencyLimit:
+                        50,
+
+                    dll:
+                        null,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "100k": {
+
+                    accountSize:
+                        100000,
+
+                    startingBalance:
+                        100000,
+
+                    profitTarget:
+                        6000,
+
+                    maxLossLimit:
+                        3000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    consistencyLimit:
+                        50,
+
+                    dll:
+                        null,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "150k": {
+
+                    accountSize:
+                        150000,
+
+                    startingBalance:
+                        150000,
+
+                    profitTarget:
+                        9000,
+
+                    maxLossLimit:
+                        4500,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    consistencyLimit:
+                        50,
+
+                    dll:
+                        null,
+
+                    currency:
+                        "USD"
+
+                }
+
+            }
+
+        },
+
+
+        /*
+        =================================
+        LUCID FLEX FUNDED
+        =================================
+        */
+
+        flexFunded: {
+
+            label:
+                "LucidFlex Funded",
+
+            stage:
+                "funded",
+
+            payoutCycleResets:
+                true,
+
+            sizes: {
+
+
+                "25k": {
+
+                    accountSize:
+                        25000,
+
+                    startingBalance:
+                        25000,
+
+                    maxLossLimit:
+                        1000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        26100,
+
+                    lockedMLLBalance:
+                        25100,
+
+                    dll:
+                        null,
+
+                    consistencyLimit:
+                        null,
+
+                    payoutMode:
+                        "winningDays",
+
+                    minWinningDays:
+                        5,
+
+                    winningDayMinProfit:
+                        100,
+
+                    requirePositiveCyclePnL:
+                        true,
+
+                    bufferBalance:
+                        null,
+
+                    minPayout:
+                        500,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        1000,
+
+                    maxPayoutCount:
+                        5,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "50k": {
+
+                    accountSize:
+                        50000,
+
+                    startingBalance:
+                        50000,
+
+                    maxLossLimit:
+                        2000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        52100,
+
+                    lockedMLLBalance:
+                        50100,
+
+                    dll:
+                        null,
+
+                    consistencyLimit:
+                        null,
+
+                    payoutMode:
+                        "winningDays",
+
+                    minWinningDays:
+                        5,
+
+                    winningDayMinProfit:
+                        150,
+
+                    requirePositiveCyclePnL:
+                        true,
+
+                    bufferBalance:
+                        null,
+
+                    minPayout:
+                        500,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        2000,
+
+                    maxPayoutCount:
+                        5,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "100k": {
+
+                    accountSize:
+                        100000,
+
+                    startingBalance:
+                        100000,
+
+                    maxLossLimit:
+                        3000,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        103100,
+
+                    lockedMLLBalance:
+                        100100,
+
+                    dll:
+                        null,
+
+                    consistencyLimit:
+                        null,
+
+                    payoutMode:
+                        "winningDays",
+
+                    minWinningDays:
+                        5,
+
+                    winningDayMinProfit:
+                        200,
+
+                    requirePositiveCyclePnL:
+                        true,
+
+                    bufferBalance:
+                        null,
+
+                    minPayout:
+                        500,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        2500,
+
+                    maxPayoutCount:
+                        5,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                },
+
+
+                "150k": {
+
+                    accountSize:
+                        150000,
+
+                    startingBalance:
+                        150000,
+
+                    maxLossLimit:
+                        4500,
+
+                    drawdownType:
+                        "eodTrailing",
+
+                    initialTrailBalance:
+                        154600,
+
+                    lockedMLLBalance:
+                        150100,
+
+                    dll:
+                        null,
+
+                    consistencyLimit:
+                        null,
+
+                    payoutMode:
+                        "winningDays",
+
+                    minWinningDays:
+                        5,
+
+                    winningDayMinProfit:
+                        250,
+
+                    requirePositiveCyclePnL:
+                        true,
+
+                    bufferBalance:
+                        null,
+
+                    minPayout:
+                        500,
+
+                    payoutPercent:
+                        50,
+
+                    maxPayout:
+                        3000,
+
+                    maxPayoutCount:
+                        5,
+
+                    profitSplitTrader:
+                        90,
+
+                    currency:
+                        "USD"
+
+                }
 
             }
 
@@ -69,3 +1386,115 @@ const PROP_RULES = {
     }
 
 };
+
+
+/*
+=========================================
+RULE LOOKUP
+=========================================
+*/
+
+
+function getOfficialRules(
+    provider,
+    program,
+    accountType
+) {
+
+    if(
+        !PROP_RULES[provider] ||
+        !PROP_RULES[provider][program] ||
+        !PROP_RULES[provider][program].sizes ||
+        !PROP_RULES[provider][program]
+            .sizes[accountType]
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        provider,
+
+        program,
+
+        programLabel:
+            PROP_RULES[
+                provider
+            ][program].label,
+
+        stage:
+            PROP_RULES[
+                provider
+            ][program].stage,
+
+        ...PROP_RULES[
+            provider
+        ][program]
+            .sizes[
+                accountType
+            ]
+
+    };
+
+}
+
+
+/*
+=========================================
+EFFECTIVE RULES
+=========================================
+
+Official Defaults
++
+Account Overrides
+
+=========================================
+*/
+
+
+function getEffectiveRules(account) {
+
+    if(!account) {
+
+        return null;
+
+    }
+
+
+    const officialRules =
+        getOfficialRules(
+            account.provider,
+            account.program,
+            account.accountType
+        );
+
+
+    if(!officialRules) {
+
+        return null;
+
+    }
+
+
+    const overrides =
+        account.ruleOverrides &&
+        typeof account.ruleOverrides ===
+            "object"
+
+            ? account.ruleOverrides
+
+            : {};
+
+
+    return {
+
+        ...officialRules,
+
+        ...overrides
+
+    };
+
+}
