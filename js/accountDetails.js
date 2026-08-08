@@ -255,8 +255,8 @@ function getAccountPayoutDetail(account) {
 
 
     const qualifyingDays =
-        Number(
-            account.qualifyingDays
+        getAccountTradingDayCount(
+            account
         );
 
 
