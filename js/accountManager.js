@@ -924,6 +924,13 @@ function renderAccounts() {
                         📄
                     </button>
 
+                    <button
+                        class="rulesAccountButton"
+                        data-account-id="${account.id}"
+                        title="Rules bearbeiten"
+                    >
+                        ⚙️
+                    </button>
 
                     <button
                         class="deleteAccountButton"
