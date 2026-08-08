@@ -60,12 +60,8 @@ function formatPortfolioMoney(value) {
 function getProviderRules(account) {
 
     if(
-        typeof PROP_RULES === "undefined" ||
-        !PROP_RULES ||
-        !PROP_RULES[account.provider] ||
-        !PROP_RULES[account.provider].accounts ||
-        !PROP_RULES[account.provider]
-            .accounts[account.accountType]
+        typeof getEffectiveRules !==
+        "function"
     ) {
 
         return null;
@@ -73,11 +69,9 @@ function getProviderRules(account) {
     }
 
 
-    return PROP_RULES[
-        account.provider
-    ].accounts[
-        account.accountType
-    ];
+    return getEffectiveRules(
+        account
+    );
 
 }
 
