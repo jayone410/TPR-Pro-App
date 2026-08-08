@@ -615,9 +615,14 @@ function renderPortfolioOverview() {
     if(balance) {
 
         balance.textContent =
-            formatPortfolioMoney(
-                data.totalBalance
-            );
+        (
+            data.earnedBalance > 0
+                ? "+"
+                : ""
+        ) +
+        formatPortfolioMoney(
+            data.earnedBalance
+        );
 
     }
 
