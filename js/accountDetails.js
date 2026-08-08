@@ -248,21 +248,15 @@ function getAccountTradingDayCount(account) {
 
 function getAccountPayoutDetail(account) {
 
-    const requiredDays =
-        Number(
-            account.requiredPayoutDays
-        );
-
-
-    const qualifyingDays =
-        getAccountTradingDayCount(
+    const rules =
+        getAccountDetailRules(
             account
         );
 
 
-    const payoutTarget =
-        Number(
-            account.payoutTarget
+    const tradingDays =
+        getAccountTradingDayCount(
+            account
         );
 
 
@@ -272,65 +266,104 @@ function getAccountPayoutDetail(account) {
         );
 
 
-    let remainingDays =
-        null;
+    if(!rules) {
+
+        return {
+
+            tradingDays,
+
+            requiredDays: null,
+
+            remainingDays: null,
+
+            remainingAmount: null
+
+        };
+
+    }
 
 
-    if(
-        Number.isFinite(requiredDays) &&
-        Number.isFinite(qualifyingDays)
-    ) {
+    /*
+    Trading Days
+    */
 
-        remainingDays =
-            Math.max(
+    const requiredDays =
+        Number(
+            rules.minTradingDays
+        );
+
+
+    const hasDayRequirement =
+        Number.isFinite(
+            requiredDays
+        );
+
+
+    const remainingDays =
+        hasDayRequirement
+            ? Math.max(
                 0,
                 requiredDays -
-                qualifyingDays
-            );
-
-    }
-
-
-    let remainingAmount =
-        null;
+                tradingDays
+            )
+            : 0;
 
 
-    if(
-        Number.isFinite(payoutTarget)
-    ) {
+    /*
+    Dollar-Betrag bis Payout
+    */
 
-        remainingAmount =
-            Math.max(
-                0,
-                payoutTarget -
-                netGrowth
-            );
+    const recommendedBuffer =
+        Number(
+            rules.recommendedBuffer
+        ) || 0;
 
-    }
+
+    const minPayout =
+        Number(
+            rules.minPayout
+        ) || 0;
+
+
+    /*
+    Für einen sinnvollen Payout:
+    Ziel = Buffer + Mindestpayout
+    */
+
+    const payoutTarget =
+        recommendedBuffer +
+        minPayout;
+
+
+    const remainingAmount =
+        Math.max(
+            0,
+            payoutTarget -
+            netGrowth
+        );
 
 
     return {
 
-        requiredDays:
-            Number.isFinite(requiredDays)
-                ? requiredDays
-                : null,
+        tradingDays,
 
-        qualifyingDays:
-            Number.isFinite(qualifyingDays)
-                ? qualifyingDays
+        requiredDays:
+            hasDayRequirement
+                ? requiredDays
                 : null,
 
         remainingDays,
 
-        payoutTarget:
-            Number.isFinite(payoutTarget)
-                ? payoutTarget
-                : null,
+        recommendedBuffer,
+
+        minPayout,
+
+        payoutTarget,
 
         remainingAmount
 
     };
+
 }
 
 
@@ -691,4 +724,27 @@ function toggleAccountDetails(
 
     }
 
+}
+
+function getAccountDetailRules(account) {
+
+    if(
+        typeof PROP_RULES === "undefined" ||
+        !PROP_RULES ||
+        !PROP_RULES[account.provider] ||
+        !PROP_RULES[account.provider].accounts ||
+        !PROP_RULES[account.provider]
+            .accounts[account.accountType]
+    ) {
+
+        return null;
+
+    }
+
+
+    return PROP_RULES[
+        account.provider
+    ].accounts[
+        account.accountType
+    ];
 }
