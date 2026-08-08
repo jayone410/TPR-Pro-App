@@ -1038,3 +1038,136 @@ function setAccountProgram(
     return true;
 
 }
+
+/*
+=========================================
+ACCOUNT PROGRAMM AUTOMATISCH ERKENNEN
+=========================================
+*/
+
+function detectAccountProgram(account) {
+
+    const provider =
+        String(account.provider || "")
+            .toLowerCase();
+
+    const name =
+        String(account.accountName || "")
+            .toLowerCase();
+
+
+    /*
+    TOPSTEP
+    */
+
+    if(provider === "topstep") {
+
+        if(
+            name.includes("cons") ||
+            name.includes("consistency")
+        ) {
+            return "xfaConsistency";
+        }
+
+        return "xfaStandard";
+    }
+
+
+    /*
+    LUCID
+    */
+
+    if(provider === "lucid") {
+
+        const isFlex =
+            name.includes("flex");
+
+        const isEvaluation =
+            name.includes("eval") ||
+            name.includes("evaluation");
+
+        if(isFlex) {
+
+            return isEvaluation
+                ? "flexEvaluation"
+                : "flexFunded";
+        }
+
+        return isEvaluation
+            ? "proEvaluation"
+            : "proFunded";
+    }
+
+
+    return null;
+}
+
+
+/*
+=========================================
+ACCOUNT MIGRATION RULES V2
+=========================================
+*/
+
+function migrateAccountsToRulesV2() {
+
+    let changed = false;
+
+
+    accounts.forEach(account => {
+
+        /*
+        Programm nur setzen,
+        wenn noch keines vorhanden ist.
+        */
+
+        if(!account.program) {
+
+            const detected =
+                detectAccountProgram(
+                    account
+                );
+
+
+            if(detected) {
+
+                account.program =
+                    detected;
+
+                changed = true;
+
+            }
+        }
+
+
+        /*
+        Rule Overrides vorbereiten
+        */
+
+        if(
+            !account.ruleOverrides ||
+            typeof account.ruleOverrides !==
+                "object"
+        ) {
+
+            account.ruleOverrides =
+                {};
+
+            changed = true;
+
+        }
+
+    });
+
+
+    if(changed) {
+
+        saveAccounts();
+
+        console.log(
+            "✅ Accounts auf Rules v2 migriert"
+        );
+
+    }
+
+}
