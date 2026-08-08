@@ -1389,11 +1389,47 @@ accountList.appendChild(
 
             }
         );
+
+
 /*
 =========================================
-ACCOUNT DETAILS AUF / ZUKLAPPEN
+RULES EDITOR
 =========================================
 */
+
+document
+    .querySelectorAll(
+        ".rulesAccountButton"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const id =
+                        button.dataset
+                            .accountId;
+
+
+                    if(
+                        typeof openRulesEditor ===
+                        "function"
+                    ) {
+
+                        openRulesEditor(
+                            id
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+    
 /*
 =========================================
 ACCOUNT DETAILS AUF / ZUKLAPPEN
