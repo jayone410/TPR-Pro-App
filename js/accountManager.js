@@ -1404,6 +1404,11 @@ accountList.appendChild(
 ACCOUNT DETAILS AUF / ZUKLAPPEN
 =========================================
 */
+/*
+=========================================
+ACCOUNT DETAILS AUF / ZUKLAPPEN
+=========================================
+*/
 
 document
     .querySelectorAll(
@@ -1458,21 +1463,5 @@ if(selectedAccountCount) {
         " Account(s) ausgewählt";
 
 }
-
-}
-
-    /*
-    =====================================
-    AUSWAHL ZÄHLEN
-    =====================================
-    */
-
-    if(selectedAccountCount) {
-
-        selectedAccountCount.textContent =
-            selectedAccountIds.length +
-            " Account(s) ausgewählt";
-
-    }
 
 }
