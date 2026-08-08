@@ -387,41 +387,30 @@ PAYOUT STATUS
 
 function getAccountPayoutInfo(account) {
 
-    let providerRules =
-        null;
-
-
     if(
-        typeof PROP_RULES !==
-        "undefined" &&
-        PROP_RULES &&
-        PROP_RULES[account.provider] &&
-        PROP_RULES[account.provider].accounts &&
-        PROP_RULES[account.provider]
-            .accounts[
-                account.accountType
-            ]
+        typeof getEffectiveRules !==
+        "function"
     ) {
 
-        providerRules =
-            PROP_RULES[
-                account.provider
-            ].accounts[
-                account.accountType
-            ];
+        return {
+            status: "--",
+            label: "Keine Rules Engine"
+        };
 
     }
 
 
-    if(!providerRules) {
+    const rules =
+        getEffectiveRules(
+            account
+        );
+
+
+    if(!rules) {
 
         return {
-
             status: "--",
-
-            label:
-                "Keine Regeln"
-
+            label: "Programm wählen"
         };
 
     }
@@ -433,11 +422,8 @@ function getAccountPayoutInfo(account) {
     ) {
 
         return {
-
             status: "--",
-
             label: "--"
-
         };
 
     }
@@ -464,7 +450,7 @@ function getAccountPayoutInfo(account) {
         const payout =
             analyzePayout(
                 engineAccount,
-                providerRules
+                rules
             );
 
 
@@ -499,11 +485,8 @@ function getAccountPayoutInfo(account) {
 
 
         return {
-
             status: "--",
-
-            label: "--"
-
+            label: "RULE ERROR"
         };
 
     }
