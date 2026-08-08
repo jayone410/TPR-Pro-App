@@ -138,6 +138,113 @@ function getAccountConsistencyInfo(account) {
     };
 }
 
+/*
+=========================================
+TRADING DAYS AUS TRADES
+=========================================
+*/
+
+function getAccountTradingDays(account) {
+
+    const trades =
+        Array.isArray(account.trades)
+            ? account.trades
+            : [];
+
+
+    const days =
+        new Set();
+
+
+    trades.forEach(trade => {
+
+        let dateValue =
+            trade.TradeDay ||
+            trade.tradeDay ||
+            trade.date ||
+            trade.Date ||
+            trade.entryTime ||
+            trade.EnteredAt ||
+            null;
+
+
+        if(!dateValue) {
+            return;
+        }
+
+
+        /*
+        Nur Datum verwenden.
+        Funktioniert z.B. mit:
+        08/07/2026 00:00:00 -05:00
+        08/07/2026 16:10:05 +02:00
+        */
+
+        const text =
+            String(dateValue)
+                .trim();
+
+
+        const match =
+            text.match(
+                /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+            );
+
+
+        if(match) {
+
+            const key =
+                match[3] +
+                "-" +
+                match[1].padStart(2, "0") +
+                "-" +
+                match[2].padStart(2, "0");
+
+
+            days.add(key);
+
+            return;
+        }
+
+
+        /*
+        ISO Datum
+        */
+
+        const isoMatch =
+            text.match(
+                /^(\d{4})-(\d{2})-(\d{2})/
+            );
+
+
+        if(isoMatch) {
+
+            days.add(
+                isoMatch[1] +
+                "-" +
+                isoMatch[2] +
+                "-" +
+                isoMatch[3]
+            );
+
+        }
+
+    });
+
+
+    return Array.from(days)
+        .sort();
+
+}
+
+
+function getAccountTradingDayCount(account) {
+
+    return getAccountTradingDays(
+        account
+    ).length;
+
+}
 
 function getAccountPayoutDetail(account) {
 
