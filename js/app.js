@@ -14,6 +14,15 @@ document.addEventListener(
 
         initAccountManager();
 
+        if(
+            typeof renderPortfolioOverview ===
+            "function"
+        ) {
+
+    renderPortfolioOverview();
+
+}
+
         initCsvImport();
 
         initDashboardLayout();
