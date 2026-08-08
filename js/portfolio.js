@@ -1392,3 +1392,78 @@ function renderMultipleAccounts(
     }
 
 }
+
+function calculateAccountNetPnL(account) {
+
+    const trades =
+        Array.isArray(account.trades)
+            ? account.trades
+            : [];
+
+
+    let grossPnL = 0;
+    let fees = 0;
+
+
+    trades.forEach(trade => {
+
+        const pnl =
+            typeof parseMoney === "function"
+                ? parseMoney(
+                    trade.pnl ??
+                    trade.PnL ??
+                    0
+                )
+                : 0;
+
+
+        grossPnL += pnl;
+
+
+        /*
+        LUCID
+        Performance CSV:
+        pnl = Gross P&L
+        Gebühren = $1 pro Kontrakt
+        */
+
+        if(
+            String(account.provider)
+                .toLowerCase() === "lucid"
+        ) {
+
+            const qty =
+                Number(
+                    trade.qty || 0
+                );
+
+
+            if(Number.isFinite(qty)) {
+
+                fees += qty * 1.00;
+
+            }
+
+        }
+
+
+        /*
+        TOPSTEP / TRADOVATE
+        später separat sauber behandeln
+        */
+
+    });
+
+
+    return {
+
+        grossPnL,
+
+        fees,
+
+        netPnL:
+            grossPnL - fees
+
+    };
+
+}
