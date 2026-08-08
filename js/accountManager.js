@@ -5,9 +5,34 @@ Account Manager
 =========================================
 */
 
-
 let selectedAccountIds = [];
 
+
+/*
+=========================================
+UI REFRESH
+=========================================
+*/
+
+function refreshAccountUI() {
+
+    renderAccounts();
+
+    if(
+        typeof renderPortfolio ===
+        "function"
+    ) {
+        renderPortfolio();
+    }
+
+    if(
+        typeof renderPortfolioOverview ===
+        "function"
+    ) {
+        renderPortfolioOverview();
+    }
+
+}
 
 
 /*
@@ -20,6 +45,26 @@ function initAccountManager() {
 
     selectedAccountIds =
         loadSelectedAccountIds();
+
+
+    /*
+    Nicht mehr vorhandene Account IDs
+    aus gespeicherter Auswahl entfernen.
+    */
+
+    selectedAccountIds =
+        selectedAccountIds.filter(
+            id =>
+                accounts.some(
+                    account =>
+                        account.id === id
+                )
+        );
+
+
+    saveSelectedAccountIds(
+        selectedAccountIds
+    );
 
 
     const addAccountButton =
@@ -48,6 +93,12 @@ function initAccountManager() {
         );
 
 
+    /*
+    =====================================
+    ACCOUNT FORMULAR
+    =====================================
+    */
+
     if(accountForm) {
 
         accountForm.style.display =
@@ -55,11 +106,6 @@ function initAccountManager() {
 
     }
 
-
-
-    /*
-    ACCOUNT FORMULAR
-    */
 
     if(
         toggleAccountFormButton &&
@@ -93,9 +139,10 @@ function initAccountManager() {
     }
 
 
-
     /*
+    =====================================
     ACCOUNT HINZUFÜGEN
+    =====================================
     */
 
     if(addAccountButton) {
@@ -105,28 +152,56 @@ function initAccountManager() {
                 "click",
                 () => {
 
-                    const provider =
+                    const providerElement =
                         document.getElementById(
                             "accountProvider"
-                        ).value;
+                        );
 
-
-                    const accountType =
+                    const accountTypeElement =
                         document.getElementById(
                             "accountType"
-                        ).value;
+                        );
 
-
-                    const accountName =
+                    const accountNameElement =
                         document.getElementById(
                             "accountName"
-                        ).value.trim();
+                        );
 
-
-                    const startingBalance =
+                    const startingBalanceElement =
                         document.getElementById(
                             "startingBalance"
-                        ).value;
+                        );
+
+
+                    if(
+                        !providerElement ||
+                        !accountTypeElement ||
+                        !accountNameElement ||
+                        !startingBalanceElement
+                    ) {
+
+                        console.error(
+                            "Account Formular unvollständig."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const provider =
+                        providerElement.value;
+
+                    const accountType =
+                        accountTypeElement.value;
+
+                    const accountName =
+                        accountNameElement
+                            .value
+                            .trim();
+
+                    const startingBalance =
+                        startingBalanceElement.value;
 
 
                     if(!accountName) {
@@ -167,13 +242,16 @@ function initAccountManager() {
                     );
 
 
-                    document.getElementById(
-                        "accountName"
-                    ).value = "";
+                    accountNameElement.value =
+                        "";
 
 
-                    accountForm.style.display =
-                        "none";
+                    if(accountForm) {
+
+                        accountForm.style.display =
+                            "none";
+
+                    }
 
 
                     if(toggleAccountFormButton) {
@@ -184,18 +262,7 @@ function initAccountManager() {
                     }
 
 
-                    renderAccounts();
-
-                    renderPortfolio();
-
-                    if(
-                        typeof renderPortfolioOverview ===
-                        "function"
-                    ) {
-
-    renderPortfolioOverview();
-
-}
+                    refreshAccountUI();
 
                 }
             );
@@ -203,9 +270,10 @@ function initAccountManager() {
     }
 
 
-
     /*
+    =====================================
     ALLE AUSWÄHLEN
+    =====================================
     */
 
     if(selectAllButton) {
@@ -227,18 +295,7 @@ function initAccountManager() {
                     );
 
 
-                    renderAccounts();
-
-                    renderPortfolio();
-
-                    if(
-                        typeof renderPortfolioOverview ===
-                        "function"
-                    ) {
-
-    renderPortfolioOverview();
-
-}
+                    refreshAccountUI();
 
                 }
             );
@@ -246,9 +303,10 @@ function initAccountManager() {
     }
 
 
-
     /*
+    =====================================
     AUSWAHL LÖSCHEN
+    =====================================
     */
 
     if(clearSelectionButton) {
@@ -258,7 +316,8 @@ function initAccountManager() {
                 "click",
                 () => {
 
-                    selectedAccountIds = [];
+                    selectedAccountIds =
+                        [];
 
 
                     saveSelectedAccountIds(
@@ -266,18 +325,7 @@ function initAccountManager() {
                     );
 
 
-                    renderAccounts();
-
-                    renderPortfolio();
-
-                    if(
-                        typeof renderPortfolioOverview ===
-                        "function"
-                    ) {
-
-    renderPortfolioOverview();
-
-}
+                    refreshAccountUI();
 
                 }
             );
@@ -285,10 +333,13 @@ function initAccountManager() {
     }
 
 
-    renderAccounts();
+    /*
+    Initialer Aufbau
+    */
+
+    refreshAccountUI();
 
 }
-
 
 
 /*
@@ -299,13 +350,33 @@ BUFFER
 
 function getAccountBuffer(account) {
 
+    const balance =
+        Number(
+            account.balance
+        );
+
+    const startingBalance =
+        Number(
+            account.startingBalance
+        );
+
+
+    if(
+        !Number.isFinite(balance) ||
+        !Number.isFinite(startingBalance)
+    ) {
+
+        return 0;
+
+    }
+
+
     return (
-        Number(account.balance) -
-        Number(account.startingBalance)
+        balance -
+        startingBalance
     );
 
 }
-
 
 
 /*
@@ -316,21 +387,28 @@ PAYOUT STATUS
 
 function getAccountPayoutInfo(account) {
 
-    let providerRules = null;
+    let providerRules =
+        null;
 
 
     if(
+        typeof PROP_RULES !==
+        "undefined" &&
         PROP_RULES &&
         PROP_RULES[account.provider] &&
         PROP_RULES[account.provider].accounts &&
-        PROP_RULES[account.provider].accounts[account.accountType]
+        PROP_RULES[account.provider]
+            .accounts[
+                account.accountType
+            ]
     ) {
 
         providerRules =
-            PROP_RULES[account.provider]
-                .accounts[
-                    account.accountType
-                ];
+            PROP_RULES[
+                account.provider
+            ].accounts[
+                account.accountType
+            ];
 
     }
 
@@ -338,8 +416,28 @@ function getAccountPayoutInfo(account) {
     if(!providerRules) {
 
         return {
+
             status: "--",
-            label: "Keine Regeln"
+
+            label:
+                "Keine Regeln"
+
+        };
+
+    }
+
+
+    if(
+        typeof analyzePayout !==
+        "function"
+    ) {
+
+        return {
+
+            status: "--",
+
+            label: "--"
+
         };
 
     }
@@ -357,7 +455,8 @@ function getAccountPayoutInfo(account) {
                 ),
 
             nextPayoutAmount:
-                account.nextPayoutAmount || 0
+                account.nextPayoutAmount ||
+                0
 
         };
 
@@ -372,10 +471,20 @@ function getAccountPayoutInfo(account) {
         return {
 
             status:
-                payout.status,
+                payout.status ||
+                "--",
 
             label:
-                payout.status
+                payout.status ||
+                "--",
+
+            message:
+                payout.message ||
+                "",
+
+            action:
+                payout.action ||
+                ""
 
         };
 
@@ -384,6 +493,7 @@ function getAccountPayoutInfo(account) {
 
         console.error(
             "Payout konnte nicht berechnet werden:",
+            account.accountName,
             error
         );
 
@@ -403,7 +513,7 @@ function getAccountPayoutInfo(account) {
 
 /*
 =========================================
-STATUS AMPEL
+ACCOUNT STATUS
 =========================================
 */
 
@@ -415,6 +525,24 @@ function getAccountStatus(account) {
         );
 
 
+    if(
+        typeof analyzeAccount !==
+        "function"
+    ) {
+
+        return {
+
+            level: "yellow",
+
+            icon: "🟡",
+
+            text: "CHECK"
+
+        };
+
+    }
+
+
     try {
 
         const engineAccount = {
@@ -424,7 +552,7 @@ function getAccountStatus(account) {
             buffer,
 
             nextPayoutAmount:
-                account.nextPayoutAmount ??
+                account.nextPayoutAmount ||
                 0
 
         };
@@ -438,7 +566,7 @@ function getAccountStatus(account) {
 
         const recommendation =
             String(
-                result.recommendation ??
+                result.recommendation ||
                 ""
             ).toUpperCase();
 
@@ -500,10 +628,12 @@ function getAccountStatus(account) {
     }
     catch(error) {
 
-        /*
-        Fallback falls Risk Engine
-        einmal nicht verfügbar ist.
-        */
+        console.error(
+            "Account Status Fehler:",
+            account.accountName,
+            error
+        );
+
 
         if(buffer <= 0) {
 
@@ -533,7 +663,6 @@ function getAccountStatus(account) {
     }
 
 }
-
 
 
 /*
@@ -567,9 +696,10 @@ function renderAccounts() {
         "";
 
 
-
     /*
+    =====================================
     KEINE ACCOUNTS
+    =====================================
     */
 
     if(accounts.length === 0) {
@@ -602,9 +732,10 @@ function renderAccounts() {
     }
 
 
-
     /*
+    =====================================
     ACCOUNT ZEILEN
+    =====================================
     */
 
     accounts.forEach(
@@ -648,6 +779,12 @@ function renderAccounts() {
                 getAccountStatus(
                     account
                 );
+
+
+            const balance =
+                Number(
+                    account.balance
+                ) || 0;
 
 
             const bufferPrefix =
@@ -699,17 +836,18 @@ function renderAccounts() {
 
                     <strong>
 
-                        $${Number(
-                            account.balance
-                        ).toLocaleString(
+                        ${balance.toLocaleString(
                             "en-US",
                             {
+                                style: "currency",
+                                currency: "USD",
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
                             }
                         )}
 
                     </strong>
+
 
                     <button
                         class="editBalanceButton"
@@ -732,7 +870,9 @@ function renderAccounts() {
                         }"
                     >
 
-                        ${bufferPrefix}$${buffer.toLocaleString(
+                        ${bufferPrefix}$${Math.abs(
+                            buffer
+                        ).toLocaleString(
                             "en-US",
                             {
                                 minimumFractionDigits: 2,
@@ -816,11 +956,10 @@ function renderAccounts() {
     );
 
 
-
     /*
-    =========================================
+    =====================================
     ACCOUNT AUSWAHL
-    =========================================
+    =====================================
     */
 
     document
@@ -835,7 +974,8 @@ function renderAccounts() {
                     event => {
 
                         const id =
-                            event.target.dataset
+                            event.target
+                                .dataset
                                 .accountId;
 
 
@@ -872,18 +1012,7 @@ function renderAccounts() {
                         );
 
 
-                        renderAccounts();
-
-                        renderPortfolio();
-
-                        if(
-                            typeof renderPortfolioOverview ===
-                            "function"
-                        ) {
-
-    renderPortfolioOverview();
-
-}
+                        refreshAccountUI();
 
                     }
                 );
@@ -892,11 +1021,10 @@ function renderAccounts() {
         );
 
 
-
     /*
-    =========================================
-    BALANCE MANUELL ÄNDERN
-    =========================================
+    =====================================
+    BALANCE ÄNDERN
+    =====================================
     */
 
     document
@@ -926,12 +1054,16 @@ function renderAccounts() {
                         }
 
 
+                        const oldBalance =
+                            Number(
+                                account.balance
+                            ) || 0;
+
+
                         const input =
                             prompt(
                                 `Aktuelle Balance für "${account.accountName}":`,
-                                Number(
-                                    account.balance
-                                ).toFixed(2)
+                                oldBalance.toFixed(2)
                             );
 
 
@@ -942,13 +1074,22 @@ function renderAccounts() {
                         }
 
 
+                        const normalizedInput =
+                            String(input)
+                                .trim()
+                                .replace(
+                                    /\s/g,
+                                    ""
+                                )
+                                .replace(
+                                    ",",
+                                    "."
+                                );
+
+
                         const newBalance =
                             Number(
-                                String(input)
-                                    .replace(
-                                        ",",
-                                        "."
-                                    )
+                                normalizedInput
                             );
 
 
@@ -967,6 +1108,21 @@ function renderAccounts() {
                         }
 
 
+                        /*
+                        Vorherige Balance merken
+                        */
+
+                        if(
+                            newBalance !==
+                            oldBalance
+                        ) {
+
+                            account.previousBalance =
+                                oldBalance;
+
+                        }
+
+
                         account.balance =
                             newBalance;
 
@@ -981,18 +1137,7 @@ function renderAccounts() {
                         );
 
 
-                        renderAccounts();
-
-                        renderPortfolio();
-
-                        if(
-                            typeof renderPortfolioOverview ===
-                            "function"
-                        ) {
-
-    renderPortfolioOverview();
-
-}
+                        refreshAccountUI();
 
                     }
                 );
@@ -1001,11 +1146,10 @@ function renderAccounts() {
         );
 
 
-
     /*
-    =========================================
-    ACCOUNT NAME BEARBEITEN
-    =========================================
+    =====================================
+    ACCOUNT NAME ÄNDERN
+    =====================================
     */
 
     document
@@ -1051,9 +1195,11 @@ function renderAccounts() {
                         }
 
 
-                        if(
-                            !newName.trim()
-                        ) {
+                        const cleanName =
+                            newName.trim();
+
+
+                        if(!cleanName) {
 
                             alert(
                                 "Der Account-Name darf nicht leer sein."
@@ -1065,7 +1211,7 @@ function renderAccounts() {
 
 
                         account.accountName =
-                            newName.trim();
+                            cleanName;
 
 
                         updateAccount(
@@ -1073,18 +1219,7 @@ function renderAccounts() {
                         );
 
 
-                        renderAccounts();
-
-                        renderPortfolio();
-
-                        if(
-                            typeof renderPortfolioOverview ===
-                            "function"
-                        ) {
-
-    renderPortfolioOverview();
-
-}
+                        refreshAccountUI();
 
                     }
                 );
@@ -1093,11 +1228,10 @@ function renderAccounts() {
         );
 
 
-
     /*
-    =========================================
+    =====================================
     DUPLIZIEREN
-    =========================================
+    =====================================
     */
 
     document
@@ -1125,10 +1259,19 @@ function renderAccounts() {
                         }
 
 
-                        selectedAccountIds
-                            .push(
-                                copy.id
-                            );
+                        if(
+                            !selectedAccountIds
+                                .includes(
+                                    copy.id
+                                )
+                        ) {
+
+                            selectedAccountIds
+                                .push(
+                                    copy.id
+                                );
+
+                        }
 
 
                         saveSelectedAccountIds(
@@ -1136,18 +1279,7 @@ function renderAccounts() {
                         );
 
 
-                        renderAccounts();
-
-                        renderPortfolio();
-
-                        if(
-                            typeof renderPortfolioOverview ===
-                            "function"
-                        ) {
-
-    renderPortfolioOverview();
-
-}
+                        refreshAccountUI();
 
                     }
                 );
@@ -1156,11 +1288,10 @@ function renderAccounts() {
         );
 
 
-
     /*
-    =========================================
+    =====================================
     LÖSCHEN
-    =========================================
+    =====================================
     */
 
     document
@@ -1180,9 +1311,7 @@ function renderAccounts() {
 
 
                         const account =
-                            getAccount(
-                                id
-                            );
+                            getAccount(id);
 
 
                         if(!account) {
@@ -1194,11 +1323,8 @@ function renderAccounts() {
 
                         const confirmed =
                             confirm(
-
                                 `Account "${account.accountName}" wirklich löschen?\n\n` +
-
                                 `Alle gespeicherten Trades dieses Accounts werden ebenfalls gelöscht.`
-
                             );
 
 
@@ -1218,7 +1344,8 @@ function renderAccounts() {
                             selectedAccountIds
                                 .filter(
                                     accountId =>
-                                        accountId !== id
+                                        accountId !==
+                                        id
                                 );
 
 
@@ -1227,18 +1354,7 @@ function renderAccounts() {
                         );
 
 
-                        renderAccounts();
-
-                        renderPortfolio();
-
-                        if(
-                            typeof renderPortfolioOverview ===
-                            "function"
-                        ) {
-
-    renderPortfolioOverview();
-
-}
+                        refreshAccountUI();
 
                     }
                 );
@@ -1247,21 +1363,17 @@ function renderAccounts() {
         );
 
 
-
     /*
-    =========================================
+    =====================================
     AUSWAHL ZÄHLEN
-    =========================================
+    =====================================
     */
 
     if(selectedAccountCount) {
 
-        selectedAccountCount
-            .textContent =
-
-                selectedAccountIds.length +
-
-                " Account(s) ausgewählt";
+        selectedAccountCount.textContent =
+            selectedAccountIds.length +
+            " Account(s) ausgewählt";
 
     }
 
