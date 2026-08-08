@@ -630,3 +630,56 @@ button:hover{
     }
 
 }
+
+.account-detail-program {
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.55;
+    letter-spacing: 0.8px;
+}
+
+.account-detail-item small {
+    display: block;
+    margin-top: 5px;
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+.account-next-action {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 13px;
+}
+
+.account-next-action-icon {
+    font-size: 25px;
+}
+
+.account-next-action strong {
+    font-size: 14px;
+}
+
+.account-next-action p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.account-next-action-green {
+    background: rgba(0, 200, 120, 0.08);
+    border: 1px solid rgba(0, 200, 120, 0.14);
+}
+
+.account-next-action-yellow {
+    background: rgba(255, 190, 0, 0.08);
+    border: 1px solid rgba(255, 190, 0, 0.14);
+}
+
+.account-next-action-red {
+    background: rgba(255, 70, 70, 0.08);
+    border: 1px solid rgba(255, 70, 70, 0.14);
+}
