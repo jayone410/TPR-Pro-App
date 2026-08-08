@@ -808,11 +808,18 @@ function renderAccounts() {
 
 
                 <td>
-
+                
+                    <button
+                        class="account-expand-button"
+                        data-account-id="${account.id}"
+                    >
+                        ▶
+                    </button>
+                
                     <strong>
                         ${account.accountName}
                     </strong>
-
+                
                 </td>
 
 
@@ -951,6 +958,37 @@ function renderAccounts() {
             accountList.appendChild(
                 row
             );
+            const detailsRow =
+    document.createElement(
+        "tr"
+    );
+
+
+detailsRow.id =
+    "accountDetails-" +
+    account.id;
+
+
+detailsRow.style.display =
+    "none";
+
+
+detailsRow.innerHTML = `
+
+    <td colspan="10">
+
+        <div class="account-details-container">
+
+        </div>
+
+    </td>
+
+`;
+
+
+accountList.appendChild(
+    detailsRow
+);
 
         }
     );
@@ -1361,7 +1399,67 @@ function renderAccounts() {
 
             }
         );
+/*
+=========================================
+ACCOUNT DETAILS AUF / ZUKLAPPEN
+=========================================
+*/
 
+document
+    .querySelectorAll(
+        ".account-expand-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const id =
+                        button.dataset
+                            .accountId;
+
+
+                    if(
+                        typeof toggleAccountDetails ===
+                        "function"
+                    ) {
+
+                        toggleAccountDetails(
+                            id
+                        );
+
+                    }
+
+
+                    button.textContent =
+                        button.textContent === "▶"
+                            ? "▼"
+                            : "▶";
+
+                }
+            );
+
+        }
+    );
+
+
+/*
+=========================================
+AUSWAHL ZÄHLEN
+=========================================
+*/
+
+if(selectedAccountCount) {
+
+    selectedAccountCount.textContent =
+        selectedAccountIds.length +
+        " Account(s) ausgewählt";
+
+}
+
+}
 
     /*
     =====================================
