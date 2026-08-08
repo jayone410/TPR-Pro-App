@@ -73,6 +73,271 @@ function renderPortfolio() {
     );
 }
 
+/*
+=========================================
+MISSION CONTROL / PORTFOLIO OVERVIEW
+=========================================
+*/
+
+function formatPortfolioMoney(value) {
+
+    const number =
+        Number(value);
+
+
+    if(!Number.isFinite(number)) {
+
+        return "$0.00";
+
+    }
+
+
+    return number.toLocaleString(
+        "en-US",
+        {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+
+function getMissionControlStatus(account) {
+
+    if(
+        typeof getAccountStatus ===
+        "function"
+    ) {
+
+        return getAccountStatus(account);
+
+    }
+
+
+    return {
+        level: "yellow",
+        icon: "🟡",
+        text: "CHECK"
+    };
+
+}
+
+
+function getMissionControlPayout(account) {
+
+    if(
+        typeof getAccountPayoutInfo !==
+        "function"
+    ) {
+
+        return {
+            status: "--",
+            label: "--"
+        };
+
+    }
+
+
+    return getAccountPayoutInfo(account);
+
+}
+
+
+function calculatePortfolioOverview() {
+
+    const accountList =
+        Array.isArray(accounts)
+            ? accounts
+            : [];
+
+
+    let totalBalance = 0;
+
+    let payoutReady = 0;
+
+    let tradeToday = 0;
+
+    let attention = 0;
+
+
+    accountList.forEach(account => {
+
+        totalBalance +=
+            Number(account.balance || 0);
+
+
+        const payout =
+            getMissionControlPayout(account);
+
+
+        const payoutStatus =
+            String(
+                payout.status || ""
+            ).toUpperCase();
+
+
+        if(
+            payoutStatus.includes("READY") ||
+            payoutStatus.includes("ELIGIBLE")
+        ) {
+
+            payoutReady++;
+
+        }
+
+
+        const status =
+            getMissionControlStatus(account);
+
+
+        if(status.level === "green") {
+
+            tradeToday++;
+
+        }
+
+
+        if(
+            status.level === "red" ||
+            status.level === "yellow"
+        ) {
+
+            attention++;
+
+        }
+
+    });
+
+
+    return {
+
+        accountCount:
+            accountList.length,
+
+        totalBalance,
+
+        payoutReady,
+
+        tradeToday,
+
+        attention
+
+    };
+
+}
+
+
+function renderPortfolioOverview() {
+
+    const data =
+        calculatePortfolioOverview();
+
+
+    const accountCount =
+        document.getElementById(
+            "portfolioAccountCount"
+        );
+
+
+    const balance =
+        document.getElementById(
+            "portfolioBalance"
+        );
+
+
+    const payoutReady =
+        document.getElementById(
+            "portfolioPayoutReady"
+        );
+
+
+    const tradeToday =
+        document.getElementById(
+            "portfolioTradeToday"
+        );
+
+
+    const riskCount =
+        document.getElementById(
+            "portfolioRiskCount"
+        );
+
+
+    const overallStatus =
+        document.getElementById(
+            "portfolioOverallStatus"
+        );
+
+
+    if(accountCount) {
+
+        accountCount.textContent =
+            data.accountCount;
+
+    }
+
+
+    if(balance) {
+
+        balance.textContent =
+            formatPortfolioMoney(
+                data.totalBalance
+            );
+
+    }
+
+
+    if(payoutReady) {
+
+        payoutReady.textContent =
+            data.payoutReady;
+
+    }
+
+
+    if(tradeToday) {
+
+        tradeToday.textContent =
+            data.tradeToday;
+
+    }
+
+
+    if(riskCount) {
+
+        riskCount.textContent =
+            data.attention;
+
+    }
+
+
+    if(overallStatus) {
+
+        if(data.attention > 0) {
+
+            overallStatus.textContent =
+                "● ATTENTION";
+
+            overallStatus.className =
+                "portfolio-status portfolio-status-yellow";
+
+        }
+        else {
+
+            overallStatus.textContent =
+                "● READY";
+
+            overallStatus.className =
+                "portfolio-status portfolio-status-green";
+
+        }
+
+    }
+
+}
 
 function renderSingleAccount(account) {
 
