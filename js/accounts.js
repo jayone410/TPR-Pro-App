@@ -9,10 +9,9 @@ Account Data & Storage
 let accounts = loadAccounts();
 
 
-
 /*
 =========================================
-ACCOUNTS LADEN / SPEICHERN
+STORAGE
 =========================================
 */
 
@@ -24,28 +23,35 @@ function loadAccounts() {
         );
 
 
-    if(saved) {
-
-        try {
-
-            return JSON.parse(saved);
-
-        }
-        catch(error) {
-
-            console.error(
-                "Accounts konnten nicht geladen werden:",
-                error
-            );
-
-        }
-
+    if(!saved) {
+        return [];
     }
 
 
-    return [];
-}
+    try {
 
+        const parsed =
+            JSON.parse(saved);
+
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    }
+    catch(error) {
+
+        console.error(
+            "Accounts konnten nicht geladen werden:",
+            error
+        );
+
+
+        return [];
+
+    }
+
+}
 
 
 function saveAccounts() {
@@ -56,7 +62,6 @@ function saveAccounts() {
     );
 
 }
-
 
 
 /*
@@ -72,6 +77,16 @@ function createAccount(
     startingBalance
 ) {
 
+    const start =
+        Number(startingBalance);
+
+
+    const safeStart =
+        Number.isFinite(start)
+            ? start
+            : 0;
+
+
     const account = {
 
         id:
@@ -85,18 +100,28 @@ function createAccount(
         accountName,
 
         startingBalance:
-            Number(startingBalance),
+            safeStart,
 
         balance:
-            Number(startingBalance),
+            safeStart,
 
-        totalTradingPnL: 0,
+        previousBalance:
+            null,
 
-        totalPayouts: 0,
+        balanceUpdatedAt:
+            new Date().toISOString(),
 
-        daysTraded: 0,
+        totalTradingPnL:
+            0,
 
-        trades: [],
+        totalPayouts:
+            0,
+
+        daysTraded:
+            0,
+
+        trades:
+            [],
 
         createdAt:
             new Date().toISOString()
@@ -104,7 +129,10 @@ function createAccount(
     };
 
 
-    accounts.push(account);
+    accounts.push(
+        account
+    );
+
 
     saveAccounts();
 
@@ -112,7 +140,6 @@ function createAccount(
     return account;
 
 }
-
 
 
 /*
@@ -125,11 +152,11 @@ function getAccount(accountId) {
 
     return accounts.find(
         account =>
-            account.id === accountId
+            account.id ===
+            accountId
     );
 
 }
-
 
 
 /*
@@ -143,12 +170,15 @@ function updateAccount(account) {
     const index =
         accounts.findIndex(
             item =>
-                item.id === account.id
+                item.id ===
+                account.id
         );
 
 
     if(index === -1) {
-        return;
+
+        return false;
+
     }
 
 
@@ -158,8 +188,10 @@ function updateAccount(account) {
 
     saveAccounts();
 
-}
 
+    return true;
+
+}
 
 
 /*
@@ -183,7 +215,6 @@ function removeAccount(accountId) {
 }
 
 
-
 /*
 =========================================
 ACCOUNT DUPLIZIEREN
@@ -193,7 +224,9 @@ ACCOUNT DUPLIZIEREN
 function duplicateAccount(accountId) {
 
     const source =
-        getAccount(accountId);
+        getAccount(
+            accountId
+        );
 
 
     if(!source) {
@@ -207,31 +240,36 @@ function duplicateAccount(accountId) {
 
         ...source,
 
-
         id:
             "TPR-" +
             Date.now(),
 
-
         accountName:
             source.accountName +
             " Copy",
-
 
         balance:
             Number(
                 source.startingBalance
             ),
 
+        previousBalance:
+            null,
 
-        totalTradingPnL: 0,
+        balanceUpdatedAt:
+            new Date().toISOString(),
 
-        totalPayouts: 0,
+        totalTradingPnL:
+            0,
 
-        daysTraded: 0,
+        totalPayouts:
+            0,
 
-        trades: [],
+        daysTraded:
+            0,
 
+        trades:
+            [],
 
         createdAt:
             new Date().toISOString()
@@ -239,7 +277,10 @@ function duplicateAccount(accountId) {
     };
 
 
-    accounts.push(copy);
+    accounts.push(
+        copy
+    );
+
 
     saveAccounts();
 
@@ -247,7 +288,6 @@ function duplicateAccount(accountId) {
     return copy;
 
 }
-
 
 
 /*
@@ -264,29 +304,37 @@ function loadSelectedAccountIds() {
         );
 
 
-    if(saved) {
+    if(!saved) {
 
-        try {
-
-            return JSON.parse(saved);
-
-        }
-        catch(error) {
-
-            console.error(
-                "Account Auswahl konnte nicht geladen werden:",
-                error
-            );
-
-        }
+        return [];
 
     }
 
 
-    return [];
+    try {
+
+        const parsed =
+            JSON.parse(saved);
+
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    }
+    catch(error) {
+
+        console.error(
+            "Account Auswahl konnte nicht geladen werden:",
+            error
+        );
+
+
+        return [];
+
+    }
 
 }
-
 
 
 function saveSelectedAccountIds(ids) {
@@ -299,8 +347,14 @@ function saveSelectedAccountIds(ids) {
 }
 
 
-
 function getSelectedAccounts(ids) {
+
+    if(!Array.isArray(ids)) {
+
+        return [];
+
+    }
+
 
     return accounts.filter(
         account =>
@@ -311,6 +365,92 @@ function getSelectedAccounts(ids) {
 
 }
 
+
+/*
+=========================================
+MONEY PARSER
+=========================================
+*/
+
+function parseMoney(value) {
+
+    if(
+        value === null ||
+        value === undefined
+    ) {
+
+        return 0;
+
+    }
+
+
+    if(
+        typeof value ===
+        "number"
+    ) {
+
+        return Number.isFinite(value)
+            ? value
+            : 0;
+
+    }
+
+
+    let text =
+        String(value)
+            .trim();
+
+
+    /*
+    Beispiele:
+
+    $120.00
+    $(460.00)
+    -290.000000
+    1,250.50
+    */
+
+
+    const parenthesesNegative =
+        text.includes("(") &&
+        text.includes(")");
+
+
+    text =
+        text
+            .replace(/\$/g, "")
+            .replace(/,/g, "")
+            .replace(/\(/g, "")
+            .replace(/\)/g, "")
+            .trim();
+
+
+    let number =
+        Number(text);
+
+
+    if(
+        !Number.isFinite(
+            number
+        )
+    ) {
+
+        return 0;
+
+    }
+
+
+    if(parenthesesNegative) {
+
+        number =
+            -Math.abs(number);
+
+    }
+
+
+    return number;
+
+}
 
 
 /*
@@ -324,8 +464,7 @@ function createTradeFingerprint(
 ) {
 
     /*
-    Topstep:
-    eindeutige Trade ID
+    TOPSTEP / TRADOVATE
     */
 
     if(trade.Id) {
@@ -339,8 +478,7 @@ function createTradeFingerprint(
 
 
     /*
-    Lucid:
-    Buy + Sell Fill IDs
+    LUCID
     */
 
     if(
@@ -349,28 +487,23 @@ function createTradeFingerprint(
     ) {
 
         return (
-
             "LUCID_" +
-
             (
                 trade.buyFillId ||
                 ""
             ) +
-
             "_" +
-
             (
                 trade.sellFillId ||
                 ""
             )
-
         );
 
     }
 
 
     /*
-    Fallback
+    FALLBACK
     */
 
     return JSON.stringify(
@@ -380,110 +513,38 @@ function createTradeFingerprint(
 }
 
 
-
 /*
 =========================================
-TRADE P&L LESEN
+GENERIC TRADE P&L
 =========================================
 */
 
-function parseMoney(value) {
+function getTradeGrossPnL(
+    trade
+) {
 
-    if(value === null || value === undefined) {
-        return 0;
-    }
+    return parseMoney(
 
-    if(typeof value === "number") {
-        return value;
-    }
+        trade.PnL ??
 
-    let text =
-        String(value).trim();
+        trade.pnl ??
 
-    /*
-    Beispiele:
-    $590.00
-    $(460.00)
-    -290.000000
-    */
-    const isParenthesesNegative =
-        text.includes("(") &&
-        text.includes(")");
+        trade["Profit/Loss"] ??
 
-    text =
-        text
-            .replace(/\$/g, "")
-            .replace(/,/g, "")
-            .replace(/\(/g, "")
-            .replace(/\)/g, "")
-            .trim();
+        0
 
-    let number =
-        Number(text);
+    );
 
-    if(!Number.isFinite(number)) {
-        return 0;
-    }
-
-    if(isParenthesesNegative) {
-        number =
-            -Math.abs(number);
-    }
-
-    return number;
 }
-
-
-function getTradePnLForBalance(trade) {
-
-    const pnl =
-        parseMoney(
-            trade.PnL ??
-            trade.pnl ??
-            trade["Profit/Loss"] ??
-            0
-        );
-
-    /*
-    Tradovate / Topstep:
-    PnL ist Gross P/L.
-    Gebühren separat abziehen.
-    */
-    if(trade.PnL !== undefined) {
-
-        const fees =
-            parseMoney(
-                trade.Fees ?? 0
-            );
-
-        const commissions =
-            parseMoney(
-                trade.Commissions ?? 0
-            );
-
-        return (
-            pnl
-            - Math.abs(fees)
-            - Math.abs(commissions)
-        );
-    }
-
-    /*
-    Lucid:
-    pnl ist bereits der Ergebniswert
-    */
-    return pnl;
-}
-
 
 
 /*
 =========================================
-ACCOUNT BALANCE NEU BERECHNEN
+LUCID NET P&L
 =========================================
 */
 
-function recalculateAccountBalance(
+function calculateLucidNetPnL(
     account
 ) {
 
@@ -495,44 +556,132 @@ function recalculateAccountBalance(
             : [];
 
 
-    const tradingPnL =
-        trades.reduce(
+    let grossPnL =
+        0;
 
-            (sum, trade) =>
+    let fees =
+        0;
 
-                sum +
-                getTradePnLForBalance(
-                    trade
-                ),
 
-            0
+    trades.forEach(
+        trade => {
+
+            const pnl =
+                parseMoney(
+                    trade.pnl ?? 0
+                );
+
+
+            grossPnL +=
+                pnl;
+
+
+            /*
+            Aktuell anhand deiner
+            Lucid CSV bestätigt:
+
+            $1 Kosten pro Contract
+            */
+
+            const qty =
+                Number(
+                    trade.qty ?? 0
+                );
+
+
+            if(
+                Number.isFinite(
+                    qty
+                )
+            ) {
+
+                fees +=
+                    Math.abs(qty);
+
+            }
+
+        }
+    );
+
+
+    const netPnL =
+        grossPnL -
+        fees;
+
+
+    return {
+
+        grossPnL,
+
+        fees,
+
+        netPnL
+
+    };
+
+}
+
+
+/*
+=========================================
+LUCID BALANCE AKTUALISIEREN
+=========================================
+*/
+
+function updateLucidBalanceFromTrades(
+    account
+) {
+
+    const performance =
+        calculateLucidNetPnL(
+            account
         );
 
 
-    const totalPayouts =
+    const oldBalance =
         Number(
-            account.totalPayouts ??
-            0
-        );
+            account.balance
+        ) || 0;
 
 
-    account.totalTradingPnL =
-        tradingPnL;
-
-
-    account.balance =
-
+    const newBalance =
         Number(
             account.startingBalance
         )
-
         +
+        performance.netPnL;
 
-        tradingPnL
 
-        -
+    if(
+        newBalance !==
+        oldBalance
+    ) {
 
-        totalPayouts;
+        account.previousBalance =
+            oldBalance;
+
+    }
+
+
+    account.totalTradingPnL =
+        performance.netPnL;
+
+
+    account.grossTradingPnL =
+        performance.grossPnL;
+
+
+    account.totalTradingFees =
+        performance.fees;
+
+
+    account.balance =
+        newBalance;
+
+
+    account.balanceUpdatedAt =
+        new Date()
+            .toISOString();
 
 
     return account;
@@ -540,10 +689,44 @@ function recalculateAccountBalance(
 }
 
 
+/*
+=========================================
+TOPSTEP / TRADOVATE ANALYTICS P&L
+=========================================
+*/
+
+function calculateTopstepGrossPnL(
+    account
+) {
+
+    const trades =
+        Array.isArray(
+            account.trades
+        )
+            ? account.trades
+            : [];
+
+
+    return trades.reduce(
+        (sum, trade) => {
+
+            return (
+                sum +
+                parseMoney(
+                    trade.PnL ?? 0
+                )
+            );
+
+        },
+        0
+    );
+
+}
+
 
 /*
 =========================================
-TRADES IN ACCOUNT IMPORTIEREN
+TRADES IMPORTIEREN
 =========================================
 */
 
@@ -553,7 +736,9 @@ function importTradesToAccount(
 ) {
 
     const account =
-        getAccount(accountId);
+        getAccount(
+            accountId
+        );
 
 
     if(!account) {
@@ -567,46 +752,61 @@ function importTradesToAccount(
 
     if(
         !Array.isArray(
-            account.trades
+            rawTrades
         )
     ) {
 
-        account.trades = [];
+        throw new Error(
+            "Ungültige Trade-Daten."
+        );
 
     }
 
 
+    if(
+        !Array.isArray(
+            account.trades
+        )
+    ) {
+
+        account.trades =
+            [];
+
+    }
+
 
     /*
-    Bereits bekannte Trades
+    Bereits vorhandene Trades
     */
 
     const existingFingerprints =
         new Set(
 
             account.trades.map(
+                trade => {
 
-                trade =>
+                    return (
+                        trade._fingerprint ||
+                        createTradeFingerprint(
+                            trade
+                        )
+                    );
 
-                    trade._fingerprint ||
-
-                    createTradeFingerprint(
-                        trade
-                    )
-
+                }
             )
 
         );
 
 
-    let added = 0;
+    let added =
+        0;
 
-    let duplicates = 0;
-
+    let duplicates =
+        0;
 
 
     /*
-    Neue Trades prüfen
+    Neue Trades importieren
     */
 
     rawTrades.forEach(
@@ -653,18 +853,62 @@ function importTradesToAccount(
     );
 
 
-
     /*
-    Balance neu berechnen
+    =====================================
+    PROVIDER SPEZIFISCHE BALANCE LOGIK
+    =====================================
     */
 
-    /*recalculateAccountBalance(
-        account
-    );*/
+
+    const provider =
+        String(
+            account.provider ||
+            ""
+        ).toLowerCase();
 
 
     /*
-    Account speichern
+    LUCID
+
+    CSV beeinflusst Balance automatisch.
+    */
+
+    if(
+        provider ===
+        "lucid"
+    ) {
+
+        updateLucidBalanceFromTrades(
+            account
+        );
+
+    }
+
+
+    /*
+    TOPSTEP / TRADOVATE
+
+    Current Balance bleibt manuell.
+
+    CSV dient hier vorerst nur
+    Analytics / Trade Historie.
+    */
+
+    if(
+        provider ===
+        "topstep"
+    ) {
+
+        account.totalTradingPnL =
+            calculateTopstepGrossPnL(
+                account
+            );
+
+    }
+
+
+    /*
+    Speichern
     */
 
     updateAccount(
@@ -682,10 +926,19 @@ function importTradesToAccount(
             account.trades.length,
 
         tradingPnL:
-            account.totalTradingPnL,
+            account.totalTradingPnL ||
+            0,
 
         balance:
-            account.balance
+            account.balance,
+
+        grossTradingPnL:
+            account.grossTradingPnL ||
+            0,
+
+        totalTradingFees:
+            account.totalTradingFees ||
+            0
 
     };
 
