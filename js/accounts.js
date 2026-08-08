@@ -1007,3 +1007,34 @@ function importTradesToAccount(
     };
 
 }
+
+function setAccountProgram(
+    accountId,
+    program
+) {
+
+    const account =
+        getAccount(
+            accountId
+        );
+
+
+    if(!account) {
+
+        return false;
+
+    }
+
+
+    account.program =
+        program;
+
+
+    updateAccount(
+        account
+    );
+
+
+    return true;
+
+}
