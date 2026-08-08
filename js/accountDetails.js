@@ -109,35 +109,106 @@ function getAccountDLLRemaining(account) {
 
 function getAccountConsistencyInfo(account) {
 
-    const limit =
-        Number(
-            account.consistencyLimit
-        );
-
-
-    const current =
-        Number(
-            account.consistencyCurrent
+    const rules =
+        getAccountDetailRules(
+            account
         );
 
 
     if(
-        !Number.isFinite(limit) ||
-        !Number.isFinite(current)
+        !rules ||
+        !Number.isFinite(
+            Number(
+                rules.consistencyLimit
+            )
+        )
     ) {
 
         return null;
+
     }
+
+
+    const limit =
+        Number(
+            rules.consistencyLimit
+        );
+
+
+    const dailyPnL =
+        getTradeDayNetPnL(
+            account
+        );
+
+
+    const dayValues =
+        Object.values(
+            dailyPnL
+        );
+
+
+    if(dayValues.length === 0) {
+
+        return {
+
+            current: 0,
+
+            limit,
+
+            bestDay: 0,
+
+            totalProfit: 0
+
+        };
+
+    }
+
+
+    const positiveDays =
+        dayValues.filter(
+            value =>
+                value > 0
+        );
+
+
+    const totalProfit =
+        positiveDays.reduce(
+            (sum, value) =>
+                sum + value,
+            0
+        );
+
+
+    const bestDay =
+        positiveDays.length > 0
+            ? Math.max(
+                ...positiveDays
+            )
+            : 0;
+
+
+    const current =
+        totalProfit > 0
+            ? (
+                bestDay /
+                totalProfit
+            ) * 100
+            : 0;
 
 
     return {
 
         current,
-        limit
+
+        limit,
+
+        bestDay,
+
+        totalProfit
 
     };
-}
 
+}
 /*
 =========================================
 TRADING DAYS AUS TRADES
