@@ -1,83 +1,35 @@
-function renderPortfolio() {
+/*
+=========================================
+TPR PRO AI
+Portfolio Engine
+=========================================
+*/
 
-    const selectedAccounts =
-        getSelectedAccounts(
-            selectedAccountIds
-        );
-
-        renderPerformanceAnalytics(
-            selectedAccounts
-        );
-    
-        renderAdvancedAnalytics(
-            selectedAccounts
-        );
-
-        renderEquityChart(
-            selectedAccounts
-        );
-
-        renderDrawdownChart(
-            selectedAccounts
-        );
-    
-        renderHourlyChart(
-            selectedAccounts
-        );
-    
-    if(selectedAccounts.length === 0) {
-
-        document.getElementById(
-            "score"
-        ).textContent = "--";
-
-        document.getElementById(
-            "recommendation"
-        ).textContent =
-            "Keine Accounts ausgewählt.";
-
-        document.getElementById(
-            "reasons"
-        ).innerHTML = "";
-
-        document.getElementById(
-            "riskFactors"
-        ).innerHTML = "";
-
-        document.getElementById(
-            "payout"
-        ).innerHTML =
-            "Account auswählen.";
-
-        document.getElementById(
-            "dailyPlan"
-        ).innerHTML =
-            "Account auswählen.";
-
-        return;
-    }
-
-
-    if(selectedAccounts.length === 1) {
-
-        renderSingleAccount(
-            selectedAccounts[0]
-        );
-
-        return;
-    }
-
-
-    renderMultipleAccounts(
-        selectedAccounts
-    );
-}
 
 /*
 =========================================
-MISSION CONTROL / PORTFOLIO OVERVIEW
+HELPER
 =========================================
 */
+
+function getSelectedPortfolioAccounts() {
+
+    if(
+        typeof getSelectedAccounts !== "function" ||
+        !Array.isArray(selectedAccountIds)
+    ) {
+
+        return [];
+
+    }
+
+
+    return getSelectedAccounts(
+        selectedAccountIds
+    );
+
+}
+
 
 function formatPortfolioMoney(value) {
 
@@ -105,6 +57,247 @@ function formatPortfolioMoney(value) {
 }
 
 
+function getProviderRules(account) {
+
+    if(
+        typeof PROP_RULES === "undefined" ||
+        !PROP_RULES ||
+        !PROP_RULES[account.provider] ||
+        !PROP_RULES[account.provider].accounts ||
+        !PROP_RULES[account.provider]
+            .accounts[account.accountType]
+    ) {
+
+        return null;
+
+    }
+
+
+    return PROP_RULES[
+        account.provider
+    ].accounts[
+        account.accountType
+    ];
+
+}
+
+
+
+/*
+=========================================
+HAUPT PORTFOLIO RENDER
+=========================================
+*/
+
+function renderPortfolio() {
+
+    const selectedAccounts =
+        getSelectedPortfolioAccounts();
+
+
+    /*
+    Analytics
+    */
+
+    if(
+        typeof renderPerformanceAnalytics ===
+        "function"
+    ) {
+
+        renderPerformanceAnalytics(
+            selectedAccounts
+        );
+
+    }
+
+
+    if(
+        typeof renderAdvancedAnalytics ===
+        "function"
+    ) {
+
+        renderAdvancedAnalytics(
+            selectedAccounts
+        );
+
+    }
+
+
+    if(
+        typeof renderEquityChart ===
+        "function"
+    ) {
+
+        renderEquityChart(
+            selectedAccounts
+        );
+
+    }
+
+
+    if(
+        typeof renderDrawdownChart ===
+        "function"
+    ) {
+
+        renderDrawdownChart(
+            selectedAccounts
+        );
+
+    }
+
+
+    if(
+        typeof renderHourlyChart ===
+        "function"
+    ) {
+
+        renderHourlyChart(
+            selectedAccounts
+        );
+
+    }
+
+
+
+    /*
+    Keine Accounts ausgewählt
+    */
+
+    if(selectedAccounts.length === 0) {
+
+        renderEmptyPortfolio();
+
+        return;
+
+    }
+
+
+
+    /*
+    Einzelaccount
+    */
+
+    if(selectedAccounts.length === 1) {
+
+        renderSingleAccount(
+            selectedAccounts[0]
+        );
+
+        return;
+
+    }
+
+
+
+    /*
+    Mehrere Accounts
+    */
+
+    renderMultipleAccounts(
+        selectedAccounts
+    );
+
+}
+
+
+
+/*
+=========================================
+KEINE AUSWAHL
+=========================================
+*/
+
+function renderEmptyPortfolio() {
+
+    const score =
+        document.getElementById(
+            "score"
+        );
+
+    const recommendation =
+        document.getElementById(
+            "recommendation"
+        );
+
+    const reasons =
+        document.getElementById(
+            "reasons"
+        );
+
+    const riskFactors =
+        document.getElementById(
+            "riskFactors"
+        );
+
+    const payout =
+        document.getElementById(
+            "payout"
+        );
+
+    const dailyPlan =
+        document.getElementById(
+            "dailyPlan"
+        );
+
+
+    if(score) {
+
+        score.textContent =
+            "--";
+
+    }
+
+
+    if(recommendation) {
+
+        recommendation.textContent =
+            "Keine Accounts ausgewählt.";
+
+    }
+
+
+    if(reasons) {
+
+        reasons.innerHTML =
+            "";
+
+    }
+
+
+    if(riskFactors) {
+
+        riskFactors.innerHTML =
+            "";
+
+    }
+
+
+    if(payout) {
+
+        payout.innerHTML =
+            "Account auswählen.";
+
+    }
+
+
+    if(dailyPlan) {
+
+        dailyPlan.innerHTML =
+            "Account auswählen.";
+
+    }
+
+}
+
+
+
+/*
+=========================================
+MISSION CONTROL STATUS
+=========================================
+*/
+
 function getMissionControlStatus(account) {
 
     if(
@@ -112,19 +305,32 @@ function getMissionControlStatus(account) {
         "function"
     ) {
 
-        return getAccountStatus(account);
+        return getAccountStatus(
+            account
+        );
 
     }
 
 
     return {
+
         level: "yellow",
+
         icon: "🟡",
+
         text: "CHECK"
+
     };
 
 }
 
+
+
+/*
+=========================================
+MISSION CONTROL PAYOUT
+=========================================
+*/
 
 function getMissionControlPayout(account) {
 
@@ -134,24 +340,40 @@ function getMissionControlPayout(account) {
     ) {
 
         return {
+
             status: "--",
+
             label: "--"
+
         };
 
     }
 
 
-    return getAccountPayoutInfo(account);
+    return getAccountPayoutInfo(
+        account
+    );
 
 }
 
 
+
+/*
+=========================================
+MISSION CONTROL BERECHNEN
+=========================================
+*/
+
 function calculatePortfolioOverview() {
 
+    /*
+    WICHTIG:
+    Mission Control verwendet nur
+    die aktuell ausgewählten Accounts.
+    */
+
     const accountList =
-        Array.isArray(accounts)
-            ? accounts
-            : [];
+        getSelectedPortfolioAccounts();
 
 
     let totalBalance = 0;
@@ -162,54 +384,115 @@ function calculatePortfolioOverview() {
 
     let attention = 0;
 
+    let greenCount = 0;
 
-    accountList.forEach(account => {
+    let yellowCount = 0;
 
-        totalBalance +=
-            Number(account.balance || 0);
-
-
-        const payout =
-            getMissionControlPayout(account);
+    let redCount = 0;
 
 
-        const payoutStatus =
-            String(
-                payout.status || ""
-            ).toUpperCase();
+    accountList.forEach(
+        account => {
+
+            /*
+            Balance
+            */
+
+            const balance =
+                Number(
+                    account.balance
+                );
 
 
-        if(
-            payoutStatus.includes("READY") ||
-            payoutStatus.includes("ELIGIBLE")
-        ) {
+            if(
+                Number.isFinite(balance)
+            ) {
 
-            payoutReady++;
+                totalBalance +=
+                    balance;
+
+            }
+
+
+
+            /*
+            Payout
+            */
+
+            const payout =
+                getMissionControlPayout(
+                    account
+                );
+
+
+            const payoutStatus =
+                String(
+                    payout.status || ""
+                ).toUpperCase();
+
+
+            if(
+                payoutStatus.includes(
+                    "READY"
+                ) ||
+                payoutStatus.includes(
+                    "ELIGIBLE"
+                )
+            ) {
+
+                payoutReady++;
+
+            }
+
+
+
+            /*
+            Account Status
+            */
+
+            const status =
+                getMissionControlStatus(
+                    account
+                );
+
+
+            if(
+                status.level ===
+                "green"
+            ) {
+
+                greenCount++;
+
+                tradeToday++;
+
+            }
+
+
+            if(
+                status.level ===
+                "yellow"
+            ) {
+
+                yellowCount++;
+
+                attention++;
+
+            }
+
+
+            if(
+                status.level ===
+                "red"
+            ) {
+
+                redCount++;
+
+                attention++;
+
+            }
 
         }
-
-
-        const status =
-            getMissionControlStatus(account);
-
-
-        if(status.level === "green") {
-
-            tradeToday++;
-
-        }
-
-
-        if(
-            status.level === "red" ||
-            status.level === "yellow"
-        ) {
-
-            attention++;
-
-        }
-
-    });
+    );
 
 
     return {
@@ -223,12 +506,25 @@ function calculatePortfolioOverview() {
 
         tradeToday,
 
-        attention
+        attention,
+
+        greenCount,
+
+        yellowCount,
+
+        redCount
 
     };
 
 }
 
+
+
+/*
+=========================================
+MISSION CONTROL RENDERN
+=========================================
+*/
 
 function renderPortfolioOverview() {
 
@@ -272,6 +568,10 @@ function renderPortfolioOverview() {
         );
 
 
+    /*
+    Accounts
+    */
+
     if(accountCount) {
 
         accountCount.textContent =
@@ -279,6 +579,10 @@ function renderPortfolioOverview() {
 
     }
 
+
+    /*
+    Balance
+    */
 
     if(balance) {
 
@@ -290,6 +594,10 @@ function renderPortfolioOverview() {
     }
 
 
+    /*
+    Payout Ready
+    */
+
     if(payoutReady) {
 
         payoutReady.textContent =
@@ -297,6 +605,10 @@ function renderPortfolioOverview() {
 
     }
 
+
+    /*
+    Trade Today
+    */
 
     if(tradeToday) {
 
@@ -306,6 +618,10 @@ function renderPortfolioOverview() {
     }
 
 
+    /*
+    Attention
+    */
+
     if(riskCount) {
 
         riskCount.textContent =
@@ -314,9 +630,58 @@ function renderPortfolioOverview() {
     }
 
 
+
+    /*
+    Gesamtstatus
+    */
+
     if(overallStatus) {
 
-        if(data.attention > 0) {
+        /*
+        Keine Auswahl
+        */
+
+        if(
+            data.accountCount === 0
+        ) {
+
+            overallStatus.textContent =
+                "● NO SELECTION";
+
+            overallStatus.className =
+                "portfolio-status";
+
+            return;
+
+        }
+
+
+        /*
+        Mindestens ein roter Account
+        */
+
+        if(
+            data.redCount > 0
+        ) {
+
+            overallStatus.textContent =
+                "● RISK";
+
+            overallStatus.className =
+                "portfolio-status portfolio-status-red";
+
+            return;
+
+        }
+
+
+        /*
+        Gelber Account
+        */
+
+        if(
+            data.yellowCount > 0
+        ) {
 
             overallStatus.textContent =
                 "● ATTENTION";
@@ -324,35 +689,65 @@ function renderPortfolioOverview() {
             overallStatus.className =
                 "portfolio-status portfolio-status-yellow";
 
-        }
-        else {
-
-            overallStatus.textContent =
-                "● READY";
-
-            overallStatus.className =
-                "portfolio-status portfolio-status-green";
+            return;
 
         }
+
+
+        /*
+        Alle grün
+        */
+
+        overallStatus.textContent =
+            "● READY";
+
+        overallStatus.className =
+            "portfolio-status portfolio-status-green";
 
     }
 
 }
 
+
+
+/*
+=========================================
+EINZELACCOUNT
+=========================================
+*/
+
 function renderSingleAccount(account) {
+
+    const balance =
+        Number(
+            account.balance
+        ) || 0;
+
+
+    const startingBalance =
+        Number(
+            account.startingBalance
+        ) || 0;
+
 
     const engineAccount = {
 
         ...account,
 
         buffer:
-            Number(account.balance) -
-            Number(account.startingBalance),
+            balance -
+            startingBalance,
 
         nextPayoutAmount:
-            account.nextPayoutAmount || 0
+            account.nextPayoutAmount ||
+            0
+
     };
 
+
+    /*
+    Account Analyse
+    */
 
     const result =
         analyzeAccount(
@@ -360,17 +755,49 @@ function renderSingleAccount(account) {
         );
 
 
-    document.getElementById(
-        "score"
-    ).textContent =
-        result.score + " / 100";
+
+    /*
+    Score
+    */
+
+    const score =
+        document.getElementById(
+            "score"
+        );
 
 
-    document.getElementById(
-        "recommendation"
-    ).textContent =
-        result.recommendation;
+    if(score) {
 
+        score.textContent =
+            result.score +
+            " / 100";
+
+    }
+
+
+
+    /*
+    Recommendation
+    */
+
+    const recommendation =
+        document.getElementById(
+            "recommendation"
+        );
+
+
+    if(recommendation) {
+
+        recommendation.textContent =
+            result.recommendation;
+
+    }
+
+
+
+    /*
+    Reasons
+    */
 
     const reasons =
         document.getElementById(
@@ -378,72 +805,136 @@ function renderSingleAccount(account) {
         );
 
 
-    reasons.innerHTML = "";
+    if(reasons) {
+
+        reasons.innerHTML =
+            "";
 
 
-    result.reasons.forEach(
-        reason => {
+        if(
+            Array.isArray(
+                result.reasons
+            )
+        ) {
 
-            const item =
-                document.createElement("p");
+            result.reasons.forEach(
+                reason => {
 
-            item.textContent =
-                "• " + reason;
+                    const item =
+                        document.createElement(
+                            "p"
+                        );
 
-            reasons.appendChild(item);
+
+                    item.textContent =
+                        "• " + reason;
+
+
+                    reasons.appendChild(
+                        item
+                    );
+
+                }
+            );
+
         }
-    );
+
+    }
 
 
-    document.getElementById(
-        "riskFactors"
-    ).innerHTML = `
 
-        <p>
-            Account Risk:
-            ${result.risk.accountRisk}/100
-        </p>
+    /*
+    Risk Factors
+    */
 
-        <p>
-            Market Risk:
-            ${result.risk.marketRisk}/100
-        </p>
+    const riskFactors =
+        document.getElementById(
+            "riskFactors"
+        );
 
-        <p>
-            Performance Risk:
-            ${result.risk.performanceRisk}/100
-        </p>
 
-        <p>
-            Discipline Risk:
-            ${result.risk.disciplineRisk}/100
-        </p>
-    `;
+    if(
+        riskFactors &&
+        result.risk
+    ) {
 
+        riskFactors.innerHTML = `
+
+            <p>
+                Account Risk:
+                ${result.risk.accountRisk}/100
+            </p>
+
+            <p>
+                Market Risk:
+                ${result.risk.marketRisk}/100
+            </p>
+
+            <p>
+                Performance Risk:
+                ${result.risk.performanceRisk}/100
+            </p>
+
+            <p>
+                Discipline Risk:
+                ${result.risk.disciplineRisk}/100
+            </p>
+
+        `;
+
+    }
+
+
+
+    /*
+    Provider Regeln
+    */
 
     const providerRules =
-        PROP_RULES[
-            account.provider
-        ]?.accounts[
-            account.accountType
-        ];
+        getProviderRules(
+            account
+        );
+
+
+    const payoutBox =
+        document.getElementById(
+            "payout"
+        );
+
+
+    const dailyPlanBox =
+        document.getElementById(
+            "dailyPlan"
+        );
 
 
     if(!providerRules) {
 
-        document.getElementById(
-            "payout"
-        ).innerHTML =
-            "Keine Payout-Regeln hinterlegt.";
+        if(payoutBox) {
 
-        document.getElementById(
-            "dailyPlan"
-        ).innerHTML =
-            "Kein Daily Plan verfügbar.";
+            payoutBox.innerHTML =
+                "Keine Payout-Regeln hinterlegt.";
+
+        }
+
+
+        if(dailyPlanBox) {
+
+            dailyPlanBox.innerHTML =
+                "Kein Daily Plan verfügbar.";
+
+        }
+
 
         return;
+
     }
 
+
+
+    /*
+    Payout
+    */
 
     const payout =
         analyzePayout(
@@ -452,90 +943,173 @@ function renderSingleAccount(account) {
         );
 
 
+
+    /*
+    Daily Plan
+    */
+
     const dailyPlan =
         createDailyPlan(
             engineAccount,
             payout
         );
 
-    const readinessDecision =
-    buildReadinessDecision(
-        engineAccount,
-        result,
-        payout,
-        dailyPlan,
-        providerRules
-    );
 
 
-renderReadinessDecision(
-    readinessDecision
-);
+    /*
+    Readiness 2.0
+    */
 
-    document.getElementById(
-        "payout"
-    ).innerHTML = `
+    if(
+        typeof buildReadinessDecision ===
+            "function" &&
+        typeof renderReadinessDecision ===
+            "function"
+    ) {
 
-        <p>
-            Account:
-            <strong>
-                ${account.accountName}
-            </strong>
-        </p>
-
-        <p>
-            Payout Status:
-            <strong>
-                ${payout.status}
-            </strong>
-        </p>
-
-        <p>
-            ${payout.message}
-        </p>
-
-        <p>
-            AI Empfehlung:
-            <br>
-            ${payout.action}
-        </p>
-    `;
+        const readinessDecision =
+            buildReadinessDecision(
+                engineAccount,
+                result,
+                payout,
+                dailyPlan,
+                providerRules
+            );
 
 
-    document.getElementById(
-        "dailyPlan"
-    ).innerHTML = `
+        renderReadinessDecision(
+            readinessDecision
+        );
 
-        <p>
-            Risk Mode:
-            <strong>
-                ${dailyPlan.mode}
-            </strong>
-        </p>
+    }
 
-        <p>
-            Tagesziel:
-            ${dailyPlan.target}
-        </p>
 
-        <p>
-            Max Loss:
-            ${dailyPlan.maxLoss}
-        </p>
 
-        <p>
-            AI Hinweise:
-        </p>
+    /*
+    Payout Card
+    */
 
-        ${dailyPlan.advice
-            .map(
-                item =>
-                    "✓ " + item
+    if(payoutBox) {
+
+        payoutBox.innerHTML = `
+
+            <p>
+
+                Account:
+
+                <strong>
+                    ${account.accountName}
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Payout Status:
+
+                <strong>
+                    ${payout.status}
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                ${payout.message || ""}
+
+            </p>
+
+
+            <p>
+
+                AI Empfehlung:
+
+                <br>
+
+                ${payout.action || ""}
+
+            </p>
+
+        `;
+
+    }
+
+
+
+    /*
+    Daily Plan Card
+    */
+
+    if(dailyPlanBox) {
+
+        const advice =
+            Array.isArray(
+                dailyPlan.advice
             )
-            .join("<br>")}
-    `;
+                ? dailyPlan.advice
+                : [];
+
+
+        dailyPlanBox.innerHTML = `
+
+            <p>
+
+                Risk Mode:
+
+                <strong>
+                    ${dailyPlan.mode}
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Tagesziel:
+
+                ${dailyPlan.target}
+
+            </p>
+
+
+            <p>
+
+                Max Loss:
+
+                ${dailyPlan.maxLoss}
+
+            </p>
+
+
+            <p>
+
+                AI Hinweise:
+
+            </p>
+
+
+            ${advice
+                .map(
+                    item =>
+                        "✓ " + item
+                )
+                .join("<br>")}
+
+        `;
+
+    }
+
 }
 
+
+
+/*
+=========================================
+MEHRERE ACCOUNTS
+=========================================
+*/
 
 function renderMultipleAccounts(
     selectedAccounts
@@ -543,20 +1117,52 @@ function renderMultipleAccounts(
 
     const totalBalance =
         selectedAccounts.reduce(
-            (sum, account) =>
-                sum +
-                Number(account.balance),
+            (sum, account) => {
+
+                const balance =
+                    Number(
+                        account.balance
+                    );
+
+
+                return (
+                    sum +
+                    (
+                        Number.isFinite(
+                            balance
+                        )
+                            ? balance
+                            : 0
+                    )
+                );
+
+            },
             0
         );
 
 
     const totalStartingBalance =
         selectedAccounts.reduce(
-            (sum, account) =>
-                sum +
-                Number(
-                    account.startingBalance
-                ),
+            (sum, account) => {
+
+                const start =
+                    Number(
+                        account.startingBalance
+                    );
+
+
+                return (
+                    sum +
+                    (
+                        Number.isFinite(
+                            start
+                        )
+                            ? start
+                            : 0
+                    )
+                );
+
+            },
             0
         );
 
@@ -568,77 +1174,188 @@ function renderMultipleAccounts(
 
     const totalTrades =
         selectedAccounts.reduce(
-            (sum, account) =>
-                sum +
-                (
+            (sum, account) => {
+
+                const tradeCount =
                     Array.isArray(
                         account.trades
                     )
                         ? account.trades.length
-                        : 0
-                ),
+                        : 0;
+
+
+                return (
+                    sum +
+                    tradeCount
+                );
+
+            },
             0
         );
 
 
-    document.getElementById(
-        "score"
-    ).textContent =
-        selectedAccounts.length +
-        " Accounts";
+
+    /*
+    Score
+    */
+
+    const score =
+        document.getElementById(
+            "score"
+        );
 
 
-    document.getElementById(
-        "recommendation"
-    ).textContent =
-        "Portfolio Ansicht";
+    if(score) {
+
+        score.textContent =
+            selectedAccounts.length +
+            " Accounts";
+
+    }
 
 
-    document.getElementById(
-        "reasons"
-    ).innerHTML = `
 
-        <p>
-            Gesamtbalance:
-            <strong>
-                $${totalBalance
-                    .toLocaleString()}
-            </strong>
-        </p>
+    /*
+    Recommendation
+    */
 
-        <p>
-            Gesamt P&L:
-            <strong>
-                ${totalProfit >= 0 ? "+" : ""}
-                $${totalProfit
-                    .toLocaleString()}
-            </strong>
-        </p>
-
-        <p>
-            Gesamt Trades:
-            <strong>
-                ${totalTrades}
-            </strong>
-        </p>
-    `;
+    const recommendation =
+        document.getElementById(
+            "recommendation"
+        );
 
 
-    document.getElementById(
-        "riskFactors"
-    ).innerHTML =
-        "<p>Portfolio-Analyse aktiv.</p>";
+    if(recommendation) {
+
+        recommendation.textContent =
+            "Portfolio Ansicht";
+
+    }
 
 
-    document.getElementById(
-        "payout"
-    ).innerHTML =
-        selectedAccounts.length +
-        " Accounts ausgewählt.";
+
+    /*
+    Portfolio Details
+    */
+
+    const reasons =
+        document.getElementById(
+            "reasons"
+        );
 
 
-    document.getElementById(
-        "dailyPlan"
-    ).innerHTML =
-        "Portfolio Daily Plan folgt.";
+    if(reasons) {
+
+        reasons.innerHTML = `
+
+            <p>
+
+                Gesamtbalance:
+
+                <strong>
+
+                    ${formatPortfolioMoney(
+                        totalBalance
+                    )}
+
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Gesamt P&L:
+
+                <strong>
+
+                    ${
+                        totalProfit >= 0
+                            ? "+"
+                            : ""
+                    }
+
+                    ${formatPortfolioMoney(
+                        totalProfit
+                    )}
+
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Gesamt Trades:
+
+                <strong>
+                    ${totalTrades}
+                </strong>
+
+            </p>
+
+        `;
+
+    }
+
+
+
+    /*
+    Risk Box
+    */
+
+    const riskFactors =
+        document.getElementById(
+            "riskFactors"
+        );
+
+
+    if(riskFactors) {
+
+        riskFactors.innerHTML =
+            "<p>Portfolio-Analyse aktiv.</p>";
+
+    }
+
+
+
+    /*
+    Payout
+    */
+
+    const payoutBox =
+        document.getElementById(
+            "payout"
+        );
+
+
+    if(payoutBox) {
+
+        payoutBox.innerHTML =
+
+            selectedAccounts.length +
+
+            " Accounts ausgewählt.";
+
+    }
+
+
+
+    /*
+    Daily Plan
+    */
+
+    const dailyPlanBox =
+        document.getElementById(
+            "dailyPlan"
+        );
+
+
+    if(dailyPlanBox) {
+
+        dailyPlanBox.innerHTML =
+            "Portfolio Daily Plan folgt.";
+
+    }
+
 }
