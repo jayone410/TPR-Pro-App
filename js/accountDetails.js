@@ -1,113 +1,628 @@
 /*
 =========================================
 TPR PRO AI
-Account Details
+Account Control Center
 =========================================
 */
 
 
-function getAccountNetGrowth(account) {
+/*
+=========================================
+HELPER
+=========================================
+*/
 
-    const balance =
-        Number(account.balance) || 0;
+function getAccountDetailRules(account) {
 
-    const start =
-        Number(account.startingBalance) || 0;
-
-    return balance - start;
-}
-
-
-function getAccountPreviousBalance(account) {
-
-    const value =
-        Number(account.previousBalance);
-
-    if(Number.isFinite(value)) {
-        return value;
-    }
-
-    return null;
-}
-
-
-function getAccountDailyPnL(account) {
-
-    const previous =
-        getAccountPreviousBalance(account);
-
-    if(previous === null) {
+    if(
+        typeof getEffectiveRules !==
+        "function"
+    ) {
         return null;
     }
+
+
+    return getEffectiveRules(
+        account
+    );
+
+}
+
+
+function formatAccountDetailMoney(
+    value,
+    showPlus = false
+) {
+
+    const number =
+        Number(value);
+
+
+    if(!Number.isFinite(number)) {
+
+        return "--";
+
+    }
+
+
+    const formatted =
+        Math.abs(number)
+            .toLocaleString(
+                "en-US",
+                {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+
+
+    if(number < 0) {
+
+        return "-" + formatted;
+
+    }
+
+
+    if(
+        showPlus &&
+        number > 0
+    ) {
+
+        return "+" + formatted;
+
+    }
+
+
+    return formatted;
+
+}
+
+
+function formatAccountPercent(value) {
+
+    const number =
+        Number(value);
+
+
+    if(!Number.isFinite(number)) {
+
+        return "--";
+
+    }
+
 
     return (
-        Number(account.balance || 0) -
-        previous
+        number.toFixed(1) +
+        " %"
     );
+
 }
 
 
-function getAccountRemainingDrawdown(account) {
+/*
+=========================================
+CURRENT PROFIT
+=========================================
+*/
+
+function getAccountCurrentProfit(account) {
 
     /*
-    Erstmal gespeicherten Wert verwenden.
-    Später provider-spezifisch automatisieren.
+    Bevorzugt den bereits von accounts.js
+    netto berechneten Trading P&L.
     */
 
-    const value =
+    const tradingPnL =
         Number(
-            account.remainingDrawdown
+            account.totalTradingPnL
         );
 
-    if(Number.isFinite(value)) {
-        return value;
+
+    if(
+        Number.isFinite(
+            tradingPnL
+        )
+    ) {
+
+        return tradingPnL;
+
     }
+
+
+    /*
+    Fallback
+    */
+
+    const balance =
+        Number(
+            account.balance
+        );
+
+
+    const start =
+        Number(
+            account.startingBalance
+        );
+
+
+    if(
+        Number.isFinite(balance) &&
+        Number.isFinite(start)
+    ) {
+
+        return (
+            balance -
+            start
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+/*
+=========================================
+TRADE DATUM NORMALISIEREN
+=========================================
+*/
+
+function getTradeDateKey(trade) {
+
+    const dateValue =
+        trade.TradeDay ||
+        trade.tradeDay ||
+        trade.date ||
+        trade.Date ||
+        trade.EnteredAt ||
+        trade.boughtTimestamp ||
+        trade.soldTimestamp ||
+        null;
+
+
+    if(!dateValue) {
+
+        return null;
+
+    }
+
+
+    const text =
+        String(dateValue)
+            .trim();
+
+
+    /*
+    US Format:
+    08/07/2026 ...
+    */
+
+    const usMatch =
+        text.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+        );
+
+
+    if(usMatch) {
+
+        return (
+            usMatch[3] +
+            "-" +
+            usMatch[1]
+                .padStart(
+                    2,
+                    "0"
+                ) +
+            "-" +
+            usMatch[2]
+                .padStart(
+                    2,
+                    "0"
+                )
+        );
+
+    }
+
+
+    /*
+    ISO Format
+    */
+
+    const isoMatch =
+        text.match(
+            /^(\d{4})-(\d{2})-(\d{2})/
+        );
+
+
+    if(isoMatch) {
+
+        return (
+            isoMatch[1] +
+            "-" +
+            isoMatch[2] +
+            "-" +
+            isoMatch[3]
+        );
+
+    }
+
 
     return null;
+
 }
 
 
-function getAccountDLLRemaining(account) {
+/*
+=========================================
+TRADE NET P&L
+=========================================
+*/
 
-    const dll =
-        Number(
-            account.dailyLossLimit
-        );
+function getAccountDetailTradeNetPnL(
+    account,
+    trade
+) {
 
-    if(!Number.isFinite(dll)) {
-        return null;
-    }
-
-
-    const todayPnL =
-        getAccountDailyPnL(account);
+    const provider =
+        String(
+            account.provider ||
+            ""
+        ).toLowerCase();
 
 
-    if(todayPnL === null) {
-        return dll;
+    let pnl =
+        typeof parseMoney ===
+        "function"
+
+            ? parseMoney(
+                trade.PnL ??
+                trade.pnl ??
+                0
+            )
+
+            : Number(
+                trade.PnL ??
+                trade.pnl ??
+                0
+            ) || 0;
+
+
+    /*
+    TOPSTEP / TRADOVATE
+    */
+
+    if(
+        provider ===
+        "topstep"
+    ) {
+
+        const fees =
+            typeof parseMoney ===
+            "function"
+
+                ? Math.abs(
+                    parseMoney(
+                        trade.Fees ??
+                        0
+                    )
+                )
+
+                : Math.abs(
+                    Number(
+                        trade.Fees ??
+                        0
+                    ) || 0
+                );
+
+
+        const commissions =
+            typeof parseMoney ===
+            "function"
+
+                ? Math.abs(
+                    parseMoney(
+                        trade.Commissions ??
+                        0
+                    )
+                )
+
+                : Math.abs(
+                    Number(
+                        trade.Commissions ??
+                        0
+                    ) || 0
+                );
+
+
+        pnl =
+            pnl -
+            fees -
+            commissions;
+
     }
 
 
     /*
-    Bei Verlust reduziert sich
-    der verbleibende DLL.
+    LUCID
+    $1 Kosten pro Contract,
+    entsprechend unserer aktuellen
+    CSV-Balance-Engine.
     */
 
-    if(todayPnL < 0) {
+    if(
+        provider ===
+        "lucid"
+    ) {
 
-        return Math.max(
-            0,
-            dll + todayPnL
-        );
+        const qty =
+            Math.abs(
+                Number(
+                    trade.qty ??
+                    0
+                ) || 0
+            );
+
+
+        pnl =
+            pnl -
+            qty;
 
     }
 
 
-    return dll;
+    return pnl;
+
 }
 
 
-function getAccountConsistencyInfo(account) {
+/*
+=========================================
+DAILY NET P&L
+=========================================
+*/
+
+function getAccountDailyNetPnL(account) {
+
+    const trades =
+        Array.isArray(
+            account.trades
+        )
+            ? account.trades
+            : [];
+
+
+    const daily =
+        {};
+
+
+    trades.forEach(
+        trade => {
+
+            const day =
+                getTradeDateKey(
+                    trade
+                );
+
+
+            if(!day) {
+
+                return;
+
+            }
+
+
+            if(
+                daily[day] ===
+                undefined
+            ) {
+
+                daily[day] =
+                    0;
+
+            }
+
+
+            daily[day] +=
+                getAccountDetailTradeNetPnL(
+                    account,
+                    trade
+                );
+
+        }
+    );
+
+
+    return daily;
+
+}
+
+
+/*
+=========================================
+TRADING DAYS
+=========================================
+*/
+
+function getAccountTradingDays(account) {
+
+    return Object.keys(
+        getAccountDailyNetPnL(
+            account
+        )
+    ).sort();
+
+}
+
+
+function getAccountTradingDayCount(
+    account
+) {
+
+    return getAccountTradingDays(
+        account
+    ).length;
+
+}
+
+
+/*
+=========================================
+LETZTER HANDELSTAG
+=========================================
+*/
+
+function getAccountLastTradingDayInfo(
+    account
+) {
+
+    const daily =
+        getAccountDailyNetPnL(
+            account
+        );
+
+
+    const days =
+        Object.keys(
+            daily
+        ).sort();
+
+
+    if(
+        days.length === 0
+    ) {
+
+        return {
+
+            date: null,
+
+            pnl: 0,
+
+            previousBalance:
+                null
+
+        };
+
+    }
+
+
+    const latestDay =
+        days[
+            days.length - 1
+        ];
+
+
+    const latestPnL =
+        Number(
+            daily[
+                latestDay
+            ]
+        ) || 0;
+
+
+    const balance =
+        Number(
+            account.balance
+        );
+
+
+    const previousBalance =
+        Number.isFinite(balance)
+
+            ? balance -
+                latestPnL
+
+            : null;
+
+
+    return {
+
+        date:
+            latestDay,
+
+        pnl:
+            latestPnL,
+
+        previousBalance
+
+    };
+
+}
+
+
+/*
+=========================================
+PAYOUT CYCLE DAILY DATA
+=========================================
+*/
+
+function getAccountCycleDailyPnL(
+    account
+) {
+
+    const daily =
+        getAccountDailyNetPnL(
+            account
+        );
+
+
+    /*
+    Später kann payoutCycleStartDate
+    automatisch nach jedem Payout gesetzt werden.
+    */
+
+    const cycleStart =
+        account.payoutCycleStartDate ||
+        null;
+
+
+    if(!cycleStart) {
+
+        return daily;
+
+    }
+
+
+    const filtered =
+        {};
+
+
+    Object.keys(daily)
+        .sort()
+        .forEach(
+            day => {
+
+                if(
+                    day >=
+                    cycleStart
+                ) {
+
+                    filtered[day] =
+                        daily[day];
+
+                }
+
+            }
+        );
+
+
+    return filtered;
+
+}
+
+
+/*
+=========================================
+CONSISTENCY
+=========================================
+*/
+
+function getAccountConsistencyInfo(
+    account
+) {
 
     const rules =
         getAccountDetailRules(
@@ -115,14 +630,7 @@ function getAccountConsistencyInfo(account) {
         );
 
 
-    if(
-        !rules ||
-        !Number.isFinite(
-            Number(
-                rules.consistencyLimit
-            )
-        )
-    ) {
+    if(!rules) {
 
         return null;
 
@@ -135,19 +643,30 @@ function getAccountConsistencyInfo(account) {
         );
 
 
-    const dailyPnL =
-        getTradeDayNetPnL(
+    if(
+        !Number.isFinite(limit)
+    ) {
+
+        return null;
+
+    }
+
+
+    const daily =
+        getAccountCycleDailyPnL(
             account
         );
 
 
-    const dayValues =
+    const values =
         Object.values(
-            dailyPnL
+            daily
         );
 
 
-    if(dayValues.length === 0) {
+    if(
+        values.length === 0
+    ) {
 
         return {
 
@@ -157,43 +676,76 @@ function getAccountConsistencyInfo(account) {
 
             bestDay: 0,
 
-            totalProfit: 0
+            totalNetProfit: 0,
+
+            minimumProfitNeeded: 0
 
         };
 
     }
 
 
-    const positiveDays =
-        dayValues.filter(
-            value =>
-                value > 0
+    const bestDay =
+        Math.max(
+            0,
+            ...values
         );
 
 
-    const totalProfit =
-        positiveDays.reduce(
+    const totalNetProfit =
+        values.reduce(
             (sum, value) =>
-                sum + value,
+                sum +
+                value,
             0
         );
 
 
-    const bestDay =
-        positiveDays.length > 0
-            ? Math.max(
-                ...positiveDays
-            )
-            : 0;
+    let current =
+        0;
 
 
-    const current =
-        totalProfit > 0
+    if(
+        totalNetProfit >
+        0
+    ) {
+
+        current =
+            (
+                bestDay /
+                totalNetProfit
+            ) *
+            100;
+
+    }
+
+
+    /*
+    Gesamtprofit, der mindestens
+    nötig wäre, damit der beste Tag
+    dem Consistency-Limit entspricht.
+    */
+
+    const requiredTotalProfit =
+        limit > 0
+
             ? (
                 bestDay /
-                totalProfit
-            ) * 100
+                (
+                    limit /
+                    100
+                )
+            )
+
             : 0;
+
+
+    const minimumProfitNeeded =
+        Math.max(
+            0,
+            requiredTotalProfit -
+            totalNetProfit
+        );
 
 
     return {
@@ -204,120 +756,24 @@ function getAccountConsistencyInfo(account) {
 
         bestDay,
 
-        totalProfit
+        totalNetProfit,
+
+        minimumProfitNeeded
 
     };
 
 }
+
+
 /*
 =========================================
-TRADING DAYS AUS TRADES
+WINNING DAYS
 =========================================
 */
 
-function getAccountTradingDays(account) {
-
-    const trades =
-        Array.isArray(account.trades)
-            ? account.trades
-            : [];
-
-
-    const days =
-        new Set();
-
-
-    trades.forEach(trade => {
-
-        let dateValue =
-            trade.TradeDay ||
-            trade.tradeDay ||
-            trade.date ||
-            trade.Date ||
-            trade.entryTime ||
-            trade.EnteredAt ||
-            null;
-
-
-        if(!dateValue) {
-            return;
-        }
-
-
-        /*
-        Nur Datum verwenden.
-        Funktioniert z.B. mit:
-        08/07/2026 00:00:00 -05:00
-        08/07/2026 16:10:05 +02:00
-        */
-
-        const text =
-            String(dateValue)
-                .trim();
-
-
-        const match =
-            text.match(
-                /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
-            );
-
-
-        if(match) {
-
-            const key =
-                match[3] +
-                "-" +
-                match[1].padStart(2, "0") +
-                "-" +
-                match[2].padStart(2, "0");
-
-
-            days.add(key);
-
-            return;
-        }
-
-
-        /*
-        ISO Datum
-        */
-
-        const isoMatch =
-            text.match(
-                /^(\d{4})-(\d{2})-(\d{2})/
-            );
-
-
-        if(isoMatch) {
-
-            days.add(
-                isoMatch[1] +
-                "-" +
-                isoMatch[2] +
-                "-" +
-                isoMatch[3]
-            );
-
-        }
-
-    });
-
-
-    return Array.from(days)
-        .sort();
-
-}
-
-
-function getAccountTradingDayCount(account) {
-
-    return getAccountTradingDays(
-        account
-    ).length;
-
-}
-
-function getAccountPayoutDetail(account) {
+function getAccountWinningDaysInfo(
+    account
+) {
 
     const rules =
         getAccountDetailRules(
@@ -325,69 +781,187 @@ function getAccountPayoutDetail(account) {
         );
 
 
-    const tradingDays =
-        getAccountTradingDayCount(
+    if(!rules) {
+
+        return null;
+
+    }
+
+
+    const required =
+        Number(
+            rules.minWinningDays
+        );
+
+
+    const minProfit =
+        Number(
+            rules.winningDayMinProfit
+        );
+
+
+    if(
+        !Number.isFinite(required) ||
+        !Number.isFinite(minProfit)
+    ) {
+
+        return null;
+
+    }
+
+
+    const daily =
+        getAccountCycleDailyPnL(
             account
         );
 
 
-    const netGrowth =
-        getAccountNetGrowth(
+    const qualifying =
+        Object.values(
+            daily
+        )
+            .filter(
+                pnl =>
+                    pnl >=
+                    minProfit
+            )
+            .length;
+
+
+    return {
+
+        current:
+            qualifying,
+
+        required,
+
+        remaining:
+            Math.max(
+                0,
+                required -
+                qualifying
+            ),
+
+        minimumDayProfit:
+            minProfit
+
+    };
+
+}
+
+
+/*
+=========================================
+TRADING DAY REQUIREMENT
+=========================================
+*/
+
+function getAccountTradingDayRequirement(
+    account
+) {
+
+    const rules =
+        getAccountDetailRules(
             account
         );
 
 
     if(!rules) {
 
+        return null;
+
+    }
+
+
+    const required =
+        Number(
+            rules.minTradingDays
+        );
+
+
+    if(
+        !Number.isFinite(required)
+    ) {
+
+        return null;
+
+    }
+
+
+    const current =
+        Object.keys(
+            getAccountCycleDailyPnL(
+                account
+            )
+        ).length;
+
+
+    return {
+
+        current,
+
+        required,
+
+        remaining:
+            Math.max(
+                0,
+                required -
+                current
+            )
+
+    };
+
+}
+
+
+/*
+=========================================
+PAYOUT AVAILABLE
+=========================================
+*/
+
+function getAccountPayoutAvailability(
+    account
+) {
+
+    const rules =
+        getAccountDetailRules(
+            account
+        );
+
+
+    if(!rules) {
+
+        return null;
+
+    }
+
+
+    if(
+        rules.stage !==
+        "funded"
+    ) {
+
         return {
 
-            tradingDays,
+            eligible: false,
 
-            requiredDays: null,
+            available: 0,
 
-            remainingDays: null,
+            stillNeeded: 0,
 
-            remainingAmount: null
+            reason:
+                "Evaluation"
 
         };
 
     }
 
 
-    /*
-    Trading Days
-    */
-
-    const requiredDays =
-        Number(
-            rules.minTradingDays
+    const currentProfit =
+        getAccountCurrentProfit(
+            account
         );
-
-
-    const hasDayRequirement =
-        Number.isFinite(
-            requiredDays
-        );
-
-
-    const remainingDays =
-        hasDayRequirement
-            ? Math.max(
-                0,
-                requiredDays -
-                tradingDays
-            )
-            : 0;
-
-
-    /*
-    Dollar-Betrag bis Payout
-    */
-
-    const recommendedBuffer =
-        Number(
-            rules.recommendedBuffer
-        ) || 0;
 
 
     const minPayout =
@@ -396,105 +970,168 @@ function getAccountPayoutDetail(account) {
         ) || 0;
 
 
+    const payoutPercent =
+        Number.isFinite(
+            Number(
+                rules.payoutPercent
+            )
+        )
+
+            ? Number(
+                rules.payoutPercent
+            )
+
+            : 100;
+
+
     /*
-    Für einen sinnvollen Payout:
-    Ziel = Buffer + Mindestpayout
+    Profit, der überhaupt
+    auszahlbar ist.
     */
 
-    const payoutTarget =
-        recommendedBuffer +
-        minPayout;
-
-
-    const remainingAmount =
+    let withdrawableProfit =
         Math.max(
             0,
-            payoutTarget -
-            netGrowth
+            currentProfit
         );
 
 
-    return {
+    /*
+    Buffer-Regel
+    z.B. LucidPro.
+    */
 
-        tradingDays,
-
-        requiredDays:
-            hasDayRequirement
-                ? requiredDays
-                : null,
-
-        remainingDays,
-
-        recommendedBuffer,
-
-        minPayout,
-
-        payoutTarget,
-
-        remainingAmount
-
-    };
-
-}
+    const bufferBalance =
+        Number(
+            rules.bufferBalance
+        );
 
 
-function formatAccountDetailMoney(value) {
+    const rulesStartBalance =
+        Number(
+            rules.startingBalance
+        );
+
 
     if(
-        value === null ||
-        value === undefined ||
-        !Number.isFinite(
-            Number(value)
+        Number.isFinite(
+            bufferBalance
+        ) &&
+        Number.isFinite(
+            rulesStartBalance
         )
     ) {
 
-        return "--";
+        const requiredBuffer =
+            bufferBalance -
+            rulesStartBalance;
+
+
+        withdrawableProfit =
+            Math.max(
+                0,
+                currentProfit -
+                requiredBuffer
+            );
+
     }
 
 
-    const number =
-        Number(value);
+    /*
+    Payout Percentage
+    */
+
+    let available =
+        withdrawableProfit *
+        (
+            payoutPercent /
+            100
+        );
 
 
-    return (
-        number > 0
-            ? "+"
-            : ""
-    ) +
-    number.toLocaleString(
-        "en-US",
-        {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
+    /*
+    Caps
+    */
+
+    let maxPayout =
+        Number(
+            rules.maxPayout
+        );
+
+
+    if(
+        !Number.isFinite(
+            maxPayout
+        )
+    ) {
+
+        const payoutNumber =
+            Number(
+                account.payoutCount
+            ) || 0;
+
+
+        if(
+            payoutNumber === 0 &&
+            Number.isFinite(
+                Number(
+                    rules.maxPayoutFirst
+                )
+            )
+        ) {
+
+            maxPayout =
+                Number(
+                    rules.maxPayoutFirst
+                );
+
         }
-    );
-}
+        else if(
+            payoutNumber > 0 &&
+            Number.isFinite(
+                Number(
+                    rules.maxPayoutLater
+                )
+            )
+        ) {
+
+            maxPayout =
+                Number(
+                    rules.maxPayoutLater
+                );
+
+        }
+
+    }
 
 
-function buildAccountDetailsHTML(account) {
+    if(
+        Number.isFinite(
+            maxPayout
+        )
+    ) {
 
-    const netGrowth =
-        getAccountNetGrowth(
+        available =
+            Math.min(
+                available,
+                maxPayout
+            );
+
+    }
+
+
+    /*
+    Day Requirements
+    */
+
+    const tradingDays =
+        getAccountTradingDayRequirement(
             account
         );
 
 
-    const previousBalance =
-        getAccountPreviousBalance(
-            account
-        );
-
-
-    const todayPnL =
-        getAccountDailyPnL(
-            account
-        );
-
-
-    const payout =
-        getAccountPayoutDetail(
+    const winningDays =
+        getAccountWinningDaysInfo(
             account
         );
 
@@ -505,20 +1142,883 @@ function buildAccountDetailsHTML(account) {
         );
 
 
-    const remainingDrawdown =
-        getAccountRemainingDrawdown(
+    let eligible =
+        true;
+
+
+    let reason =
+        "Ready";
+
+
+    if(
+        tradingDays &&
+        tradingDays.remaining >
+        0
+    ) {
+
+        eligible =
+            false;
+
+        reason =
+            tradingDays.remaining +
+            " Trading Day(s) fehlen";
+
+    }
+
+
+    if(
+        winningDays &&
+        winningDays.remaining >
+        0
+    ) {
+
+        eligible =
+            false;
+
+        reason =
+            winningDays.remaining +
+            " Winning Day(s) fehlen";
+
+    }
+
+
+    if(
+        consistency &&
+        consistency.current >
+        consistency.limit
+    ) {
+
+        eligible =
+            false;
+
+        reason =
+            "Consistency zu hoch";
+
+    }
+
+
+    if(
+        available <
+        minPayout
+    ) {
+
+        eligible =
+            false;
+
+
+        if(
+            reason ===
+            "Ready"
+        ) {
+
+            reason =
+                "Minimum Payout noch nicht erreicht";
+
+        }
+
+    }
+
+
+    const stillNeeded =
+        Math.max(
+            0,
+            minPayout -
+            available
+        );
+
+
+    return {
+
+        eligible,
+
+        available:
+            eligible
+                ? available
+                : 0,
+
+        potentialAvailable:
+            available,
+
+        minPayout,
+
+        stillNeeded,
+
+        reason
+
+    };
+
+}
+
+
+/*
+=========================================
+REMAINING DRAWDOWN
+=========================================
+*/
+
+function getAccountDrawdownInfo(
+    account
+) {
+
+    const rules =
+        getAccountDetailRules(
             account
         );
 
 
-    const dllRemaining =
-        getAccountDLLRemaining(
+    if(!rules) {
+
+        return null;
+
+    }
+
+
+    const maxLoss =
+        Number(
+            rules.maxLossLimit
+        );
+
+
+    if(
+        !Number.isFinite(
+            maxLoss
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    /*
+    Account-spezifischer Override
+    gewinnt immer.
+    */
+
+    const manualFloor =
+        Number(
+            account.currentDrawdownFloor
+        );
+
+
+    if(
+        Number.isFinite(
+            manualFloor
+        )
+    ) {
+
+        const currentValue =
+            rules.balanceMode ===
+            "profitBalance"
+
+                ? getAccountCurrentProfit(
+                    account
+                )
+
+                : Number(
+                    account.balance
+                );
+
+
+        return {
+
+            floor:
+                manualFloor,
+
+            remaining:
+                Math.max(
+                    0,
+                    currentValue -
+                    manualFloor
+                ),
+
+            source:
+                "Manual"
+
+        };
+
+    }
+
+
+    const daily =
+        getAccountCycleDailyPnL(
             account
         );
 
 
-    let payoutHTML =
-        `
+    const values =
+        Object.values(
+            daily
+        );
+
+
+    /*
+    TOPSTEP XFA:
+    Profit Balance startet bei 0.
+    */
+
+    if(
+        rules.balanceMode ===
+        "profitBalance"
+    ) {
+
+        let cumulative =
+            0;
+
+        let highestEOD =
+            0;
+
+
+        values.forEach(
+            pnl => {
+
+                cumulative +=
+                    pnl;
+
+
+                highestEOD =
+                    Math.max(
+                        highestEOD,
+                        cumulative
+                    );
+
+            }
+        );
+
+
+        let floor =
+            highestEOD -
+            maxLoss;
+
+
+        const lockedMLL =
+            Number(
+                rules.lockedMLL
+            );
+
+
+        if(
+            Number.isFinite(
+                lockedMLL
+            )
+        ) {
+
+            floor =
+                Math.min(
+                    floor,
+                    lockedMLL
+                );
+
+        }
+
+
+        const currentProfit =
+            getAccountCurrentProfit(
+                account
+            );
+
+
+        return {
+
+            floor,
+
+            highestEOD,
+
+            remaining:
+                Math.max(
+                    0,
+                    currentProfit -
+                    floor
+                ),
+
+            source:
+                "EOD Trailing"
+
+        };
+
+    }
+
+
+    /*
+    Lucid / klassische Account Balance
+    */
+
+    let cumulative =
+        Number(
+            rules.startingBalance
+        ) || 0;
+
+
+    let highestEOD =
+        cumulative;
+
+
+    values.forEach(
+        pnl => {
+
+            cumulative +=
+                pnl;
+
+
+            highestEOD =
+                Math.max(
+                    highestEOD,
+                    cumulative
+                );
+
+        }
+    );
+
+
+    let floor =
+        highestEOD -
+        maxLoss;
+
+
+    const lockedBalance =
+        Number(
+            rules.lockedMLLBalance
+        );
+
+
+    if(
+        Number.isFinite(
+            lockedBalance
+        )
+    ) {
+
+        floor =
+            Math.min(
+                floor,
+                lockedBalance
+            );
+
+    }
+
+
+    const currentBalance =
+        Number(
+            account.balance
+        );
+
+
+    return {
+
+        floor,
+
+        highestEOD,
+
+        remaining:
+            Number.isFinite(
+                currentBalance
+            )
+
+                ? Math.max(
+                    0,
+                    currentBalance -
+                    floor
+                )
+
+                : null,
+
+        source:
+            "EOD Trailing"
+
+    };
+
+}
+
+
+/*
+=========================================
+DLL / DAILY RISK
+=========================================
+*/
+
+function getAccountDLLInfo(account) {
+
+    const rules =
+        getAccountDetailRules(
+            account
+        );
+
+
+    if(!rules) {
+
+        return null;
+
+    }
+
+
+    let limit =
+        Number(
+            rules.fixedDLL
+        );
+
+
+    if(
+        !Number.isFinite(limit)
+    ) {
+
+        limit =
+            Number(
+                rules.dll
+            );
+
+    }
+
+
+    if(
+        !Number.isFinite(limit)
+    ) {
+
+        return null;
+
+    }
+
+
+    const lastDay =
+        getAccountLastTradingDayInfo(
+            account
+        );
+
+
+    const lossUsed =
+        lastDay.pnl < 0
+
+            ? Math.abs(
+                lastDay.pnl
+            )
+
+            : 0;
+
+
+    return {
+
+        limit,
+
+        used:
+            lossUsed,
+
+        remaining:
+            Math.max(
+                0,
+                limit -
+                lossUsed
+            )
+
+    };
+
+}
+
+
+/*
+=========================================
+NEXT ACTION
+=========================================
+*/
+
+function getAccountNextAction(
+    account
+) {
+
+    const payout =
+        getAccountPayoutAvailability(
+            account
+        );
+
+
+    const drawdown =
+        getAccountDrawdownInfo(
+            account
+        );
+
+
+    const consistency =
+        getAccountConsistencyInfo(
+            account
+        );
+
+
+    if(
+        drawdown &&
+        drawdown.remaining <=
+        250
+    ) {
+
+        return {
+
+            level:
+                "red",
+
+            icon:
+                "🔴",
+
+            title:
+                "PROTECT ACCOUNT",
+
+            text:
+                "Remaining Drawdown ist sehr niedrig."
+
+        };
+
+    }
+
+
+    if(
+        payout &&
+        payout.eligible
+    ) {
+
+        return {
+
+            level:
+                "green",
+
+            icon:
+                "💰",
+
+            title:
+                "PAYOUT READY",
+
+            text:
+                formatAccountDetailMoney(
+                    payout.available
+                ) +
+                " aktuell auszahlbar."
+
+        };
+
+    }
+
+
+    if(
+        consistency &&
+        consistency.current >
+        consistency.limit
+    ) {
+
+        return {
+
+            level:
+                "yellow",
+
+            icon:
+                "🟡",
+
+            title:
+                "BUILD CONSISTENCY",
+
+            text:
+                formatAccountDetailMoney(
+                    consistency.minimumProfitNeeded
+                ) +
+                " zusätzlicher Net Profit erforderlich."
+
+        };
+
+    }
+
+
+    if(
+        payout &&
+        payout.reason
+    ) {
+
+        return {
+
+            level:
+                "yellow",
+
+            icon:
+                "🟡",
+
+            title:
+                "BUILD ACCOUNT",
+
+            text:
+                payout.reason
+
+        };
+
+    }
+
+
+    return {
+
+        level:
+            "green",
+
+        icon:
+            "🟢",
+
+        title:
+            "TRADE NORMAL",
+
+        text:
+            "Account befindet sich im normalen Arbeitsbereich."
+
+    };
+
+}
+
+
+/*
+=========================================
+HTML HELPERS
+=========================================
+*/
+
+function buildDetailMetric(
+    label,
+    value,
+    subtext = ""
+) {
+
+    return `
+
+        <div class="account-detail-item">
+
+            <span>
+                ${label}
+            </span>
+
+            <strong>
+                ${value}
+            </strong>
+
+            ${
+                subtext
+                    ? `
+                        <small>
+                            ${subtext}
+                        </small>
+                    `
+                    : ""
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+/*
+=========================================
+DETAIL HTML
+=========================================
+*/
+
+function buildAccountDetailsHTML(
+    account
+) {
+
+    const rules =
+        getAccountDetailRules(
+            account
+        );
+
+
+    if(!rules) {
+
+        return `
+
+            <div class="account-detail-content">
+
+                <p>
+                    ⚠️ Keine Rules für diesen Account gefunden.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    const currentProfit =
+        getAccountCurrentProfit(
+            account
+        );
+
+
+    const lastDay =
+        getAccountLastTradingDayInfo(
+            account
+        );
+
+
+    const tradingDays =
+        getAccountTradingDayRequirement(
+            account
+        );
+
+
+    const winningDays =
+        getAccountWinningDaysInfo(
+            account
+        );
+
+
+    const consistency =
+        getAccountConsistencyInfo(
+            account
+        );
+
+
+    const payout =
+        getAccountPayoutAvailability(
+            account
+        );
+
+
+    const drawdown =
+        getAccountDrawdownInfo(
+            account
+        );
+
+
+    const dll =
+        getAccountDLLInfo(
+            account
+        );
+
+
+    const nextAction =
+        getAccountNextAction(
+            account
+        );
+
+
+    /*
+    ACCOUNT
+    */
+
+    let accountHTML = `
+
+        <div class="account-detail-section">
+
+            <div class="account-detail-section-title">
+                ACCOUNT
+            </div>
+
+            <div class="account-detail-grid">
+
+                ${buildDetailMetric(
+                    "Current Profit",
+                    formatAccountDetailMoney(
+                        currentProfit,
+                        true
+                    )
+                )}
+
+                ${buildDetailMetric(
+                    "Current Balance",
+                    formatAccountDetailMoney(
+                        account.balance
+                    )
+                )}
+
+                ${buildDetailMetric(
+                    "Previous Balance",
+                    lastDay.previousBalance !==
+                        null
+
+                        ? formatAccountDetailMoney(
+                            lastDay.previousBalance
+                        )
+
+                        : "--"
+                )}
+
+                ${buildDetailMetric(
+                    "Last Trading Day",
+                    formatAccountDetailMoney(
+                        lastDay.pnl,
+                        true
+                    ),
+                    lastDay.date ||
+                    ""
+                )}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /*
+    PAYOUT
+    */
+
+    let payoutMetrics =
+        "";
+
+
+    if(tradingDays) {
+
+        payoutMetrics +=
+            buildDetailMetric(
+                "Trading Days",
+                tradingDays.current +
+                " / " +
+                tradingDays.required,
+                tradingDays.remaining +
+                " remaining"
+            );
+
+    }
+
+
+    if(winningDays) {
+
+        payoutMetrics +=
+            buildDetailMetric(
+                "Winning Days",
+                winningDays.current +
+                " / " +
+                winningDays.required,
+                "Min " +
+                formatAccountDetailMoney(
+                    winningDays.minimumDayProfit
+                ) +
+                " / day"
+            );
+
+    }
+
+
+    if(payout) {
+
+        payoutMetrics +=
+            buildDetailMetric(
+                "Payout Available",
+                formatAccountDetailMoney(
+                    payout.available
+                ),
+                payout.reason
+            );
+
+
+        payoutMetrics +=
+            buildDetailMetric(
+                "Potential Payout",
+                formatAccountDetailMoney(
+                    payout.potentialAvailable
+                ),
+                "Min " +
+                formatAccountDetailMoney(
+                    payout.minPayout
+                )
+            );
+
+    }
+
+
+    const payoutHTML = `
+
         <div class="account-detail-section">
 
             <div class="account-detail-section-title">
@@ -526,74 +2026,19 @@ function buildAccountDetailsHTML(account) {
             </div>
 
             <div class="account-detail-grid">
-        `;
 
+                ${payoutMetrics}
 
-    if(
-        payout.qualifyingDays !== null &&
-        payout.requiredDays !== null
-    ) {
-
-        payoutHTML += `
-
-            <div class="account-detail-item">
-                <span>Qualifying Days</span>
-                <strong>
-                    ${payout.qualifyingDays}
-                    /
-                    ${payout.requiredDays}
-                </strong>
             </div>
 
-        `;
-
-    }
-
-
-    if(
-        payout.remainingDays !== null
-    ) {
-
-        payoutHTML += `
-
-            <div class="account-detail-item">
-                <span>Noch notwendig</span>
-                <strong>
-                    ${payout.remainingDays}
-                    Tag(e)
-                </strong>
-            </div>
-
-        `;
-
-    }
-
-
-    if(
-        payout.remainingAmount !== null
-    ) {
-
-        payoutHTML += `
-
-            <div class="account-detail-item">
-                <span>Noch bis Payout-Ziel</span>
-                <strong>
-                    ${formatAccountDetailMoney(
-                        payout.remainingAmount
-                    )}
-                </strong>
-            </div>
-
-        `;
-
-    }
-
-
-    payoutHTML += `
-            </div>
         </div>
+
     `;
 
+
+    /*
+    CONSISTENCY
+    */
 
     let consistencyHTML =
         "";
@@ -611,26 +2056,40 @@ function buildAccountDetailsHTML(account) {
 
                 <div class="account-detail-grid">
 
-                    <div class="account-detail-item">
+                    ${buildDetailMetric(
+                        "Current",
+                        formatAccountPercent(
+                            consistency.current
+                        )
+                    )}
 
-                        <span>Aktuell</span>
+                    ${buildDetailMetric(
+                        "Limit",
+                        formatAccountPercent(
+                            consistency.limit
+                        )
+                    )}
 
-                        <strong>
-                            ${consistency.current.toFixed(1)} %
-                        </strong>
+                    ${buildDetailMetric(
+                        "Best Day",
+                        formatAccountDetailMoney(
+                            consistency.bestDay,
+                            true
+                        )
+                    )}
 
-                    </div>
+                    ${buildDetailMetric(
+                        "Profit Needed",
+                        formatAccountDetailMoney(
+                            consistency.minimumProfitNeeded
+                        ),
+                        consistency.current >
+                            consistency.limit
 
+                            ? "to satisfy consistency"
 
-                    <div class="account-detail-item">
-
-                        <span>Limit</span>
-
-                        <strong>
-                            ${consistency.limit.toFixed(1)} %
-                        </strong>
-
-                    </div>
+                            : "Consistency OK"
+                    )}
 
                 </div>
 
@@ -641,104 +2100,156 @@ function buildAccountDetailsHTML(account) {
     }
 
 
+    /*
+    RISK
+    */
+
+    let riskMetrics =
+        "";
+
+
+    if(drawdown) {
+
+        riskMetrics +=
+            buildDetailMetric(
+                "Remaining Drawdown",
+                formatAccountDetailMoney(
+                    drawdown.remaining
+                ),
+                drawdown.source
+            );
+
+
+        riskMetrics +=
+            buildDetailMetric(
+                "Current Floor",
+                formatAccountDetailMoney(
+                    drawdown.floor
+                )
+            );
+
+    }
+
+
+    if(dll) {
+
+        riskMetrics +=
+            buildDetailMetric(
+                "DLL Remaining",
+                formatAccountDetailMoney(
+                    dll.remaining
+                ),
+                "Limit " +
+                formatAccountDetailMoney(
+                    dll.limit
+                )
+            );
+
+    }
+
+
+    const riskHTML = `
+
+        <div class="account-detail-section">
+
+            <div class="account-detail-section-title">
+                RISK
+            </div>
+
+            <div class="account-detail-grid">
+
+                ${
+                    riskMetrics ||
+                    buildDetailMetric(
+                        "Risk Limits",
+                        "--"
+                    )
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /*
+    NEXT ACTION
+    */
+
+    const actionHTML = `
+
+        <div
+            class="
+                account-next-action
+                account-next-action-${nextAction.level}
+            "
+        >
+
+            <div class="account-next-action-icon">
+                ${nextAction.icon}
+            </div>
+
+            <div>
+
+                <strong>
+                    ${nextAction.title}
+                </strong>
+
+                <p>
+                    ${nextAction.text}
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+
     return `
 
         <div class="account-detail-content">
 
-            <div class="account-detail-grid">
+            <div class="account-detail-program">
 
-                <div class="account-detail-item">
+                ${rules.programLabel}
 
-                    <span>Net Account Growth</span>
+                ·
 
-                    <strong>
-                        ${formatAccountDetailMoney(
-                            netGrowth
-                        )}
-                    </strong>
+                ${String(
+                    rules.stage
+                ).toUpperCase()}
 
-                </div>
+                ·
 
-
-                <div class="account-detail-item">
-
-                    <span>Previous Balance</span>
-
-                    <strong>
-                        ${
-                            previousBalance !== null
-                                ? formatAccountDetailMoney(
-                                    previousBalance
-                                )
-                                : "--"
-                        }
-                    </strong>
-
-                </div>
-
-
-                <div class="account-detail-item">
-
-                    <span>Today P&L</span>
-
-                    <strong>
-                        ${
-                            todayPnL !== null
-                                ? formatAccountDetailMoney(
-                                    todayPnL
-                                )
-                                : "--"
-                        }
-                    </strong>
-
-                </div>
-
-
-                <div class="account-detail-item">
-
-                    <span>Remaining Drawdown</span>
-
-                    <strong>
-                        ${
-                            remainingDrawdown !== null
-                                ? formatAccountDetailMoney(
-                                    remainingDrawdown
-                                )
-                                : "--"
-                        }
-                    </strong>
-
-                </div>
-
-
-                <div class="account-detail-item">
-
-                    <span>DLL Remaining</span>
-
-                    <strong>
-                        ${
-                            dllRemaining !== null
-                                ? formatAccountDetailMoney(
-                                    dllRemaining
-                                )
-                                : "--"
-                        }
-                    </strong>
-
-                </div>
+                ${account.accountType}
 
             </div>
 
+
+            ${accountHTML}
 
             ${payoutHTML}
 
             ${consistencyHTML}
 
+            ${riskHTML}
+
+            ${actionHTML}
+
         </div>
 
     `;
+
 }
 
+
+/*
+=========================================
+DETAIL TOGGLE
+=========================================
+*/
 
 function toggleAccountDetails(
     accountId
@@ -752,31 +2263,33 @@ function toggleAccountDetails(
 
 
     if(!row) {
+
         return;
+
     }
 
 
-    const hidden =
+    const isHidden =
         row.style.display ===
-        "none";
+        "none" ||
+        row.style.display ===
+        "";
 
 
-    row.style.display =
-        hidden
-            ? "table-row"
-            : "none";
+    if(isHidden) {
+
+        const account =
+            getAccount(
+                accountId
+            );
 
 
-    const account =
-        getAccount(
-            accountId
-        );
+        if(!account) {
 
+            return;
 
-    if(
-        hidden &&
-        account
-    ) {
+        }
+
 
         const container =
             row.querySelector(
@@ -793,162 +2306,16 @@ function toggleAccountDetails(
 
         }
 
+
+        row.style.display =
+            "table-row";
+
     }
+    else {
 
-}
-
-function getAccountDetailRules(account) {
-
-    if(
-        typeof getEffectiveRules !==
-        "function"
-    ) {
-
-        return null;
+        row.style.display =
+            "none";
 
     }
 
-
-    return getEffectiveRules(
-        account
-    );
-
-}
-
-function getTradeDayNetPnL(account) {
-
-    const trades =
-        Array.isArray(account.trades)
-            ? account.trades
-            : [];
-
-
-    const daily =
-        {};
-
-
-    trades.forEach(trade => {
-
-        const dateValue =
-            trade.TradeDay ||
-            trade.tradeDay ||
-            trade.date ||
-            trade.Date ||
-            trade.EnteredAt ||
-            trade.boughtTimestamp ||
-            trade.soldTimestamp ||
-            null;
-
-
-        if(!dateValue) {
-            return;
-        }
-
-
-        const text =
-            String(dateValue);
-
-
-        const match =
-            text.match(
-                /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
-            );
-
-
-        if(!match) {
-            return;
-        }
-
-
-        const dayKey =
-            match[3] +
-            "-" +
-            match[1].padStart(2, "0") +
-            "-" +
-            match[2].padStart(2, "0");
-
-
-        let pnl = 0;
-
-
-        if(
-            typeof parseMoney ===
-            "function"
-        ) {
-
-            pnl =
-                parseMoney(
-                    trade.PnL ??
-                    trade.pnl ??
-                    0
-                );
-
-        }
-
-
-        /*
-        Topstep:
-        Fees + Commissions abziehen
-        */
-
-        if(
-            String(account.provider)
-                .toLowerCase() ===
-            "topstep"
-        ) {
-
-            pnl -=
-                Math.abs(
-                    parseMoney(
-                        trade.Fees ?? 0
-                    )
-                );
-
-
-            pnl -=
-                Math.abs(
-                    parseMoney(
-                        trade.Commissions ?? 0
-                    )
-                );
-
-        }
-
-
-        /*
-        Lucid:
-        1 USD pro Contract
-        */
-
-        if(
-            String(account.provider)
-                .toLowerCase() ===
-            "lucid"
-        ) {
-
-            pnl -=
-                Math.abs(
-                    Number(
-                        trade.qty ?? 0
-                    )
-                );
-
-        }
-
-
-        if(!daily[dayKey]) {
-
-            daily[dayKey] =
-                0;
-
-        }
-
-
-        daily[dayKey] +=
-            pnl;
-
-    });
-
-
-    return daily;
 }
