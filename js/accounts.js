@@ -695,31 +695,62 @@ TOPSTEP / TRADOVATE ANALYTICS P&L
 =========================================
 */
 
-function calculateTopstepGrossPnL(
-    account
-) {
+function calculateTopstepNetPnL(account) {
 
     const trades =
-        Array.isArray(
-            account.trades
-        )
+        Array.isArray(account.trades)
             ? account.trades
             : [];
 
 
-    return trades.reduce(
-        (sum, trade) => {
+    let grossPnL = 0;
+    let fees = 0;
+    let commissions = 0;
 
-            return (
-                sum +
+
+    trades.forEach(trade => {
+
+        grossPnL +=
+            parseMoney(
+                trade.PnL ?? 0
+            );
+
+
+        fees +=
+            Math.abs(
                 parseMoney(
-                    trade.PnL ?? 0
+                    trade.Fees ?? 0
                 )
             );
 
-        },
-        0
-    );
+
+        commissions +=
+            Math.abs(
+                parseMoney(
+                    trade.Commissions ?? 0
+                )
+            );
+
+    });
+
+
+    const netPnL =
+        grossPnL -
+        fees -
+        commissions;
+
+
+    return {
+
+        grossPnL,
+
+        fees,
+
+        commissions,
+
+        netPnL
+
+    };
 
 }
 
@@ -895,16 +926,49 @@ function importTradesToAccount(
     */
 
     if(
-        provider ===
-        "topstep"
-    ) {
+    provider ===
+    "topstep"
+) {
 
-        account.totalTradingPnL =
-            calculateTopstepGrossPnL(
-                account
-            );
+    const performance =
+        calculateTopstepNetPnL(
+            account
+        );
 
-    }
+
+    account.grossTradingPnL =
+        performance.grossPnL;
+
+
+    account.totalTradingFees =
+        performance.fees;
+
+
+    account.totalCommissions =
+        performance.commissions;
+
+
+    account.totalTradingPnL =
+        performance.netPnL;
+
+
+    /*
+    Account Balance aus Netto-P&L
+    */
+
+    account.balance =
+        Number(
+            account.startingBalance
+        )
+        +
+        performance.netPnL;
+
+
+    account.balanceUpdatedAt =
+        new Date()
+            .toISOString();
+
+}
 
 
     /*
