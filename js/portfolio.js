@@ -366,17 +366,13 @@ MISSION CONTROL BERECHNEN
 
 function calculatePortfolioOverview() {
 
-    /*
-    WICHTIG:
-    Mission Control verwendet nur
-    die aktuell ausgewählten Accounts.
-    */
-
     const accountList =
         getSelectedPortfolioAccounts();
 
 
     let totalBalance = 0;
+
+    let totalStartingBalance = 0;
 
     let payoutReady = 0;
 
@@ -395,7 +391,7 @@ function calculatePortfolioOverview() {
         account => {
 
             /*
-            Balance
+            Current Balance
             */
 
             const balance =
@@ -413,6 +409,27 @@ function calculatePortfolioOverview() {
 
             }
 
+
+            /*
+            Initial Balance
+            */
+
+            const startingBalance =
+                Number(
+                    account.startingBalance
+                );
+
+
+            if(
+                Number.isFinite(
+                    startingBalance
+                )
+            ) {
+
+                totalStartingBalance +=
+                    startingBalance;
+
+            }
 
 
             /*
@@ -445,9 +462,8 @@ function calculatePortfolioOverview() {
             }
 
 
-
             /*
-            Account Status
+            Status
             */
 
             const status =
@@ -495,12 +511,25 @@ function calculatePortfolioOverview() {
     );
 
 
+    /*
+    Tatsächlich erwirtschafteter Betrag
+    */
+
+    const earnedBalance =
+        totalBalance -
+        totalStartingBalance;
+
+
     return {
 
         accountCount:
             accountList.length,
 
         totalBalance,
+
+        totalStartingBalance,
+
+        earnedBalance,
 
         payoutReady,
 
@@ -517,7 +546,6 @@ function calculatePortfolioOverview() {
     };
 
 }
-
 
 
 /*
