@@ -289,12 +289,23 @@ PAYOUT STATUS
 
 function getAccountPayoutInfo(account) {
 
-    const providerRules =
-        PROP_RULES?.[
-            account.provider
-        ]?.accounts?.[
-            account.accountType
-        ];
+    let providerRules = null;
+
+
+    if(
+        PROP_RULES &&
+        PROP_RULES[account.provider] &&
+        PROP_RULES[account.provider].accounts &&
+        PROP_RULES[account.provider].accounts[account.accountType]
+    ) {
+
+        providerRules =
+            PROP_RULES[account.provider]
+                .accounts[
+                    account.accountType
+                ];
+
+    }
 
 
     if(!providerRules) {
@@ -319,8 +330,7 @@ function getAccountPayoutInfo(account) {
                 ),
 
             nextPayoutAmount:
-                account.nextPayoutAmount ??
-                0
+                account.nextPayoutAmount || 0
 
         };
 
@@ -362,7 +372,6 @@ function getAccountPayoutInfo(account) {
     }
 
 }
-
 
 
 /*
