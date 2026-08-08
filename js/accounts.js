@@ -8,6 +8,8 @@ Account Data & Storage
 
 let accounts = loadAccounts();
 
+migrateAccountsToRulesV2();
+
 
 /*
 =========================================
