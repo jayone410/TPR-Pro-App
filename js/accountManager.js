@@ -188,6 +188,15 @@ function initAccountManager() {
 
                     renderPortfolio();
 
+                    if(
+                        typeof renderPortfolioOverview ===
+                        "function"
+                    ) {
+
+    renderPortfolioOverview();
+
+}
+
                 }
             );
 
@@ -222,6 +231,15 @@ function initAccountManager() {
 
                     renderPortfolio();
 
+                    if(
+                        typeof renderPortfolioOverview ===
+                        "function"
+                    ) {
+
+    renderPortfolioOverview();
+
+}
+
                 }
             );
 
@@ -251,6 +269,15 @@ function initAccountManager() {
                     renderAccounts();
 
                     renderPortfolio();
+
+                    if(
+                        typeof renderPortfolioOverview ===
+                        "function"
+                    ) {
+
+    renderPortfolioOverview();
+
+}
 
                 }
             );
@@ -849,6 +876,15 @@ function renderAccounts() {
 
                         renderPortfolio();
 
+                        if(
+                            typeof renderPortfolioOverview ===
+                            "function"
+                        ) {
+
+    renderPortfolioOverview();
+
+}
+
                     }
                 );
 
@@ -949,6 +985,15 @@ function renderAccounts() {
 
                         renderPortfolio();
 
+                        if(
+                            typeof renderPortfolioOverview ===
+                            "function"
+                        ) {
+
+    renderPortfolioOverview();
+
+}
+
                     }
                 );
 
@@ -1032,6 +1077,15 @@ function renderAccounts() {
 
                         renderPortfolio();
 
+                        if(
+                            typeof renderPortfolioOverview ===
+                            "function"
+                        ) {
+
+    renderPortfolioOverview();
+
+}
+
                     }
                 );
 
@@ -1085,6 +1139,15 @@ function renderAccounts() {
                         renderAccounts();
 
                         renderPortfolio();
+
+                        if(
+                            typeof renderPortfolioOverview ===
+                            "function"
+                        ) {
+
+    renderPortfolioOverview();
+
+}
 
                     }
                 );
@@ -1167,6 +1230,15 @@ function renderAccounts() {
                         renderAccounts();
 
                         renderPortfolio();
+
+                        if(
+                            typeof renderPortfolioOverview ===
+                            "function"
+                        ) {
+
+    renderPortfolioOverview();
+
+}
 
                     }
                 );
