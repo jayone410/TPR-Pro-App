@@ -748,3 +748,141 @@ function getAccountDetailRules(account) {
         account.accountType
     ];
 }
+
+function getTradeDayNetPnL(account) {
+
+    const trades =
+        Array.isArray(account.trades)
+            ? account.trades
+            : [];
+
+
+    const daily =
+        {};
+
+
+    trades.forEach(trade => {
+
+        const dateValue =
+            trade.TradeDay ||
+            trade.tradeDay ||
+            trade.date ||
+            trade.Date ||
+            trade.EnteredAt ||
+            trade.boughtTimestamp ||
+            trade.soldTimestamp ||
+            null;
+
+
+        if(!dateValue) {
+            return;
+        }
+
+
+        const text =
+            String(dateValue);
+
+
+        const match =
+            text.match(
+                /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+            );
+
+
+        if(!match) {
+            return;
+        }
+
+
+        const dayKey =
+            match[3] +
+            "-" +
+            match[1].padStart(2, "0") +
+            "-" +
+            match[2].padStart(2, "0");
+
+
+        let pnl = 0;
+
+
+        if(
+            typeof parseMoney ===
+            "function"
+        ) {
+
+            pnl =
+                parseMoney(
+                    trade.PnL ??
+                    trade.pnl ??
+                    0
+                );
+
+        }
+
+
+        /*
+        Topstep:
+        Fees + Commissions abziehen
+        */
+
+        if(
+            String(account.provider)
+                .toLowerCase() ===
+            "topstep"
+        ) {
+
+            pnl -=
+                Math.abs(
+                    parseMoney(
+                        trade.Fees ?? 0
+                    )
+                );
+
+
+            pnl -=
+                Math.abs(
+                    parseMoney(
+                        trade.Commissions ?? 0
+                    )
+                );
+
+        }
+
+
+        /*
+        Lucid:
+        1 USD pro Contract
+        */
+
+        if(
+            String(account.provider)
+                .toLowerCase() ===
+            "lucid"
+        ) {
+
+            pnl -=
+                Math.abs(
+                    Number(
+                        trade.qty ?? 0
+                    )
+                );
+
+        }
+
+
+        if(!daily[dayKey]) {
+
+            daily[dayKey] =
+                0;
+
+        }
+
+
+        daily[dayKey] +=
+            pnl;
+
+    });
+
+
+    return daily;
+}
