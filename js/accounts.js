@@ -1480,19 +1480,26 @@ function migrateAccountsToRulesV3() {
                     );
 
 
+                /*
+                Stage nur automatisch setzen,
+                wenn keine manuelle Stage
+                gespeichert wurde.
+                */
+                
                 if(
                     rules &&
                     rules.stage &&
+                    account.stageManual !== true &&
                     account.stage !==
                         rules.stage
                 ) {
-
+                
                     account.stage =
                         rules.stage;
-
+                
                     changed =
                         true;
-
+                
                 }
 
             }
