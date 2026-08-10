@@ -1056,58 +1056,110 @@ ACCOUNT PROGRAMM AUTOMATISCH ERKENNEN
 function detectAccountProgram(account) {
 
     const provider =
-        String(account.provider || "")
-            .toLowerCase();
+        String(
+            account.provider || ""
+        ).toLowerCase();
+
 
     const name =
-        String(account.accountName || "")
-            .toLowerCase();
+        String(
+            account.accountName || ""
+        ).toLowerCase();
 
 
     /*
+    =====================================
     TOPSTEP
+    =====================================
     */
 
-    if(provider === "topstep") {
+    if(
+        provider ===
+        "topstep"
+    ) {
+
+        /*
+        Evaluation / Trading Combine
+        MUSS zuerst geprüft werden.
+        */
+
+        if(
+            name.includes("comb") ||
+            name.includes("combine") ||
+            name.includes("eval") ||
+            name.includes("evaluation")
+        ) {
+
+            return "tradingCombine";
+
+        }
+
+
+        /*
+        Funded Consistency XFA
+        */
 
         if(
             name.includes("cons") ||
             name.includes("consistency")
         ) {
+
             return "xfaConsistency";
+
         }
 
+
+        /*
+        Funded Standard XFA
+        */
+
         return "xfaStandard";
+
     }
 
 
     /*
+    =====================================
     LUCID
+    =====================================
     */
 
-    if(provider === "lucid") {
+    if(
+        provider ===
+        "lucid"
+    ) {
 
         const isFlex =
-            name.includes("flex");
+            name.includes(
+                "flex"
+            );
+
 
         const isEvaluation =
             name.includes("eval") ||
-            name.includes("evaluation");
+            name.includes(
+                "evaluation"
+            );
+
 
         if(isFlex) {
 
             return isEvaluation
                 ? "flexEvaluation"
                 : "flexFunded";
+
         }
+
 
         return isEvaluation
             ? "proEvaluation"
             : "proFunded";
+
     }
 
 
     return null;
+
 }
 
 
