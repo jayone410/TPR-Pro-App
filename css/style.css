@@ -683,3 +683,27 @@ button:hover{
     background: rgba(255, 70, 70, 0.08);
     border: 1px solid rgba(255, 70, 70, 0.14);
 }
+
+.account-status-evaluation {
+    background: rgba(255, 80, 170, 0.14);
+    color: #ff6fb7;
+    border: 1px solid rgba(255, 80, 170, 0.22);
+}
+
+.account-status-funded-building {
+    background: rgba(255, 150, 40, 0.14);
+    color: #ff9d3d;
+    border: 1px solid rgba(255, 150, 40, 0.22);
+}
+
+.account-status-funded-ready {
+    background: rgba(0, 200, 120, 0.14);
+    color: #35d98a;
+    border: 1px solid rgba(0, 200, 120, 0.22);
+}
+
+.account-status-unknown {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.65);
+    border: 1px solid rgba(255,255,255,0.10);
+}
