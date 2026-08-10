@@ -10,6 +10,8 @@ let accounts = loadAccounts();
 
 migrateAccountsToRulesV2();
 
+migrateAccountStages();
+
 
 /*
 =========================================
