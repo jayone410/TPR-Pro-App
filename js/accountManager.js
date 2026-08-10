@@ -157,6 +157,11 @@ function initAccountManager() {
                             "accountProvider"
                         );
 
+                    const accountProgramElement =
+                        document.getElementById(
+                            "accountProgram"
+                        );
+
                     const accountTypeElement =
                         document.getElementById(
                             "accountType"
@@ -175,6 +180,7 @@ function initAccountManager() {
 
                     if(
                         !providerElement ||
+                        !accountProgramElement ||
                         !accountTypeElement ||
                         !accountNameElement ||
                         !startingBalanceElement
@@ -184,6 +190,10 @@ function initAccountManager() {
                             "Account Formular unvollständig."
                         );
 
+                        alert(
+                            "Account Formular unvollständig. Bitte Provider, Programm, Accountgröße, Name und Startbalance prüfen."
+                        );
+
                         return;
 
                     }
@@ -191,6 +201,9 @@ function initAccountManager() {
 
                     const provider =
                         providerElement.value;
+
+                    const program =
+                        accountProgramElement.value;
 
                     const accountType =
                         accountTypeElement.value;
@@ -202,6 +215,39 @@ function initAccountManager() {
 
                     const startingBalance =
                         startingBalanceElement.value;
+
+
+                    if(!provider) {
+
+                        alert(
+                            "Bitte einen Provider auswählen."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if(!program) {
+
+                        alert(
+                            "Bitte ein Account-Programm auswählen."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if(!accountType) {
+
+                        alert(
+                            "Bitte eine Accountgröße auswählen."
+                        );
+
+                        return;
+
+                    }
 
 
                     if(!accountName) {
@@ -223,6 +269,20 @@ function initAccountManager() {
                             accountName,
                             startingBalance
                         );
+
+
+                    if(
+                        !account ||
+                        !account.id
+                    ) {
+
+                        console.error(
+                            "Account konnte nicht erstellt werden."
+                        );
+
+                        return;
+
+                    }
 
 
                     if(
@@ -387,36 +447,38 @@ PAYOUT STATUS
 */
 
 function getAccountPayoutInfo(account) {
+
     /*
     Evaluation Accounts
     haben keinen Payout.
     */
-    
+
     if(
         String(
             account.stage || ""
         ).toLowerCase() ===
         "evaluation"
     ) {
-    
+
         return {
-    
+
             status:
                 "EVAL",
-    
+
             label:
                 "EVAL",
-    
+
             message:
                 "Evaluation Account",
-    
+
             action:
                 ""
-    
+
         };
-    
+
     }
-    
+
+
     if(
         typeof getEffectiveRules !==
         "function"
@@ -821,18 +883,18 @@ function renderAccounts() {
 
 
                 <td>
-                
+
                     <button
                         class="account-expand-button"
                         data-account-id="${account.id}"
                     >
                         ▶
                     </button>
-                
+
                     <strong>
                         ${account.accountName}
                     </strong>
-                
+
                 </td>
 
 
@@ -954,6 +1016,7 @@ function renderAccounts() {
                         📄
                     </button>
 
+
                     <button
                         class="rulesAccountButton"
                         data-account-id="${account.id}"
@@ -961,6 +1024,7 @@ function renderAccounts() {
                     >
                         ⚙️
                     </button>
+
 
                     <button
                         class="deleteAccountButton"
@@ -978,37 +1042,39 @@ function renderAccounts() {
             accountList.appendChild(
                 row
             );
+
+
             const detailsRow =
-    document.createElement(
-        "tr"
-    );
+                document.createElement(
+                    "tr"
+                );
 
 
-detailsRow.id =
-    "accountDetails-" +
-    account.id;
+            detailsRow.id =
+                "accountDetails-" +
+                account.id;
 
 
-detailsRow.style.display =
-    "none";
+            detailsRow.style.display =
+                "none";
 
 
-detailsRow.innerHTML = `
+            detailsRow.innerHTML = `
 
-    <td colspan="10">
+                <td colspan="10">
 
-        <div class="account-details-container">
+                    <div class="account-details-container">
 
-        </div>
+                    </div>
 
-    </td>
+                </td>
 
-`;
+            `;
 
 
-accountList.appendChild(
-    detailsRow
-);
+            accountList.appendChild(
+                detailsRow
+            );
 
         }
     );
@@ -1165,10 +1231,6 @@ accountList.appendChild(
 
                         }
 
-
-                        /*
-                        Vorherige Balance merken
-                        */
 
                         if(
                             newBalance !==
@@ -1421,106 +1483,114 @@ accountList.appendChild(
         );
 
 
-/*
-=========================================
-RULES EDITOR
-=========================================
-*/
+    /*
+    =====================================
+    RULES EDITOR
+    =====================================
+    */
 
-document
-    .querySelectorAll(
-        ".rulesAccountButton"
-    )
-    .forEach(
-        button => {
+    document
+        .querySelectorAll(
+            ".rulesAccountButton"
+        )
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    const id =
-                        button.dataset
-                            .accountId;
-
-
-                    if(
-                        typeof openRulesEditor ===
-                        "function"
-                    ) {
-
-                        openRulesEditor(
-                            id
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-    
-/*
-=========================================
-ACCOUNT DETAILS AUF / ZUKLAPPEN
-=========================================
-*/
-
-document
-    .querySelectorAll(
-        ".account-expand-button"
-    )
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const id =
-                        button.dataset
-                            .accountId;
+                        const id =
+                            button.dataset
+                                .accountId;
 
 
-                    if(
-                        typeof toggleAccountDetails ===
-                        "function"
-                    ) {
+                        if(
+                            typeof openRulesEditor ===
+                            "function"
+                        ) {
 
-                        toggleAccountDetails(
-                            id
-                        );
+                            openRulesEditor(
+                                id
+                            );
+
+                        }
 
                     }
+                );
+
+            }
+        );
 
 
-                    button.textContent =
-                        button.textContent === "▶"
-                            ? "▼"
-                            : "▶";
+    /*
+    =====================================
+    ACCOUNT DETAILS AUF / ZUKLAPPEN
+    =====================================
+    */
 
-                }
-            );
+    document
+        .querySelectorAll(
+            ".account-expand-button"
+        )
+        .forEach(
+            button => {
 
-        }
-    );
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const id =
+                            button.dataset
+                                .accountId;
 
 
-/*
-=========================================
-AUSWAHL ZÄHLEN
-=========================================
-*/
+                        if(
+                            typeof toggleAccountDetails ===
+                            "function"
+                        ) {
 
-if(selectedAccountCount) {
+                            toggleAccountDetails(
+                                id
+                            );
 
-    selectedAccountCount.textContent =
-        selectedAccountIds.length +
-        " Account(s) ausgewählt";
+                        }
+
+
+                        button.textContent =
+                            button.textContent === "▶"
+                                ? "▼"
+                                : "▶";
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+    =====================================
+    AUSWAHL ZÄHLEN
+    =====================================
+    */
+
+    if(selectedAccountCount) {
+
+        selectedAccountCount.textContent =
+            selectedAccountIds.length +
+            " Account(s) ausgewählt";
+
+    }
 
 }
 
-}
+
+/*
+=========================================
+ACCOUNT LIFECYCLE STATUS
+=========================================
+*/
 
 function getAccountLifecycleStatus(
     account
@@ -1539,18 +1609,23 @@ function getAccountLifecycleStatus(
     */
 
     if(
-        stage === "evaluation"
+        stage ===
+        "evaluation"
     ) {
 
         return {
 
-            level: "evaluation",
+            level:
+                "evaluation",
 
-            icon: "●",
+            icon:
+                "●",
 
-            text: "EVALUATION"
+            text:
+                "EVALUATION"
 
         };
+
     }
 
 
@@ -1561,10 +1636,12 @@ function getAccountLifecycleStatus(
     */
 
     if(
-        stage === "funded"
+        stage ===
+        "funded"
     ) {
 
-        let payoutReady = false;
+        let payoutReady =
+            false;
 
 
         if(
@@ -1580,42 +1657,43 @@ function getAccountLifecycleStatus(
 
             payoutReady =
                 payout &&
-                payout.eligible === true;
+                payout.eligible ===
+                true;
+
         }
 
-
-        /*
-        Payout ready → GRÜN
-        */
 
         if(payoutReady) {
 
             return {
 
-                level: "funded-ready",
+                level:
+                    "funded-ready",
 
-                icon: "●",
+                icon:
+                    "●",
 
-                text: "PAYOUT READY"
+                text:
+                    "PAYOUT READY"
 
             };
+
         }
 
 
-        /*
-        Funded aber noch nicht payoutbereit
-        → ORANGE
-        */
-
         return {
 
-            level: "funded-building",
+            level:
+                "funded-building",
 
-            icon: "●",
+            icon:
+                "●",
 
-            text: "FUNDED"
+            text:
+                "FUNDED"
 
         };
+
     }
 
 
@@ -1625,11 +1703,15 @@ function getAccountLifecycleStatus(
 
     return {
 
-        level: "unknown",
+        level:
+            "unknown",
 
-        icon: "●",
+        icon:
+            "●",
 
-        text: "CHECK"
+        text:
+            "CHECK"
 
     };
+
 }
