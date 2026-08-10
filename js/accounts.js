@@ -1301,3 +1301,142 @@ function migrateAccountStages() {
         );
     }
 }
+
+/*
+=========================================
+RULES V3 MIGRATION
+Stage + Program korrigieren
+=========================================
+*/
+
+function migrateAccountsToRulesV3() {
+
+    let changed =
+        false;
+
+
+    accounts.forEach(
+        account => {
+
+            const provider =
+                String(
+                    account.provider || ""
+                ).toLowerCase();
+
+
+            const name =
+                String(
+                    account.accountName || ""
+                ).toLowerCase();
+
+
+            /*
+            =================================
+            TOPSTEP COMBINE KORRIGIEREN
+            =================================
+            */
+
+            if(
+                provider ===
+                "topstep"
+            ) {
+
+                const isCombine =
+                    name.includes("comb") ||
+                    name.includes("combine") ||
+                    name.includes("eval") ||
+                    name.includes("evaluation");
+
+
+                if(isCombine) {
+
+                    if(
+                        account.program !==
+                        "tradingCombine"
+                    ) {
+
+                        account.program =
+                            "tradingCombine";
+
+                        changed =
+                            true;
+
+                    }
+
+
+                    if(
+                        account.stage !==
+                        "evaluation"
+                    ) {
+
+                        account.stage =
+                            "evaluation";
+
+                        changed =
+                            true;
+
+                    }
+
+
+                    return;
+
+                }
+
+            }
+
+
+            /*
+            =================================
+            STAGE AUS OFFICIAL RULES
+            =================================
+            */
+
+            if(
+                account.provider &&
+                account.program &&
+                account.accountType &&
+                typeof getOfficialRules ===
+                    "function"
+            ) {
+
+                const rules =
+                    getOfficialRules(
+                        account.provider,
+                        account.program,
+                        account.accountType
+                    );
+
+
+                if(
+                    rules &&
+                    rules.stage &&
+                    account.stage !==
+                        rules.stage
+                ) {
+
+                    account.stage =
+                        rules.stage;
+
+                    changed =
+                        true;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    if(changed) {
+
+        saveAccounts();
+
+
+        console.log(
+            "✅ Accounts auf Rules v3 migriert"
+        );
+
+    }
+
+}
