@@ -1,87 +1,167 @@
 /*
 =========================================
 TPR PRO AI
-Decision Engine
+Decision Engine v2
 =========================================
 */
 
 
-function analyzeAccount(account){
+function analyzeAccount(account) {
+
+    const risk =
+        calculateRisk(
+            account
+        );
 
 
-    const risk = calculateRisk(account);
+    /*
+    =====================================
+    SCORE
+    =====================================
+    */
+
+    const score =
+        Math.round(
+
+            (
+                risk.accountRisk *
+                0.40
+
+                +
+
+                risk.marketRisk *
+                0.15
+
+                +
+
+                risk.performanceRisk *
+                0.30
+
+                +
+
+                risk.disciplineRisk *
+                0.15
+            )
+
+        );
 
 
-    let score = Math.round(
+    /*
+    =====================================
+    RECOMMENDATION
+    =====================================
+    */
 
-        (
-            risk.accountRisk * 0.30
-            +
-            risk.marketRisk * 0.30
-            +
-            risk.performanceRisk * 0.25
-            +
-            risk.disciplineRisk * 0.15
+    let recommendation =
+        "";
+
+
+    if(
+        score >= 85
+    ) {
+
+        recommendation =
+            "🟢 TRADE NORMAL";
+
+    }
+    else if(
+        score >= 70
+    ) {
+
+        recommendation =
+            "🟡 REDUCE RISK";
+
+    }
+    else if(
+        score >= 50
+    ) {
+
+        recommendation =
+            "🟠 ONLY A+ SETUPS";
+
+    }
+    else {
+
+        recommendation =
+            "🔴 DON'T TRADE";
+
+    }
+
+
+    /*
+    =====================================
+    REASONS
+    =====================================
+    */
+
+    const reasons =
+        [];
+
+
+    if(
+        risk.accountRisk >= 80
+    ) {
+
+        reasons.push(
+            "Account Risiko kontrolliert."
+        );
+
+    }
+    else {
+
+        reasons.push(
+            "Account Risiko erhöht."
+        );
+
+    }
+
+
+    if(
+        risk.performanceRisk >= 80
+    ) {
+
+        reasons.push(
+            "Performance stabil."
+        );
+
+    }
+    else {
+
+        reasons.push(
+            "Performance Risiko erhöht."
+        );
+
+    }
+
+
+    if(
+        Array.isArray(
+            risk.reasons
         )
+    ) {
 
-    );
+        risk.reasons.forEach(
+            reason => {
 
+                if(
+                    !reasons.includes(
+                        reason
+                    )
+                ) {
 
-let recommendation = "";
+                    reasons.push(
+                        reason
+                    );
 
+                }
 
-if(score >= 85){
-
-    recommendation = "🟢 TRADE NORMAL";
-
-}
-else if(score >= 70){
-
-    recommendation = "🟡 REDUCE RISK";
-
-}
-else if(score >= 50){
-
-    recommendation = "🟠 ONLY A+ SETUPS";
-
-}
-else{
-
-    recommendation = "🔴 DON'T TRADE";
-
-}
-
-    const reasons = [];
-
-
-    if(risk.accountRisk >= 80){
-
-        reasons.push("Account Risiko kontrolliert.");
+            }
+        );
 
     }
-    else{
-
-        reasons.push("Account Risiko erhöht.");
-
-    }
-
-
-
-    if(risk.marketRisk >= 80){
-
-        reasons.push("Marktumfeld günstig.");
-
-    }
-    else{
-
-        reasons.push("Marktrisiko erhöht.");
-
-    }
-
 
 
     return {
-
 
         score,
 
@@ -93,8 +173,15 @@ else{
 
     };
 
-
 }
+
+
+
+/*
+=========================================
+READINESS DECISION
+=========================================
+*/
 
 function buildReadinessDecision(
     account,
@@ -104,22 +191,71 @@ function buildReadinessDecision(
     providerRules
 ) {
 
-    const buffer =
-        Number(account.balance) -
-        Number(account.startingBalance);
+    /*
+    =====================================
+    BASIS
+    =====================================
+    */
+
+    const stage =
+        String(
+            account.stage ||
+            providerRules?.stage ||
+            ""
+        ).toLowerCase();
 
 
-    const recommendedBuffer =
-        Number(
-            providerRules?.recommendedBuffer ??
-            0
-        );
+    const drawdown =
+        typeof getAccountDrawdownInfo ===
+        "function"
+
+            ? getAccountDrawdownInfo(
+                account
+            )
+
+            : null;
 
 
-    const bufferDifference =
-        buffer -
-        recommendedBuffer;
+    const dll =
+        typeof getAccountDLLInfo ===
+        "function"
 
+            ? getAccountDLLInfo(
+                account
+            )
+
+            : null;
+
+
+    const consistency =
+        typeof getAccountConsistencyInfo ===
+        "function"
+
+            ? getAccountConsistencyInfo(
+                account
+            )
+
+            : null;
+
+
+    const currentProfit =
+        typeof getAccountCurrentProfit ===
+        "function"
+
+            ? Number(
+                getAccountCurrentProfit(
+                    account
+                )
+            )
+
+            : (
+                Number(
+                    account.balance
+                ) -
+                Number(
+                    account.startingBalance
+                )
+            );
 
 
     /*
@@ -135,7 +271,64 @@ function buildReadinessDecision(
         "green";
 
 
-    if(result.score < 85) {
+    /*
+    Daily Plan hat höchste Priorität
+    */
+
+    if(
+        dailyPlan?.mode ===
+        "STOP"
+    ) {
+
+        status =
+            "STOP";
+
+        level =
+            "red";
+
+    }
+
+    else if(
+        dailyPlan?.mode ===
+        "PROTECT"
+    ) {
+
+        status =
+            "PROTECT";
+
+        level =
+            "yellow";
+
+    }
+
+    else if(
+        dailyPlan?.mode ===
+        "DEFENSIVE"
+    ) {
+
+        status =
+            "CAUTION";
+
+        level =
+            "yellow";
+
+    }
+
+    else if(
+        result.score < 50
+    ) {
+
+        status =
+            "STOP";
+
+        level =
+            "red";
+
+    }
+
+    else if(
+        result.score < 85
+    ) {
 
         status =
             "CAUTION";
@@ -146,60 +339,152 @@ function buildReadinessDecision(
     }
 
 
-    if(result.score < 60) {
-
-        status =
-            "STOP";
-
-        level =
-            "red";
-
-    }
-
-
-
     /*
     =====================================
-    BUFFER
+    ACCOUNT / BUFFER METRIC
     =====================================
     */
 
+    let buffer =
+        currentProfit;
+
+
+    let recommendedBuffer =
+        0;
+
+
     let bufferStatus =
-        "Optimal";
+        "Normal";
+
 
     let bufferDetail =
-        "Buffer liegt über Empfehlung.";
+        "";
 
 
-    if(bufferDifference < 0) {
+    /*
+    Evaluation:
+    statt Buffer lieber Profit Target
+    */
+
+    if(
+        stage ===
+        "evaluation"
+    ) {
+
+        const profitTarget =
+            Number(
+                providerRules?.profitTarget
+            );
+
+
+        const targetRemaining =
+            Number.isFinite(
+                profitTarget
+            )
+
+                ? Math.max(
+                    0,
+                    profitTarget -
+                    currentProfit
+                )
+
+                : null;
+
 
         bufferStatus =
-            "Unter Ziel";
+            targetRemaining === 0
+                ? "TARGET"
+                : "EVAL";
 
 
         bufferDetail =
-            `$${Math.abs(
-                bufferDifference
-            ).toLocaleString()} bis Zielbuffer`;
+            targetRemaining !== null
+
+                ? (
+                    formatDecisionMoney(
+                        targetRemaining
+                    ) +
+                    " bis Target"
+                )
+
+                : "Evaluation aktiv";
 
     }
 
 
+    /*
+    Funded:
+    Remaining DD ist wichtiger
+    */
+
+    if(
+        stage ===
+        "funded"
+    ) {
+
+        if(
+            drawdown &&
+            Number.isFinite(
+                Number(
+                    drawdown.remaining
+                )
+            )
+        ) {
+
+            buffer =
+                Number(
+                    drawdown.remaining
+                );
+
+
+            bufferStatus =
+                drawdown.remaining <= 500
+                    ? "LOW"
+                    : "OK";
+
+
+            bufferDetail =
+                "Remaining DD: " +
+                formatDecisionMoney(
+                    drawdown.remaining
+                );
+
+        }
+
+    }
+
 
     /*
     =====================================
-    PAYOUT
+    PAYOUT / EVAL TEXT
     =====================================
     */
 
     let payoutText =
-        payout?.status ?? "--";
+        payout?.status ??
+        "--";
 
 
     let payoutDetail =
         payout?.message ??
-        "Keine Payout-Daten.";
+        "Keine Daten.";
 
+
+    if(
+        stage ===
+        "evaluation"
+    ) {
+
+        payoutText =
+            payout?.status ??
+            "EVAL";
+
+
+        payoutDetail =
+            payout?.message ??
+            "Evaluation aktiv.";
+
+    }
 
 
     /*
@@ -208,54 +493,180 @@ function buildReadinessDecision(
     =====================================
     */
 
-    const ai = [];
+    const ai =
+        [];
 
 
-    if(bufferDifference < 0) {
-
-        ai.push(
-            "Buffer zuerst weiter aufbauen."
-        );
-
-    }
-    else {
-
-        ai.push(
-            "Buffer ist ausreichend."
-        );
-
-    }
-
-
-    if(payout?.status === "READY") {
-
-        ai.push(
-            "Payout prüfen und Gewinne schützen."
-        );
-
-    }
-
-
-    if(payout?.status === "WAIT") {
-
-        ai.push(
-            "Kein unnötiges Risiko vor dem nächsten Payout."
-        );
-
-    }
-
+    /*
+    Evaluation
+    */
 
     if(
-        dailyPlan?.mode ===
-        "DEFENSIVE"
+        stage ===
+        "evaluation"
     ) {
 
-        ai.push(
-            "Heute defensiv handeln."
-        );
+        if(
+            payout?.status ===
+            "TARGET"
+        ) {
+
+            ai.push(
+                "Profit Target erreicht – Evaluation-Abschluss prüfen."
+            );
+
+        }
+
+
+        if(
+            payout?.status ===
+            "PROTECT"
+        ) {
+
+            ai.push(
+                "Evaluation fast geschafft – Risiko reduzieren."
+            );
+
+        }
+
+
+        if(
+            consistency &&
+            Number(
+                consistency.current
+            ) >
+            Number(
+                consistency.limit
+            )
+        ) {
+
+            ai.push(
+                "Consistency verbessern, bevor du weiter aggressiv tradest."
+            );
+
+        }
 
     }
 
+
+    /*
+    Funded
+    */
+
+    if(
+        stage ===
+        "funded"
+    ) {
+
+        if(
+            payout?.status ===
+            "READY"
+        ) {
+
+            ai.push(
+                "Payout prüfen und Gewinne schützen."
+            );
+
+        }
+
+
+        if(
+            payout?.status ===
+            "WAIT"
+        ) {
+
+            ai.push(
+                "Payout-Bedingungen kontrolliert erfüllen."
+            );
+
+        }
+
+
+        if(
+            payout?.status ===
+            "CONSISTENCY"
+        ) {
+
+            ai.push(
+                "Consistency gezielt verbessern."
+            );
+
+        }
+
+    }
+
+
+    /*
+    Drawdown
+    */
+
+    if(
+        drawdown &&
+        Number.isFinite(
+            Number(
+                drawdown.remaining
+            )
+        )
+    ) {
+
+        if(
+            Number(
+                drawdown.remaining
+            ) <= 250
+        ) {
+
+            ai.push(
+                "Remaining Drawdown kritisch – heute nicht weiter handeln."
+            );
+
+        }
+
+        else if(
+            Number(
+                drawdown.remaining
+            ) <= 500
+        ) {
+
+            ai.push(
+                "Drawdown sehr niedrig – nur A+ Setup."
+            );
+
+        }
+
+    }
+
+
+    /*
+    DLL
+    */
+
+    if(
+        dll &&
+        Number.isFinite(
+            Number(
+                dll.remaining
+            )
+        )
+    ) {
+
+        if(
+            Number(
+                dll.remaining
+            ) <= 100
+        ) {
+
+            ai.push(
+                "Daily Loss Limit fast ausgeschöpft."
+            );
+
+        }
+
+    }
+
+
+    /*
+    Daily Plan Advice übernehmen
+    */
 
     if(
         Array.isArray(
@@ -267,9 +678,15 @@ function buildReadinessDecision(
             .forEach(
                 item => {
 
-                    if(!ai.includes(item)) {
+                    if(
+                        !ai.includes(
+                            item
+                        )
+                    ) {
 
-                        ai.push(item);
+                        ai.push(
+                            item
+                        );
 
                     }
 
@@ -279,6 +696,58 @@ function buildReadinessDecision(
     }
 
 
+    /*
+    Risk Reasons übernehmen
+    */
+
+    if(
+        Array.isArray(
+            result?.risk?.reasons
+        )
+    ) {
+
+        result.risk.reasons
+            .forEach(
+                item => {
+
+                    if(
+                        !ai.includes(
+                            item
+                        )
+                    ) {
+
+                        ai.push(
+                            item
+                        );
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /*
+    Fallback
+    */
+
+    if(
+        ai.length === 0
+    ) {
+
+        ai.push(
+            "Account befindet sich im normalen Arbeitsbereich."
+        );
+
+    }
+
+
+    /*
+    =====================================
+    RETURN
+    =====================================
+    */
 
     return {
 
@@ -309,8 +778,66 @@ function buildReadinessDecision(
             dailyPlan?.maxLoss ??
             "--",
 
-        ai
+        ai,
+
+        stage,
+
+        drawdown,
+
+        dll,
+
+        consistency,
+
+        currentProfit
 
     };
+
+}
+
+
+
+/*
+=========================================
+FORMAT
+=========================================
+*/
+
+function formatDecisionMoney(
+    value
+) {
+
+    const number =
+        Number(
+            value
+        );
+
+
+    if(
+        !Number.isFinite(
+            number
+        )
+    ) {
+
+        return "$0.00";
+
+    }
+
+
+    return number.toLocaleString(
+        "en-US",
+        {
+            style:
+                "currency",
+
+            currency:
+                "USD",
+
+            minimumFractionDigits:
+                2,
+
+            maximumFractionDigits:
+                2
+        }
+    );
 
 }
