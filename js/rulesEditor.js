@@ -159,6 +159,25 @@ function ensureRulesEditorModal() {
 
             </div>
 
+            <div class="rules-editor-stage">
+            
+                <label for="rulesEditorStage">
+                    Stage
+                </label>
+            
+                <select id="rulesEditorStage">
+            
+                    <option value="evaluation">
+                        Evaluation
+                    </option>
+            
+                    <option value="funded">
+                        Funded
+                    </option>
+            
+                </select>
+            
+            </div>
 
             <div
                 id="rulesEditorFields"
@@ -289,6 +308,20 @@ function openRulesEditor(accountId) {
 
     `;
 
+    const stageSelect =
+    document.getElementById(
+        "rulesEditorStage"
+    );
+
+
+    if(stageSelect) {
+    
+        stageSelect.value =
+            account.stage ||
+            officialRules.stage ||
+            "evaluation";
+    
+    }
 
     const fieldsContainer =
         document.getElementById(
@@ -533,7 +566,41 @@ function saveRulesOverrides(
 
     });
 
+    const stageSelect =
+        document.getElementById(
+            "rulesEditorStage"
+        );
+    
+    
+    if(stageSelect) {
+    
+        const selectedStage =
+            stageSelect.value;
+    
+    
+        if(
+            selectedStage === "evaluation" ||
+            selectedStage === "funded"
+        ) {
+    
+            account.stage =
+                selectedStage;
+    
+        }
+    
+    }
 
+    if(
+        stageSelect &&
+        account.stage !==
+        officialRules.stage
+    ) {
+    
+        stageSelect.title =
+            "Stage wurde manuell überschrieben.";
+    
+    }
+    
     account.ruleOverrides =
         overrides;
 
