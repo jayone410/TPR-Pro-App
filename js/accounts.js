@@ -75,22 +75,83 @@ function saveAccounts() {
 ACCOUNT ERSTELLEN
 =========================================
 */
-
 function createAccount(
     provider,
+    program,
     accountType,
     accountName,
     startingBalance
 ) {
 
+    /*
+    Official Rules laden
+    */
+
+    const rules =
+        typeof getOfficialRules ===
+        "function"
+
+            ? getOfficialRules(
+                provider,
+                program,
+                accountType
+            )
+
+            : null;
+
+
+    /*
+    Stage automatisch aus Programm
+    */
+
+    const stage =
+        rules &&
+        rules.stage
+
+            ? rules.stage
+
+            : getStageFromProgram(
+                provider,
+                program,
+                accountType
+            );
+
+
+    /*
+    Startbalance
+
+    Wenn Rules einen offiziellen
+    Startwert haben, bevorzugen wir
+    zunächst die Formulareingabe.
+
+    Damit bleiben manuelle Werte möglich.
+    */
+
     const start =
-        Number(startingBalance);
+        Number(
+            startingBalance
+        );
 
 
     const safeStart =
         Number.isFinite(start)
+
             ? start
-            : 0;
+
+            : (
+                rules &&
+                Number.isFinite(
+                    Number(
+                        rules.startingBalance
+                    )
+                )
+
+                    ? Number(
+                        rules.startingBalance
+                    )
+
+                    : 0
+            );
 
 
     const account = {
@@ -119,13 +180,23 @@ function createAccount(
             null,
 
         balanceUpdatedAt:
-            new Date().toISOString(),
+            new Date()
+                .toISOString(),
 
         totalTradingPnL:
             0,
 
         totalPayouts:
             0,
+
+        payoutCount:
+            0,
+
+        payoutCycleStartDate:
+            null,
+
+        ruleOverrides:
+            {},
 
         daysTraded:
             0,
@@ -134,7 +205,8 @@ function createAccount(
             [],
 
         createdAt:
-            new Date().toISOString()
+            new Date()
+                .toISOString()
 
     };
 
@@ -150,7 +222,6 @@ function createAccount(
     return account;
 
 }
-
 
 /*
 =========================================
