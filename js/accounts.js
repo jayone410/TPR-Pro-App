@@ -1173,3 +1173,73 @@ function migrateAccountsToRulesV2() {
     }
 
 }
+
+function getStageFromProgram(
+    provider,
+    program,
+    accountType
+) {
+
+    if(
+        typeof getOfficialRules !== "function"
+    ) {
+        return "evaluation";
+    }
+
+
+    const rules =
+        getOfficialRules(
+            provider,
+            program,
+            accountType
+        );
+
+
+    if(
+        rules &&
+        rules.stage
+    ) {
+        return rules.stage;
+    }
+
+
+    return "evaluation";
+}
+
+function migrateAccountStages() {
+
+    let changed = false;
+
+
+    accounts.forEach(
+        account => {
+
+            if(
+                !account.stage &&
+                account.provider &&
+                account.program
+            ) {
+
+                account.stage =
+                    getStageFromProgram(
+                        account.provider,
+                        account.program,
+                        account.accountType
+                    );
+
+                changed = true;
+            }
+
+        }
+    );
+
+
+    if(changed) {
+
+        saveAccounts();
+
+        console.log(
+            "✅ Account Stages migriert"
+        );
+    }
+}
