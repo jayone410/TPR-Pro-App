@@ -759,7 +759,7 @@ function renderAccounts() {
 
 
             const status =
-                getAccountStatus(
+                getAccountLifecycleStatus(
                     account
                 );
 
