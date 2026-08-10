@@ -12,6 +12,8 @@ migrateAccountsToRulesV2();
 
 migrateAccountStages();
 
+migrateAccountsToRulesV3();
+
 
 /*
 =========================================
