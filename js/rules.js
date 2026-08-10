@@ -31,6 +31,264 @@ const PROP_RULES = {
 
         name: "Topstep",
 
+        /*
+        =================================
+        TRADING COMBINE / EVALUATION
+        =================================
+        */
+        
+        tradingCombine: {
+        
+            label:
+                "Trading Combine",
+        
+            stage:
+                "evaluation",
+        
+            balanceMode:
+                "accountBalance",
+        
+            sizes: {
+        
+        
+                /*
+                =============================
+                25K TOPSTEP LABS
+                =============================
+                */
+        
+                "25k": {
+        
+                    accountSize:
+                        25000,
+        
+                    startingBalance:
+                        25000,
+        
+                    buyingPower:
+                        25000,
+        
+                    profitTarget:
+                        2000,
+        
+                    consistencyLimit:
+                        50,
+        
+                    maxLossLimit:
+                        1000,
+        
+                    initialMLL:
+                        24000,
+        
+                    mllType:
+                        "static",
+        
+                    dllOptional:
+                        false,
+        
+                    dll:
+                        500,
+        
+                    maxMinis:
+                        2,
+        
+                    maxMicros:
+                        20,
+        
+                    scalingPlan:
+                        false,
+        
+                    payoutMode:
+                        null,
+        
+                    minPayout:
+                        null,
+        
+                    currency:
+                        "USD"
+        
+                },
+        
+        
+                /*
+                =============================
+                50K STANDARD COMBINE
+                =============================
+                */
+        
+                "50k": {
+        
+                    accountSize:
+                        50000,
+        
+                    startingBalance:
+                        50000,
+        
+                    buyingPower:
+                        50000,
+        
+                    profitTarget:
+                        3000,
+        
+                    consistencyLimit:
+                        50,
+        
+                    maxLossLimit:
+                        2000,
+        
+                    initialMLL:
+                        48000,
+        
+                    lockedMLL:
+                        50000,
+        
+                    mllType:
+                        "eodTrailing",
+        
+                    dllOptional:
+                        true,
+        
+                    dll:
+                        null,
+        
+                    maxMinis:
+                        5,
+        
+                    maxMicros:
+                        50,
+        
+                    payoutMode:
+                        null,
+        
+                    minPayout:
+                        null,
+        
+                    currency:
+                        "USD"
+        
+                },
+        
+        
+                /*
+                =============================
+                100K STANDARD COMBINE
+                =============================
+                */
+        
+                "100k": {
+        
+                    accountSize:
+                        100000,
+        
+                    startingBalance:
+                        100000,
+        
+                    buyingPower:
+                        100000,
+        
+                    profitTarget:
+                        6000,
+        
+                    consistencyLimit:
+                        50,
+        
+                    maxLossLimit:
+                        3000,
+        
+                    initialMLL:
+                        97000,
+        
+                    lockedMLL:
+                        100000,
+        
+                    mllType:
+                        "eodTrailing",
+        
+                    dllOptional:
+                        true,
+        
+                    dll:
+                        null,
+        
+                    maxMinis:
+                        10,
+        
+                    maxMicros:
+                        100,
+        
+                    payoutMode:
+                        null,
+        
+                    minPayout:
+                        null,
+        
+                    currency:
+                        "USD"
+        
+                },
+        
+        
+                /*
+                =============================
+                150K STANDARD COMBINE
+                =============================
+                */
+        
+                "150k": {
+        
+                    accountSize:
+                        150000,
+        
+                    startingBalance:
+                        150000,
+        
+                    buyingPower:
+                        150000,
+        
+                    profitTarget:
+                        9000,
+        
+                    consistencyLimit:
+                        50,
+        
+                    maxLossLimit:
+                        4500,
+        
+                    initialMLL:
+                        145500,
+        
+                    lockedMLL:
+                        150000,
+        
+                    mllType:
+                        "eodTrailing",
+        
+                    dllOptional:
+                        true,
+        
+                    dll:
+                        null,
+        
+                    maxMinis:
+                        15,
+        
+                    maxMicros:
+                        150,
+        
+                    payoutMode:
+                        null,
+        
+                    minPayout:
+                        null,
+        
+                    currency:
+                        "USD"
+        
+                }
+        
+            }
+        
+        },    
 
         /*
         =================================
