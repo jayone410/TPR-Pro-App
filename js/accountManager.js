@@ -386,7 +386,36 @@ PAYOUT STATUS
 */
 
 function getAccountPayoutInfo(account) {
-
+    /*
+    Evaluation Accounts
+    haben keinen Payout.
+    */
+    
+    if(
+        String(
+            account.stage || ""
+        ).toLowerCase() ===
+        "evaluation"
+    ) {
+    
+        return {
+    
+            status:
+                "EVAL",
+    
+            label:
+                "EVAL",
+    
+            message:
+                "Evaluation Account",
+    
+            action:
+                ""
+    
+        };
+    
+    }
+    
     if(
         typeof getEffectiveRules !==
         "function"
