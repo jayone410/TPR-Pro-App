@@ -218,6 +218,7 @@ function initAccountManager() {
                     const account =
                         createAccount(
                             provider,
+                            program,
                             accountType,
                             accountName,
                             startingBalance
