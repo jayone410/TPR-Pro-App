@@ -1438,16 +1438,16 @@ function migrateAccountsToRulesV3() {
 
 
                     if(
-                        account.stage !==
-                        "evaluation"
+                        account.stageManual !== true &&
+                        account.stage !== "evaluation"
                     ) {
-
+                    
                         account.stage =
                             "evaluation";
-
+                    
                         changed =
                             true;
-
+                    
                     }
 
 
