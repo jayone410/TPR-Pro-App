@@ -1267,9 +1267,7 @@ function getAccountDrawdownInfo(
 
 
     if(!rules) {
-
         return null;
-
     }
 
 
@@ -1284,15 +1282,18 @@ function getAccountDrawdownInfo(
             maxLoss
         )
     ) {
-
         return null;
-
     }
 
 
     /*
-    Account-spezifischer Override
-    gewinnt immer.
+    =====================================
+    MANUELLER FLOOR OVERRIDE
+    =====================================
+
+    Wenn wir im Rules Editor / Account
+    einen aktuellen Floor hinterlegen,
+    hat dieser immer Vorrang.
     */
 
     const manualFloor =
@@ -1326,35 +1327,130 @@ function getAccountDrawdownInfo(
                 manualFloor,
 
             remaining:
-                Math.max(
-                    0,
-                    currentValue -
-                    manualFloor
-                ),
+                Number.isFinite(
+                    currentValue
+                )
+                    ? Math.max(
+                        0,
+                        currentValue -
+                        manualFloor
+                    )
+                    : null,
 
             source:
-                "Manual"
+                "Manual Floor"
 
         };
 
     }
 
 
-    const daily =
-        getAccountCycleDailyPnL(
-            account
-        );
+
+    /*
+    =====================================
+    TOPSTEP 25K STATIC XFA
+    =====================================
+    */
+
+    if(
+        rules.mllType ===
+        "static"
+    ) {
+
+        const currentProfit =
+            getAccountCurrentProfit(
+                account
+            );
 
 
-    const values =
-        Object.values(
-            daily
-        );
+        /*
+        Vor dem ersten Payout:
+        Floor = -MaxLoss
+
+        Beim 25K also:
+        -$1,000
+        */
+
+        let floor =
+            -Math.abs(
+                maxLoss
+            );
+
+
+        /*
+        Nach dem ersten Payout:
+        Topstep setzt den MLL auf $0.
+        */
+
+        const payoutCount =
+            Number(
+                account.payoutCount
+            ) || 0;
+
+
+        if(
+            payoutCount > 0 &&
+            rules.mllResetsToZeroAfterFirstPayout
+        ) {
+
+            floor = 0;
+
+        }
+
+
+        /*
+        Alternativ kann der Account
+        explizit als MLL locked markiert sein.
+        */
+
+        if(
+            account.mllLocked ===
+            true
+        ) {
+
+            const lockedMLL =
+                Number(
+                    rules.lockedMLL
+                );
+
+
+            floor =
+                Number.isFinite(
+                    lockedMLL
+                )
+                    ? lockedMLL
+                    : 0;
+
+        }
+
+
+        return {
+
+            floor,
+
+            highestEOD:
+                null,
+
+            remaining:
+                Math.max(
+                    0,
+                    currentProfit -
+                    floor
+                ),
+
+            source:
+                "Static MLL"
+
+        };
+
+    }
+
 
 
     /*
-    TOPSTEP XFA:
-    Profit Balance startet bei 0.
+    =====================================
+    TOPSTEP EOD TRAILING XFA
+    =====================================
     */
 
     if(
@@ -1362,8 +1458,21 @@ function getAccountDrawdownInfo(
         "profitBalance"
     ) {
 
+        const daily =
+            getAccountCycleDailyPnL(
+                account
+            );
+
+
+        const values =
+            Object.values(
+                daily
+            );
+
+
         let cumulative =
             0;
+
 
         let highestEOD =
             0;
@@ -1391,6 +1500,13 @@ function getAccountDrawdownInfo(
             maxLoss;
 
 
+        /*
+        Standard Topstep XFA:
+
+        Der MLL darf bis maximal $0
+        trailen und lockt dort.
+        */
+
         const lockedMLL =
             Number(
                 rules.lockedMLL
@@ -1408,6 +1524,32 @@ function getAccountDrawdownInfo(
                     floor,
                     lockedMLL
                 );
+
+        }
+
+
+        /*
+        Nach erstem Payout
+        zwingend MLL = $0.
+        */
+
+        const payoutCount =
+            Number(
+                account.payoutCount
+            ) || 0;
+
+
+        if(
+            payoutCount > 0 &&
+            rules.mllResetsToZeroAfterFirstPayout
+        ) {
+
+            floor =
+                Number.isFinite(
+                    lockedMLL
+                )
+                    ? lockedMLL
+                    : 0;
 
         }
 
@@ -1432,16 +1574,31 @@ function getAccountDrawdownInfo(
                 ),
 
             source:
-                "EOD Trailing"
+                "EOD Trailing MLL"
 
         };
 
     }
 
 
+
     /*
-    Lucid / klassische Account Balance
+    =====================================
+    LUCID / KLASSISCHE ACCOUNT BALANCE
+    =====================================
     */
+
+    const daily =
+        getAccountCycleDailyPnL(
+            account
+        );
+
+
+    const values =
+        Object.values(
+            daily
+        );
+
 
     let cumulative =
         Number(
@@ -1512,13 +1669,11 @@ function getAccountDrawdownInfo(
             Number.isFinite(
                 currentBalance
             )
-
                 ? Math.max(
                     0,
                     currentBalance -
                     floor
                 )
-
                 : null,
 
         source:
