@@ -54,6 +54,118 @@ const PROP_RULES = {
 
             sizes: {
 
+                
+            "25k": {
+
+                    accountSize:
+                        25000,
+                
+                    /*
+                    Topstep Labs 25K XFA
+                    XFA Performance Balance startet bei $0.
+                    */
+                
+                    startingBalance:
+                        0,
+                
+                    buyingPower:
+                        25000,
+                
+                
+                    /*
+                    Maximum Loss Limit
+                
+                    Besonderheit:
+                    25K Labs = STATIC, nicht EOD Trailing.
+                    */
+                
+                    maxLossLimit:
+                        1000,
+                
+                    initialMLL:
+                        -1000,
+                
+                    lockedMLL:
+                        0,
+                
+                    mllType:
+                        "static",
+                
+                    mllLocksAt:
+                        0,
+                
+                    mllLocksAfterProfit:
+                        null,
+                
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+                
+                
+                    /*
+                    DLL ist beim 25K verpflichtend.
+                    */
+                
+                    dllOptional:
+                        false,
+                
+                    dll:
+                        500,
+                
+                
+                    /*
+                    Position Size
+                    */
+                
+                    maxMinis:
+                        2,
+                
+                    maxMicros:
+                        20,
+                
+                    scalingPlan:
+                        false,
+                
+                
+                    /*
+                    Payout
+                    */
+                
+                    payoutMode:
+                        "winningDays",
+                
+                    minWinningDays:
+                        5,
+                
+                    winningDayMinProfit:
+                        150,
+                
+                    consistencyLimit:
+                        null,
+                
+                    minPayout:
+                        125,
+                
+                    payoutPercent:
+                        50,
+                
+                    /*
+                    Topstep Labs 25K:
+                    XFA Payout Cap $4,000
+                    */
+                
+                    maxPayout:
+                        4000,
+                
+                    profitSplitTrader:
+                        90,
+                
+                    profitTarget:
+                        null,
+                
+                    currency:
+                        "USD"
+                
+                },
 
                 "50k": {
 
@@ -329,6 +441,101 @@ const PROP_RULES = {
 
             sizes: {
 
+                "25k": {
+
+                    accountSize:
+                        25000,
+                
+                    startingBalance:
+                        0,
+                
+                    buyingPower:
+                        25000,
+                
+                
+                    /*
+                    STATIC Maximum Loss Limit
+                    */
+                
+                    maxLossLimit:
+                        1000,
+                
+                    initialMLL:
+                        -1000,
+                
+                    lockedMLL:
+                        0,
+                
+                    mllType:
+                        "static",
+                
+                    mllLocksAt:
+                        0,
+                
+                    mllLocksAfterProfit:
+                        null,
+                
+                    mllResetsToZeroAfterFirstPayout:
+                        true,
+                
+                
+                    /*
+                    Mandatory DLL
+                    */
+                
+                    dllOptional:
+                        false,
+                
+                    dll:
+                        500,
+                
+                
+                    /*
+                    Position Size
+                    */
+                
+                    maxMinis:
+                        2,
+                
+                    maxMicros:
+                        20,
+                
+                    scalingPlan:
+                        false,
+                
+                
+                    /*
+                    Payout / Consistency
+                    */
+                
+                    payoutMode:
+                        "consistency",
+                
+                    minTradingDays:
+                        3,
+                
+                    consistencyLimit:
+                        40,
+                
+                    minPayout:
+                        125,
+                
+                    payoutPercent:
+                        50,
+                
+                    maxPayout:
+                        4000,
+                
+                    profitSplitTrader:
+                        90,
+                
+                    profitTarget:
+                        null,
+                
+                    currency:
+                        "USD"
+                
+                },
 
                 "50k": {
 
