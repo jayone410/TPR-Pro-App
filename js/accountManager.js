@@ -1491,3 +1491,115 @@ if(selectedAccountCount) {
 }
 
 }
+
+function getAccountLifecycleStatus(
+    account
+) {
+
+    const stage =
+        String(
+            account.stage || ""
+        ).toLowerCase();
+
+
+    /*
+    =====================================
+    EVALUATION
+    =====================================
+    */
+
+    if(
+        stage === "evaluation"
+    ) {
+
+        return {
+
+            level: "evaluation",
+
+            icon: "●",
+
+            text: "EVALUATION"
+
+        };
+    }
+
+
+    /*
+    =====================================
+    FUNDED
+    =====================================
+    */
+
+    if(
+        stage === "funded"
+    ) {
+
+        let payoutReady = false;
+
+
+        if(
+            typeof getAccountPayoutAvailability ===
+            "function"
+        ) {
+
+            const payout =
+                getAccountPayoutAvailability(
+                    account
+                );
+
+
+            payoutReady =
+                payout &&
+                payout.eligible === true;
+        }
+
+
+        /*
+        Payout ready → GRÜN
+        */
+
+        if(payoutReady) {
+
+            return {
+
+                level: "funded-ready",
+
+                icon: "●",
+
+                text: "PAYOUT READY"
+
+            };
+        }
+
+
+        /*
+        Funded aber noch nicht payoutbereit
+        → ORANGE
+        */
+
+        return {
+
+            level: "funded-building",
+
+            icon: "●",
+
+            text: "FUNDED"
+
+        };
+    }
+
+
+    /*
+    Fallback
+    */
+
+    return {
+
+        level: "unknown",
+
+        icon: "●",
+
+        text: "CHECK"
+
+    };
+}
