@@ -462,6 +462,12 @@ function renderReadinessDecision(
     }
 
 
+    /*
+    =====================================
+    STATUS
+    =====================================
+    */
+
     status.textContent =
         decision.status;
 
@@ -472,49 +478,453 @@ function renderReadinessDecision(
         decision.level;
 
 
-    score.textContent =
-        decision.score +
-        " / 100";
+    if(score) {
+
+        score.textContent =
+            decision.score +
+            " / 100";
+
+    }
 
 
-    recommendation.textContent =
-        decision.status;
+    /*
+    =====================================
+    RECOMMENDATION
+    =====================================
+    */
+
+    if(recommendation) {
+
+        if(
+            decision.level ===
+            "green"
+        ) {
+
+            recommendation.textContent =
+                "🟢 TRADE NORMAL";
+
+        }
+        else if(
+            decision.level ===
+            "yellow"
+        ) {
+
+            if(
+                decision.status ===
+                "PROTECT"
+            ) {
+
+                recommendation.textContent =
+                    "🟡 PROTECT ACCOUNT";
+
+            }
+            else {
+
+                recommendation.textContent =
+                    "🟡 REDUCE RISK";
+
+            }
+
+        }
+        else {
+
+            recommendation.textContent =
+                "🔴 DON'T TRADE";
+
+        }
+
+    }
 
 
-    buffer.textContent =
-        "$" +
-        decision.buffer
-            .toLocaleString();
+    /*
+    =====================================
+    EVALUATION
+    =====================================
+    */
+
+    if(
+        decision.stage ===
+        "evaluation"
+    ) {
+
+        const selectedAccounts =
+            typeof getSelectedAccounts ===
+            "function"
+
+                ? getSelectedAccounts(
+                    selectedAccountIds
+                )
+
+                : [];
 
 
-    bufferDetail.textContent =
-        decision.bufferStatus +
-        " · " +
-        decision.bufferDetail;
+        const account =
+            selectedAccounts.length ===
+            1
+
+                ? selectedAccounts[0]
+
+                : null;
 
 
-    payout.textContent =
-        decision.payoutText;
+        const rules =
+            account &&
+            typeof getEffectiveRules ===
+            "function"
+
+                ? getEffectiveRules(
+                    account
+                )
+
+                : null;
 
 
-    payoutDetail.textContent =
-        decision.payoutDetail;
+        const profitTarget =
+            Number(
+                rules?.profitTarget
+            );
 
 
-    goal.textContent =
-        decision.goal;
+        const currentProfit =
+            Number(
+                decision.currentProfit
+            );
 
 
-    stop.textContent =
-        decision.stop;
-
-
-    ai.innerHTML =
-        decision.ai
-            .map(
-                item =>
-                    "✓ " + item
+        const remaining =
+            Number.isFinite(
+                profitTarget
+            ) &&
+            Number.isFinite(
+                currentProfit
             )
-            .join("<br>");
+
+                ? Math.max(
+                    0,
+                    profitTarget -
+                    currentProfit
+                )
+
+                : null;
+
+
+        /*
+        Linke Metrik:
+        Target Remaining
+        */
+
+        if(buffer) {
+
+            buffer.textContent =
+                remaining !== null
+
+                    ? formatReadinessMoney(
+                        remaining
+                    )
+
+                    : "--";
+
+        }
+
+
+        if(bufferDetail) {
+
+            bufferDetail.textContent =
+                remaining !== null
+
+                    ? "bis Profit Target"
+
+                    : "Evaluation aktiv";
+
+        }
+
+
+        /*
+        Rechte Metrik:
+        Consistency
+        */
+
+        if(payout) {
+
+            if(
+                decision.consistency &&
+                Number.isFinite(
+                    Number(
+                        decision.consistency.current
+                    )
+                )
+            ) {
+
+                payout.textContent =
+                    Number(
+                        decision.consistency.current
+                    ).toFixed(1) +
+                    "%";
+
+            }
+            else {
+
+                payout.textContent =
+                    "--";
+
+            }
+
+        }
+
+
+        if(payoutDetail) {
+
+            if(
+                decision.consistency &&
+                Number.isFinite(
+                    Number(
+                        decision.consistency.limit
+                    )
+                )
+            ) {
+
+                payoutDetail.textContent =
+                    "Limit " +
+                    Number(
+                        decision.consistency.limit
+                    ).toFixed(1) +
+                    "%";
+
+            }
+            else {
+
+                payoutDetail.textContent =
+                    "Keine Consistency Rule";
+
+            }
+
+        }
+
+    }
+
+
+    /*
+    =====================================
+    FUNDED
+    =====================================
+    */
+
+    else if(
+        decision.stage ===
+        "funded"
+    ) {
+
+        /*
+        Linke Metrik:
+        Remaining Drawdown
+        */
+
+        if(buffer) {
+
+            if(
+                decision.drawdown &&
+                Number.isFinite(
+                    Number(
+                        decision.drawdown.remaining
+                    )
+                )
+            ) {
+
+                buffer.textContent =
+                    formatReadinessMoney(
+                        decision.drawdown.remaining
+                    );
+
+            }
+            else {
+
+                buffer.textContent =
+                    "--";
+
+            }
+
+        }
+
+
+        if(bufferDetail) {
+
+            if(
+                decision.drawdown &&
+                Number.isFinite(
+                    Number(
+                        decision.drawdown.floor
+                    )
+                )
+            ) {
+
+                bufferDetail.textContent =
+                    "Floor " +
+                    formatReadinessMoney(
+                        decision.drawdown.floor
+                    );
+
+            }
+            else {
+
+                bufferDetail.textContent =
+                    "Remaining Drawdown";
+
+            }
+
+        }
+
+
+        /*
+        Rechte Metrik:
+        Payout
+        */
+
+        if(payout) {
+
+            payout.textContent =
+                decision.payoutText ||
+                "--";
+
+        }
+
+
+        if(payoutDetail) {
+
+            payoutDetail.textContent =
+                decision.payoutDetail ||
+                "--";
+
+        }
+
+    }
+
+
+    /*
+    =====================================
+    FALLBACK
+    =====================================
+    */
+
+    else {
+
+        if(buffer) {
+            buffer.textContent = "--";
+        }
+
+        if(bufferDetail) {
+            bufferDetail.textContent = "--";
+        }
+
+        if(payout) {
+            payout.textContent = "--";
+        }
+
+        if(payoutDetail) {
+            payoutDetail.textContent = "--";
+        }
+
+    }
+
+
+    /*
+    =====================================
+    DAILY PLAN
+    =====================================
+    */
+
+    if(goal) {
+
+        goal.textContent =
+            decision.goal ||
+            "--";
+
+    }
+
+
+    if(stop) {
+
+        stop.textContent =
+            decision.stop ||
+            "--";
+
+    }
+
+
+    /*
+    =====================================
+    AI DECISION
+    =====================================
+    */
+
+    if(ai) {
+
+        const messages =
+            Array.isArray(
+                decision.ai
+            )
+                ? decision.ai
+                : [];
+
+
+        ai.innerHTML =
+            messages.length > 0
+
+                ? messages
+                    .map(
+                        item =>
+                            "✓ " + item
+                    )
+                    .join("<br>")
+
+                : "Keine Hinweise.";
+
+    }
+
+}
+
+
+/*
+=========================================
+FORMAT
+=========================================
+*/
+
+function formatReadinessMoney(
+    value
+) {
+
+    const number =
+        Number(
+            value
+        );
+
+
+    if(
+        !Number.isFinite(
+            number
+        )
+    ) {
+
+        return "--";
+
+    }
+
+
+    return number.toLocaleString(
+        "en-US",
+        {
+            style:
+                "currency",
+
+            currency:
+                "USD",
+
+            minimumFractionDigits:
+                2,
+
+            maximumFractionDigits:
+                2
+        }
+    );
 
 }
