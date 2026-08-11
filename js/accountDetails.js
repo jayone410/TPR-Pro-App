@@ -100,6 +100,78 @@ function formatAccountPercent(value) {
 
 }
 
+function getAccountPayoutHistoryHtml(
+    account
+) {
+
+    const history =
+        Array.isArray(
+            account.payoutHistory
+        )
+            ? account.payoutHistory
+            : [];
+
+
+    if(
+        history.length === 0
+    ) {
+
+        return `
+            <div class="account-payout-history-empty">
+                Noch keine Payouts gespeichert.
+            </div>
+        `;
+
+    }
+
+
+    return history
+        .slice()
+        .reverse()
+        .map(
+            payout => {
+
+                const amount =
+                    Number(
+                        payout.amount
+                    ) || 0;
+
+
+                return `
+                    <div class="account-payout-history-item">
+
+                        <div>
+                            <strong>
+                                Cycle #${payout.cycleNumber}
+                            </strong>
+
+                            <span>
+                                ${payout.date || "--"}
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                $${amount.toFixed(2)}
+                            </strong>
+
+                            <span>
+                                ${
+                                    Number(
+                                        payout.cycleProfit
+                                    ) || 0
+                                } Cycle P&L
+                            </span>
+                        </div>
+
+                    </div>
+                `;
+
+            }
+        )
+        .join("");
+
+}
 
 /*
 =========================================
