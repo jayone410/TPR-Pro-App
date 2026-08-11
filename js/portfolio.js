@@ -542,6 +542,7 @@ function calculatePortfolioOverview() {
 }
 
 
+
 /*
 =========================================
 MISSION CONTROL RENDERN
@@ -734,8 +735,6 @@ function renderPortfolioOverview() {
     }
 
 }
-
-
 
 /*
 =========================================
@@ -1013,124 +1012,703 @@ function renderSingleAccount(account) {
 
 
     /*
-    Payout Card
+    Payout / Evaluation Intelligence
     */
 
-    if(payoutBox) {
+    renderPayoutIntelligence(
+        account,
+        payout,
+        providerRules
+    );
 
-        payoutBox.innerHTML = `
 
-            <p>
+    /*
+    Daily Trading Plan
+    */
 
-                Account:
+    renderDailyTradingPlan(
+        account,
+        dailyPlan,
+        payout,
+        providerRules
+    );
+
+}
+
+
+/*
+=========================================
+PAYOUT / EVALUATION INTELLIGENCE UI
+=========================================
+*/
+
+function renderPayoutIntelligence(
+    account,
+    payout,
+    rules
+) {
+
+    const box =
+        document.getElementById(
+            "payout"
+        );
+
+    if(!box) {
+        return;
+    }
+
+
+    const stage =
+        String(
+            account.stage ||
+            rules?.stage ||
+            ""
+        ).toLowerCase();
+
+
+    /*
+    =====================================
+    EVALUATION
+    =====================================
+    */
+
+    if(stage === "evaluation") {
+
+        const currentProfit =
+            typeof getAccountCurrentProfit ===
+            "function"
+                ? Number(
+                    getAccountCurrentProfit(
+                        account
+                    )
+                )
+                : (
+                    Number(account.balance) -
+                    Number(account.startingBalance)
+                );
+
+
+        const profitTarget =
+            Number(
+                rules?.profitTarget
+            );
+
+
+        const targetRemaining =
+            Number.isFinite(
+                profitTarget
+            )
+                ? Math.max(
+                    0,
+                    profitTarget -
+                    currentProfit
+                )
+                : null;
+
+
+        const progress =
+            Number.isFinite(
+                profitTarget
+            ) &&
+            profitTarget > 0
+                ? Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        (
+                            currentProfit /
+                            profitTarget
+                        ) * 100
+                    )
+                )
+                : null;
+
+
+        const consistency =
+            typeof getAccountConsistencyInfo ===
+            "function"
+                ? getAccountConsistencyInfo(
+                    account
+                )
+                : null;
+
+
+        const drawdown =
+            typeof getAccountDrawdownInfo ===
+            "function"
+                ? getAccountDrawdownInfo(
+                    account
+                )
+                : null;
+
+
+        const dll =
+            typeof getAccountDLLInfo ===
+            "function"
+                ? getAccountDLLInfo(
+                    account
+                )
+                : null;
+
+
+        box.innerHTML = `
+
+            <div class="payout-intelligence-header">
+
+                <div>
+                    <small>
+                        EVALUATION PROGRESS
+                    </small>
+
+                    <strong>
+                        ${account.accountName}
+                    </strong>
+                </div>
+
+                <span>
+                    ${payout?.status || "EVAL"}
+                </span>
+
+            </div>
+
+            <div class="payout-intelligence-grid">
+
+                ${buildPortfolioMetric(
+                    "Current Profit",
+                    formatPortfolioSignedMoney(
+                        currentProfit
+                    )
+                )}
+
+                ${buildPortfolioMetric(
+                    "Profit Target",
+                    Number.isFinite(
+                        profitTarget
+                    )
+                        ? formatPortfolioMoney(
+                            profitTarget
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Target Remaining",
+                    targetRemaining !== null
+                        ? formatPortfolioMoney(
+                            targetRemaining
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Progress",
+                    progress !== null
+                        ? progress.toFixed(1) +
+                            "%"
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Consistency",
+                    consistency
+                        ? (
+                            Number(
+                                consistency.current
+                            ).toFixed(1) +
+                            "% / " +
+                            Number(
+                                consistency.limit
+                            ).toFixed(1) +
+                            "%"
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Remaining DD",
+                    drawdown &&
+                    Number.isFinite(
+                        Number(
+                            drawdown.remaining
+                        )
+                    )
+                        ? formatPortfolioMoney(
+                            drawdown.remaining
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "DLL Left",
+                    dll &&
+                    Number.isFinite(
+                        Number(
+                            dll.remaining
+                        )
+                    )
+                        ? formatPortfolioMoney(
+                            dll.remaining
+                        )
+                        : "--"
+                )}
+
+            </div>
+
+            <div class="payout-intelligence-action">
 
                 <strong>
-                    ${account.accountName}
+                    ${payout?.message || "Evaluation aktiv."}
                 </strong>
 
-            </p>
+                <div>
+                    ${payout?.action || ""}
+                </div>
 
-
-            <p>
-
-                Payout Status:
-
-                <strong>
-                    ${payout.status}
-                </strong>
-
-            </p>
-
-
-            <p>
-
-                ${payout.message || ""}
-
-            </p>
-
-
-            <p>
-
-                AI Empfehlung:
-
-                <br>
-
-                ${payout.action || ""}
-
-            </p>
-
+            </div>
         `;
+
+
+        return;
 
     }
 
 
 
     /*
-    Daily Plan Card
+    =====================================
+    FUNDED
+    =====================================
     */
 
-    if(dailyPlanBox) {
+    if(stage === "funded") {
 
-        const advice =
-            Array.isArray(
-                dailyPlan.advice
-            )
-                ? dailyPlan.advice
-                : [];
+        const payoutData =
+            typeof getAccountPayoutAvailability ===
+            "function"
+                ? getAccountPayoutAvailability(
+                    account
+                )
+                : null;
 
 
-        dailyPlanBox.innerHTML = `
+        const tradingDays =
+            typeof getAccountTradingDayRequirement ===
+            "function"
+                ? getAccountTradingDayRequirement(
+                    account
+                )
+                : null;
 
-            <p>
 
-                Risk Mode:
+        const winningDays =
+            typeof getAccountWinningDaysInfo ===
+            "function"
+                ? getAccountWinningDaysInfo(
+                    account
+                )
+                : null;
+
+
+        const consistency =
+            typeof getAccountConsistencyInfo ===
+            "function"
+                ? getAccountConsistencyInfo(
+                    account
+                )
+                : null;
+
+
+        const drawdown =
+            typeof getAccountDrawdownInfo ===
+            "function"
+                ? getAccountDrawdownInfo(
+                    account
+                )
+                : null;
+
+
+        const dll =
+            typeof getAccountDLLInfo ===
+            "function"
+                ? getAccountDLLInfo(
+                    account
+                )
+                : null;
+
+
+        let dayMetric =
+            "--";
+
+        let dayLabel =
+            "Qualifying Days";
+
+
+        if(tradingDays) {
+
+            dayMetric =
+                tradingDays.current +
+                " / " +
+                tradingDays.required;
+
+            dayLabel =
+                "Trading Days";
+
+        }
+        else if(winningDays) {
+
+            dayMetric =
+                winningDays.current +
+                " / " +
+                winningDays.required;
+
+            dayLabel =
+                "Winning Days";
+
+        }
+
+
+        box.innerHTML = `
+
+            <div class="payout-intelligence-header">
+
+                <div>
+                    <small>
+                        PAYOUT INTELLIGENCE
+                    </small>
+
+                    <strong>
+                        ${account.accountName}
+                    </strong>
+                </div>
+
+                <span>
+                    ${payout?.status || "--"}
+                </span>
+
+            </div>
+
+            <div class="payout-intelligence-grid">
+
+                ${buildPortfolioMetric(
+                    dayLabel,
+                    dayMetric
+                )}
+
+                ${buildPortfolioMetric(
+                    "Consistency",
+                    consistency
+                        ? (
+                            Number(
+                                consistency.current
+                            ).toFixed(1) +
+                            "% / " +
+                            Number(
+                                consistency.limit
+                            ).toFixed(1) +
+                            "%"
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Potential Payout",
+                    payoutData
+                        ? formatPortfolioMoney(
+                            payoutData.potentialAvailable
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Payout Available",
+                    payoutData
+                        ? formatPortfolioMoney(
+                            payoutData.available
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Still Needed",
+                    payoutData
+                        ? formatPortfolioMoney(
+                            payoutData.stillNeeded
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "Remaining DD",
+                    drawdown &&
+                    Number.isFinite(
+                        Number(
+                            drawdown.remaining
+                        )
+                    )
+                        ? formatPortfolioMoney(
+                            drawdown.remaining
+                        )
+                        : "--"
+                )}
+
+                ${buildPortfolioMetric(
+                    "DLL Left",
+                    dll &&
+                    Number.isFinite(
+                        Number(
+                            dll.remaining
+                        )
+                    )
+                        ? formatPortfolioMoney(
+                            dll.remaining
+                        )
+                        : "--"
+                )}
+
+            </div>
+
+            <div class="payout-intelligence-action">
 
                 <strong>
-                    ${dailyPlan.mode}
+                    ${payout?.message || "Payout-Status prüfen."}
                 </strong>
 
-            </p>
+                <div>
+                    ${payout?.action || ""}
+                </div>
 
-
-            <p>
-
-                Tagesziel:
-
-                ${dailyPlan.target}
-
-            </p>
-
-
-            <p>
-
-                Max Loss:
-
-                ${dailyPlan.maxLoss}
-
-            </p>
-
-
-            <p>
-
-                AI Hinweise:
-
-            </p>
-
-
-            ${advice
-                .map(
-                    item =>
-                        "✓ " + item
-                )
-                .join("<br>")}
-
+            </div>
         `;
 
+
+        return;
+
     }
+
+
+    box.innerHTML =
+        "Account Stage prüfen.";
 
 }
 
 
+/*
+=========================================
+DAILY TRADING PLAN UI
+=========================================
+*/
+
+function renderDailyTradingPlan(
+    account,
+    dailyPlan,
+    payout,
+    rules
+) {
+
+    const box =
+        document.getElementById(
+            "dailyPlan"
+        );
+
+
+    if(!box) {
+        return;
+    }
+
+
+    const stage =
+        String(
+            account.stage ||
+            rules?.stage ||
+            ""
+        ).toLowerCase();
+
+
+    const advice =
+        Array.isArray(
+            dailyPlan?.advice
+        )
+            ? dailyPlan.advice
+            : [];
+
+
+    const drawdown =
+        typeof getAccountDrawdownInfo ===
+        "function"
+            ? getAccountDrawdownInfo(
+                account
+            )
+            : null;
+
+
+    const dll =
+        typeof getAccountDLLInfo ===
+        "function"
+            ? getAccountDLLInfo(
+                account
+            )
+            : null;
+
+
+    box.innerHTML = `
+
+        <div class="daily-plan-header">
+
+            <div>
+                <small>
+                    ${
+                        stage === "evaluation"
+                            ? "EVALUATION PLAN"
+                            : "FUNDED PLAN"
+                    }
+                </small>
+
+                <strong>
+                    ${account.accountName}
+                </strong>
+            </div>
+
+            <span>
+                ${dailyPlan?.mode || "--"}
+            </span>
+
+        </div>
+
+        <div class="daily-plan-grid">
+
+            ${buildPortfolioMetric(
+                "Today's Goal",
+                dailyPlan?.target || "--"
+            )}
+
+            ${buildPortfolioMetric(
+                "Today's Stop",
+                dailyPlan?.maxLoss || "--"
+            )}
+
+            ${buildPortfolioMetric(
+                "Remaining DD",
+                drawdown &&
+                Number.isFinite(
+                    Number(
+                        drawdown.remaining
+                    )
+                )
+                    ? formatPortfolioMoney(
+                        drawdown.remaining
+                    )
+                    : "--"
+            )}
+
+            ${buildPortfolioMetric(
+                "DLL Left",
+                dll &&
+                Number.isFinite(
+                    Number(
+                        dll.remaining
+                    )
+                )
+                    ? formatPortfolioMoney(
+                        dll.remaining
+                    )
+                    : "--"
+            )}
+
+            ${buildPortfolioMetric(
+                stage === "evaluation"
+                    ? "Eval Status"
+                    : "Payout Status",
+                payout?.status || "--"
+            )}
+
+        </div>
+
+        <div class="daily-plan-advice">
+
+            ${
+                advice.length > 0
+                    ? advice
+                        .map(
+                            item =>
+                                "✓ " + item
+                        )
+                        .join("<br>")
+                    : "Keine Hinweise."
+            }
+
+        </div>
+    `;
+
+}
+
+
+/*
+=========================================
+UI HELPERS
+=========================================
+*/
+
+function buildPortfolioMetric(
+    label,
+    value
+) {
+
+    return `
+        <div class="portfolio-info-metric">
+            <span>${label}</span>
+            <strong>${value}</strong>
+        </div>
+    `;
+
+}
+
+
+function formatPortfolioSignedMoney(
+    value
+) {
+
+    const number =
+        Number(
+            value
+        );
+
+
+    if(
+        !Number.isFinite(
+            number
+        )
+    ) {
+
+        return "--";
+
+    }
+
+
+    const formatted =
+        formatPortfolioMoney(
+            Math.abs(
+                number
+            )
+        );
+
+
+    if(number > 0) {
+
+        return "+" + formatted;
+
+    }
+
+
+    if(number < 0) {
+
+        return "-" + formatted;
+
+    }
+
+
+    return formatted;
+
+}
 
 /*
 =========================================
@@ -1387,6 +1965,13 @@ function renderMultipleAccounts(
 
 }
 
+
+/*
+=========================================
+ACCOUNT NET P&L
+=========================================
+*/
+
 function calculateAccountNetPnL(account) {
 
     const trades =
@@ -1417,6 +2002,7 @@ function calculateAccountNetPnL(account) {
         /*
         LUCID
         Performance CSV:
+
         pnl = Gross P&L
         Gebühren = $1 pro Kontrakt
         */
@@ -1432,9 +2018,12 @@ function calculateAccountNetPnL(account) {
                 );
 
 
-            if(Number.isFinite(qty)) {
+            if(
+                Number.isFinite(qty)
+            ) {
 
-                fees += qty * 1.00;
+                fees +=
+                    qty * 1.00;
 
             }
 
