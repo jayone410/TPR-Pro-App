@@ -866,7 +866,15 @@ function renderAccounts() {
                 buffer > 0
                     ? "+"
                     : "";
-
+            
+            
+            /*
+            =====================================
+            PAYOUT BUTTON
+            Nur für Funded Accounts
+            =====================================
+            */
+            
             const payoutButtonHtml =
                 String(
                     account.stage || ""
