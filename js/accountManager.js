@@ -1043,14 +1043,6 @@ function renderAccounts() {
                     ${payoutButtonHtml}
 
                     <button
-                        class="payoutAccountButton"
-                        data-account-id="${account.id}"
-                        title="Payout buchen"
-                    >
-                        💰
-                    </button>
-
-                    <button
                         class="rulesAccountButton"
                         data-account-id="${account.id}"
                         title="Rules bearbeiten"
