@@ -14,6 +14,8 @@ migrateAccountStages();
 
 migrateAccountsToRulesV3();
 
+migrateAccountPayoutHistory();
+
 
 /*
 =========================================
@@ -189,6 +191,9 @@ function createAccount(
         totalPayouts:
             0,
 
+        payoutHistory:
+            [],
+        
         payoutCount:
             0,
 
@@ -274,6 +279,590 @@ function updateAccount(account) {
 
 }
 
+/*
+=========================================
+PAYOUT HISTORY
+=========================================
+*/
+
+function ensurePayoutHistory(
+    account
+) {
+
+    if(
+        !Array.isArray(
+            account.payoutHistory
+        )
+    ) {
+
+        account.payoutHistory =
+            [];
+
+    }
+
+
+    if(
+        !Number.isFinite(
+            Number(
+                account.payoutCount
+            )
+        )
+    ) {
+
+        account.payoutCount =
+            account.payoutHistory.length;
+
+    }
+
+
+    return account.payoutHistory;
+
+}
+
+
+/*
+=========================================
+PAYOUT HINZUFÜGEN
+=========================================
+*/
+
+function addAccountPayout(
+    accountId,
+    amount,
+    payoutDate = null
+) {
+
+    const account =
+        getAccount(
+            accountId
+        );
+
+
+    if(!account) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Account nicht gefunden."
+
+        };
+
+    }
+
+
+    const payoutAmount =
+        Number(
+            amount
+        );
+
+
+    if(
+        !Number.isFinite(
+            payoutAmount
+        ) ||
+        payoutAmount <= 0
+    ) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Ungültiger Payout-Betrag."
+
+        };
+
+    }
+
+
+    const history =
+        ensurePayoutHistory(
+            account
+        );
+
+
+    const date =
+        payoutDate
+            ? String(
+                payoutDate
+            )
+            : new Date()
+                .toISOString()
+                .slice(
+                    0,
+                    10
+                );
+
+
+    /*
+    Aktuellen Cycle vor dem Reset sichern
+    */
+
+    const cycleProfit =
+        typeof getAccountCycleDailyPnL ===
+        "function"
+
+            ? Object.values(
+                getAccountCycleDailyPnL(
+                    account
+                )
+            ).reduce(
+                (
+                    sum,
+                    value
+                ) => {
+
+                    const number =
+                        Number(
+                            value
+                        );
+
+
+                    return (
+                        sum +
+                        (
+                            Number.isFinite(
+                                number
+                            )
+                                ? number
+                                : 0
+                        )
+                    );
+
+                },
+                0
+            )
+
+            : 0;
+
+
+    const cycleDays =
+        typeof getAccountCycleDailyPnL ===
+        "function"
+
+            ? Object.keys(
+                getAccountCycleDailyPnL(
+                    account
+                )
+            ).length
+
+            : 0;
+
+
+    const payoutEntry = {
+
+        id:
+            "PAYOUT-" +
+            Date.now(),
+
+        cycleNumber:
+            history.length +
+            1,
+
+        date,
+
+        amount:
+            payoutAmount,
+
+        cycleStartDate:
+            account.payoutCycleStartDate ||
+            null,
+
+        cycleProfit,
+
+        cycleDays,
+
+        createdAt:
+            new Date()
+                .toISOString()
+
+    };
+
+
+    history.push(
+        payoutEntry
+    );
+
+
+    /*
+    Gesamtpayouts aktualisieren
+    */
+
+    account.totalPayouts =
+        history.reduce(
+            (
+                sum,
+                payout
+            ) => {
+
+                const value =
+                    Number(
+                        payout.amount
+                    );
+
+
+                return (
+                    sum +
+                    (
+                        Number.isFinite(
+                            value
+                        )
+                            ? value
+                            : 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    account.payoutCount =
+        history.length;
+
+
+    /*
+    Neuer Cycle startet
+    am Tag NACH dem Payout.
+    */
+
+    const nextCycleDate =
+        addDaysToISODate(
+            date,
+            1
+        );
+
+
+    account.payoutCycleStartDate =
+        nextCycleDate;
+
+
+    /*
+    Topstep:
+    nach erstem Payout MLL ggf. auf 0.
+    */
+
+    const rules =
+        typeof getEffectiveRules ===
+        "function"
+
+            ? getEffectiveRules(
+                account
+            )
+
+            : null;
+
+
+    if(
+        account.payoutCount > 0 &&
+        rules &&
+        rules.mllResetsToZeroAfterFirstPayout ===
+            true
+    ) {
+
+        account.mllLocked =
+            true;
+
+    }
+
+
+    updateAccount(
+        account
+    );
+
+
+    return {
+
+        success: true,
+
+        payout:
+            payoutEntry,
+
+        payoutCount:
+            account.payoutCount,
+
+        totalPayouts:
+            account.totalPayouts,
+
+        nextCycleStart:
+            account.payoutCycleStartDate
+
+    };
+
+}
+
+
+/*
+=========================================
+PAYOUT LÖSCHEN
+=========================================
+*/
+
+function removeAccountPayout(
+    accountId,
+    payoutId
+) {
+
+    const account =
+        getAccount(
+            accountId
+        );
+
+
+    if(!account) {
+
+        return false;
+
+    }
+
+
+    ensurePayoutHistory(
+        account
+    );
+
+
+    account.payoutHistory =
+        account.payoutHistory
+            .filter(
+                payout =>
+                    payout.id !==
+                    payoutId
+            );
+
+
+    /*
+    Cycle Nummern neu setzen
+    */
+
+    account.payoutHistory
+        .forEach(
+            (
+                payout,
+                index
+            ) => {
+
+                payout.cycleNumber =
+                    index +
+                    1;
+
+            }
+        );
+
+
+    account.payoutCount =
+        account.payoutHistory
+            .length;
+
+
+    account.totalPayouts =
+        account.payoutHistory
+            .reduce(
+                (
+                    sum,
+                    payout
+                ) => {
+
+                    const value =
+                        Number(
+                            payout.amount
+                        );
+
+
+                    return (
+                        sum +
+                        (
+                            Number.isFinite(
+                                value
+                            )
+                                ? value
+                                : 0
+                        )
+                    );
+
+                },
+                0
+            );
+
+
+    /*
+    Letzten bekannten Cycle Start
+    wiederherstellen
+    */
+
+    const lastPayout =
+        account.payoutHistory[
+            account.payoutHistory.length -
+            1
+        ];
+
+
+    account.payoutCycleStartDate =
+        lastPayout
+            ? addDaysToISODate(
+                lastPayout.date,
+                1
+            )
+            : null;
+
+    updateAccount(
+        account
+    );
+
+
+    return true;
+
+}
+
+
+/*
+=========================================
+DATUM + TAGE
+=========================================
+*/
+
+function addDaysToISODate(
+    dateString,
+    days
+) {
+
+    const date =
+        new Date(
+            dateString +
+            "T12:00:00"
+        );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    date.setDate(
+        date.getDate() +
+        Number(
+            days
+        )
+    );
+
+
+    return date
+        .toISOString()
+        .slice(
+            0,
+            10
+        );
+
+}
+
+
+/*
+=========================================
+AKTUELLER CYCLE
+=========================================
+*/
+
+function getAccountPayoutCycleInfo(
+    account
+) {
+
+    ensurePayoutHistory(
+        account
+    );
+
+
+    const daily =
+        typeof getAccountCycleDailyPnL ===
+        "function"
+
+            ? getAccountCycleDailyPnL(
+                account
+            )
+
+            : {};
+
+
+    const days =
+        Object.keys(
+            daily
+        ).sort();
+
+
+    const profit =
+        Object.values(
+            daily
+        ).reduce(
+            (
+                sum,
+                value
+            ) => {
+
+                const number =
+                    Number(
+                        value
+                    );
+
+
+                return (
+                    sum +
+                    (
+                        Number.isFinite(
+                            number
+                        )
+                            ? number
+                            : 0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    return {
+
+        cycleNumber:
+            Number(
+                account.payoutCount ||
+                0
+            ) +
+            1,
+
+        startDate:
+            account.payoutCycleStartDate ||
+            (
+                days.length > 0
+                    ? days[0]
+                    : null
+            ),
+
+        tradingDays:
+            days.length,
+
+        profit,
+
+        payoutCount:
+            Number(
+                account.payoutCount ||
+                0
+            ),
+
+        totalPayouts:
+            Number(
+                account.totalPayouts ||
+                0
+            )
+
+    };
+
+}
 
 /*
 =========================================
@@ -345,6 +934,18 @@ function duplicateAccount(accountId) {
 
         totalPayouts:
             0,
+
+        payoutHistory:
+            [],
+        
+        payoutCount:
+            0,
+        
+        payoutCycleStartDate:
+            null,
+        
+        mllLocked:
+            false,
 
         daysTraded:
             0,
@@ -1515,6 +2116,77 @@ function migrateAccountsToRulesV3() {
 
         console.log(
             "✅ Accounts auf Rules v3 migriert"
+        );
+
+    }
+
+}
+
+function migrateAccountPayoutHistory() {
+
+    let changed =
+        false;
+
+
+    accounts.forEach(
+        account => {
+
+            if(
+                !Array.isArray(
+                    account.payoutHistory
+                )
+            ) {
+
+                account.payoutHistory =
+                    [];
+
+                changed =
+                    true;
+
+            }
+
+
+            if(
+                !Number.isFinite(
+                    Number(
+                        account.payoutCount
+                    )
+                )
+            ) {
+
+                account.payoutCount =
+                    account.payoutHistory
+                        .length;
+
+                changed =
+                    true;
+
+            }
+
+
+            if(
+                account.payoutCycleStartDate ===
+                undefined
+            ) {
+
+                account.payoutCycleStartDate =
+                    null;
+
+                changed =
+                    true;
+
+            }
+
+        }
+    );
+
+
+    if(changed) {
+
+        saveAccounts();
+
+        console.log(
+            "✅ Payout History migriert"
         );
 
     }
