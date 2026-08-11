@@ -1,39 +1,72 @@
 /*
 =========================================
 TPR PRO AI
-Payout / Evaluation Engine v2
+Payout / Evaluation Engine v3
+=========================================
+
+- Evaluation / Funded getrennt
+- Rules v3 kompatibel
+- getEffectiveRules()
+- Topstep Trading Combine
+- Topstep XFA Standard
+- Topstep XFA Consistency
+- Lucid Pro
+- Lucid Flex
+- Rule Overrides kompatibel
 =========================================
 */
 
+
+/*
+=========================================
+HAUPTEINSTIEG
+=========================================
+*/
 
 function analyzePayout(
     account,
     rules
 ) {
 
+    if(!account) {
+
+        return buildPayoutResult(
+            "CHECK",
+            "Kein Account verfügbar.",
+            "Accountdaten prüfen.",
+            "unknown"
+        );
+
+    }
+
+
     /*
-    =====================================
-    FALLBACK RULES
-    =====================================
+    Falls keine Rules übergeben wurden,
+    zentrale Rules Engine verwenden.
     */
+
+    if(
+        !rules &&
+        typeof getEffectiveRules ===
+            "function"
+    ) {
+
+        rules =
+            getEffectiveRules(
+                account
+            );
+
+    }
+
 
     if(!rules) {
 
-        return {
-
-            status:
-                "--",
-
-            message:
-                "Keine Account-Regeln verfügbar.",
-
-            action:
-                "Rules prüfen.",
-
-            mode:
-                "unknown"
-
-        };
+        return buildPayoutResult(
+            "--",
+            "Keine Account-Regeln verfügbar.",
+            "Rules prüfen.",
+            "unknown"
+        );
 
     }
 
@@ -90,21 +123,12 @@ function analyzePayout(
     =====================================
     */
 
-    return {
-
-        status:
-            "CHECK",
-
-        message:
-            "Account Stage unbekannt.",
-
-        action:
-            "Stage im Rules Editor prüfen.",
-
-        mode:
-            "unknown"
-
-    };
+    return buildPayoutResult(
+        "CHECK",
+        "Account Stage unbekannt.",
+        "Stage im Rules Editor prüfen.",
+        "unknown"
+    );
 
 }
 
@@ -122,97 +146,81 @@ function analyzeEvaluationProgress(
 ) {
 
     const currentProfit =
-        typeof getAccountCurrentProfit ===
-        "function"
-
-            ? Number(
-                getAccountCurrentProfit(
-                    account
-                )
-            )
-
-            : (
-                Number(
-                    account.balance
-                ) -
-                Number(
-                    account.startingBalance
-                )
-            );
+        getPayoutCurrentProfit(
+            account
+        );
 
 
     const profitTarget =
-        Number(
+        toFiniteNumber(
             rules.profitTarget
         );
 
 
     const drawdown =
-        typeof getAccountDrawdownInfo ===
-        "function"
+        getPayoutDrawdown(
+            account
+        );
 
-            ? getAccountDrawdownInfo(
-                account
-            )
 
-            : null;
+    const dll =
+        getPayoutDLL(
+            account
+        );
 
 
     const consistency =
-        typeof getAccountConsistencyInfo ===
-        "function"
-
-            ? getAccountConsistencyInfo(
-                account
-            )
-
-            : null;
+        getPayoutConsistency(
+            account
+        );
 
 
     /*
-    Kein Profit Target vorhanden
+    =====================================
+    KEIN PROFIT TARGET
+    =====================================
     */
 
     if(
-        !Number.isFinite(
-            profitTarget
-        ) ||
+        profitTarget === null ||
         profitTarget <= 0
     ) {
 
-        return {
+        return buildPayoutResult(
+            "EVAL",
+            "Evaluation aktiv.",
+            "Account-Regeln beachten.",
+            "evaluation",
+            {
 
-            status:
-                "EVAL",
+                currentProfit,
 
-            message:
-                "Evaluation aktiv.",
+                profitTarget:
+                    null,
 
-            action:
-                "Account-Regeln beachten.",
+                targetRemaining:
+                    null,
 
-            mode:
-                "evaluation",
+                progressPercent:
+                    null,
 
-            currentProfit,
+                drawdown,
 
-            profitTarget:
-                null,
+                dll,
 
-            targetRemaining:
-                null,
+                consistency
 
-            progressPercent:
-                null,
-
-            drawdown,
-
-            consistency
-
-        };
+            }
+        );
 
     }
 
+
+    /*
+    =====================================
+    TARGET / PROGRESS
+    =====================================
+    */
 
     const targetRemaining =
         Math.max(
@@ -223,17 +231,125 @@ function analyzeEvaluationProgress(
 
 
     const progressPercent =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                (
-                    currentProfit /
-                    profitTarget
-                ) *
-                100
-            )
+        clampPercent(
+            (
+                currentProfit /
+                profitTarget
+            ) *
+            100
         );
+
+
+    /*
+    =====================================
+    DRAWDOWN KRITISCH
+
+    Risiko hat Vorrang vor TARGET.
+    =====================================
+    */
+
+    if(
+        isCriticalDrawdown(
+            drawdown
+        )
+    ) {
+
+        return buildPayoutResult(
+            "RISK",
+            "Evaluation Drawdown kritisch.",
+            "Kapital schützen. Nur A+ Setups oder pausieren.",
+            "evaluation",
+            {
+
+                currentProfit,
+
+                profitTarget,
+
+                targetRemaining,
+
+                progressPercent,
+
+                drawdown,
+
+                dll,
+
+                consistency
+
+            }
+        );
+
+    }
+
+
+    /*
+    =====================================
+    CONSISTENCY
+
+    Muss erfüllt sein, bevor die
+    Evaluation als abgeschlossen gilt.
+    =====================================
+    */
+
+    if(
+        isConsistencyFailed(
+            consistency
+        )
+    ) {
+
+        const needed =
+            toFiniteNumber(
+                consistency
+                    .minimumProfitNeeded
+            );
+
+
+        return buildPayoutResult(
+            "CONSISTENCY",
+
+            `Consistency ${
+                formatPayoutPercent(
+                    consistency.current
+                )
+            } / ${
+                formatPayoutPercent(
+                    consistency.limit
+                )
+            }.`,
+
+            (
+                needed !== null &&
+                needed > 0
+            )
+                ? `${
+                    formatPayoutMoney(
+                        needed
+                    )
+                } zusätzlicher Net Profit erforderlich.`
+
+                : "Weitere kontrollierte Green Days aufbauen.",
+
+            "evaluation",
+
+            {
+
+                currentProfit,
+
+                profitTarget,
+
+                targetRemaining,
+
+                progressPercent,
+
+                drawdown,
+
+                dll,
+
+                consistency
+
+            }
+        );
+
+    }
 
 
     /*
@@ -247,141 +363,31 @@ function analyzeEvaluationProgress(
         0
     ) {
 
-        return {
+        return buildPayoutResult(
+            "TARGET",
+            "Profit Target erreicht.",
+            "Keine unnötigen Trades mehr. Evaluation-Abschluss prüfen.",
+            "evaluation",
+            {
 
-            status:
-                "TARGET",
+                currentProfit,
 
-            message:
-                "Profit Target erreicht.",
+                profitTarget,
 
-            action:
-                "Keine unnötigen Trades mehr. Evaluation-Abschluss prüfen.",
+                targetRemaining:
+                    0,
 
-            mode:
-                "evaluation",
+                progressPercent:
+                    100,
 
-            currentProfit,
+                drawdown,
 
-            profitTarget,
+                dll,
 
-            targetRemaining:
-                0,
+                consistency
 
-            progressPercent:
-                100,
-
-            drawdown,
-
-            consistency
-
-        };
-
-    }
-
-
-    /*
-    =====================================
-    DRAWDOWN KRITISCH
-    =====================================
-    */
-
-    if(
-        drawdown &&
-        Number.isFinite(
-            Number(
-                drawdown.remaining
-            )
-        ) &&
-        Number(
-            drawdown.remaining
-        ) <= 250
-    ) {
-
-        return {
-
-            status:
-                "RISK",
-
-            message:
-                "Evaluation Drawdown kritisch.",
-
-            action:
-                "Kapital schützen. Nur A+ Setups oder pausieren.",
-
-            mode:
-                "evaluation",
-
-            currentProfit,
-
-            profitTarget,
-
-            targetRemaining,
-
-            progressPercent,
-
-            drawdown,
-
-            consistency
-
-        };
-
-    }
-
-
-    /*
-    =====================================
-    CONSISTENCY ZU HOCH
-    =====================================
-    */
-
-    if(
-        consistency &&
-        Number.isFinite(
-            Number(
-                consistency.current
-            )
-        ) &&
-        Number.isFinite(
-            Number(
-                consistency.limit
-            )
-        ) &&
-        Number(
-            consistency.current
-        ) >
-        Number(
-            consistency.limit
-        )
-    ) {
-
-        return {
-
-            status:
-                "CONSISTENCY",
-
-            message:
-                "Consistency aktuell über dem Limit.",
-
-            action:
-                "Weitere kontrollierte Green Days aufbauen.",
-
-            mode:
-                "evaluation",
-
-            currentProfit,
-
-            profitTarget,
-
-            targetRemaining,
-
-            progressPercent,
-
-            drawdown,
-
-            consistency
-
-        };
+            }
+        );
 
     }
 
@@ -397,21 +403,61 @@ function analyzeEvaluationProgress(
         80
     ) {
 
-        return {
+        return buildPayoutResult(
+            "PROTECT",
 
-            status:
-                "PROTECT",
-
-            message:
-                `${formatPayoutMoney(
+            `${
+                formatPayoutMoney(
                     targetRemaining
-                )} bis zum Profit Target.`,
+                )
+            } bis zum Profit Target.`,
 
-            action:
-                "Evaluation schützen. Kein aggressives Trading mehr.",
+            "Evaluation schützen. Kein aggressives Trading mehr.",
 
-            mode:
-                "evaluation",
+            "evaluation",
+
+            {
+
+                currentProfit,
+
+                profitTarget,
+
+                targetRemaining,
+
+                progressPercent,
+
+                drawdown,
+
+                dll,
+
+                consistency
+
+            }
+        );
+
+    }
+
+
+    /*
+    =====================================
+    NORMAL BUILD
+    =====================================
+    */
+
+    return buildPayoutResult(
+        "BUILD",
+
+        `${
+            formatPayoutMoney(
+                targetRemaining
+            )
+        } bis zum Profit Target.`,
+
+        "Kontrolliert weiter aufbauen.",
+
+        "evaluation",
+
+        {
 
             currentProfit,
 
@@ -423,48 +469,12 @@ function analyzeEvaluationProgress(
 
             drawdown,
 
+            dll,
+
             consistency
 
-        };
-
-    }
-
-
-    /*
-    =====================================
-    NORMAL BUILD
-    =====================================
-    */
-
-    return {
-
-        status:
-            "BUILD",
-
-        message:
-            `${formatPayoutMoney(
-                targetRemaining
-            )} bis zum Profit Target.`,
-
-        action:
-            "Kontrolliert weiter aufbauen.",
-
-        mode:
-            "evaluation",
-
-        currentProfit,
-
-        profitTarget,
-
-        targetRemaining,
-
-        progressPercent,
-
-        drawdown,
-
-        consistency
-
-    };
+        }
+    );
 
 }
 
@@ -481,65 +491,46 @@ function analyzeFundedPayout(
     rules
 ) {
 
-    /*
-    Wir verwenden bewusst dieselbe
-    zentrale Berechnung wie im
-    Account Control Center.
-    */
-
     const payout =
-        typeof getAccountPayoutAvailability ===
-        "function"
-
-            ? getAccountPayoutAvailability(
-                account
-            )
-
-            : null;
+        getPayoutAvailability(
+            account
+        );
 
 
     const consistency =
-        typeof getAccountConsistencyInfo ===
-        "function"
-
-            ? getAccountConsistencyInfo(
-                account
-            )
-
-            : null;
+        getPayoutConsistency(
+            account
+        );
 
 
     const drawdown =
-        typeof getAccountDrawdownInfo ===
-        "function"
+        getPayoutDrawdown(
+            account
+        );
 
-            ? getAccountDrawdownInfo(
-                account
-            )
 
-            : null;
+    const dll =
+        getPayoutDLL(
+            account
+        );
 
 
     const tradingDays =
-        typeof getAccountTradingDayRequirement ===
-        "function"
-
-            ? getAccountTradingDayRequirement(
-                account
-            )
-
-            : null;
+        getPayoutTradingDays(
+            account
+        );
 
 
     const winningDays =
-        typeof getAccountWinningDaysInfo ===
-        "function"
+        getPayoutWinningDays(
+            account
+        );
 
-            ? getAccountWinningDaysInfo(
-                account
-            )
 
-            : null;
+    const cycleProfit =
+        getPayoutCycleProfit(
+            account
+        );
 
 
     /*
@@ -550,117 +541,75 @@ function analyzeFundedPayout(
 
     if(!payout) {
 
-        return {
+        return buildPayoutResult(
+            "CHECK",
+            "Payout konnte nicht berechnet werden.",
+            "Rules und Accountdaten prüfen.",
+            "funded",
+            {
 
-            status:
-                "CHECK",
+                payout,
 
-            message:
-                "Payout konnte nicht berechnet werden.",
+                consistency,
 
-            action:
-                "Rules und Accountdaten prüfen.",
+                drawdown,
 
-            mode:
-                "funded"
+                dll,
 
-        };
+                tradingDays,
+
+                winningDays,
+
+                cycleProfit
+
+            }
+        );
 
     }
 
 
     /*
     =====================================
-    PAYOUT READY
+    1. DRAWDOWN KRITISCH
     =====================================
     */
 
     if(
-        payout.eligible ===
-        true
+        isCriticalDrawdown(
+            drawdown
+        )
     ) {
 
-        return {
+        return buildPayoutResult(
+            "RISK",
+            "Remaining Drawdown kritisch.",
+            "Account schützen. Kein Payout-Push.",
+            "funded",
+            {
 
-            status:
-                "READY",
+                payout,
 
-            message:
-                `${formatPayoutMoney(
-                    payout.available
-                )} aktuell payout-ready.`,
+                consistency,
 
-            action:
-                "Payout prüfen und unnötiges Risiko vermeiden.",
+                drawdown,
 
-            mode:
-                "funded",
+                dll,
 
-            payout,
+                tradingDays,
 
-            consistency,
+                winningDays,
 
-            drawdown,
+                cycleProfit
 
-            tradingDays,
-
-            winningDays
-
-        };
+            }
+        );
 
     }
 
 
     /*
     =====================================
-    DRAWDOWN KRITISCH
-    =====================================
-    */
-
-    if(
-        drawdown &&
-        Number.isFinite(
-            Number(
-                drawdown.remaining
-            )
-        ) &&
-        Number(
-            drawdown.remaining
-        ) <= 250
-    ) {
-
-        return {
-
-            status:
-                "RISK",
-
-            message:
-                "Remaining Drawdown kritisch.",
-
-            action:
-                "Account schützen. Kein Payout-Push.",
-
-            mode:
-                "funded",
-
-            payout,
-
-            consistency,
-
-            drawdown,
-
-            tradingDays,
-
-            winningDays
-
-        };
-
-    }
-
-
-    /*
-    =====================================
-    TRADING DAYS FEHLEN
+    2. TRADING DAYS FEHLEN
     =====================================
     */
 
@@ -671,40 +620,42 @@ function analyzeFundedPayout(
         ) > 0
     ) {
 
-        return {
+        return buildPayoutResult(
+            "WAIT",
 
-            status:
-                "WAIT",
+            `Noch ${
+                tradingDays.remaining
+            } Handelstag(e) erforderlich.`,
 
-            message:
-                `Noch ${
-                    tradingDays.remaining
-                } Handelstag(e) erforderlich.`,
+            "Qualifying Days kontrolliert erfüllen.",
 
-            action:
-                "Qualifying Days kontrolliert erfüllen.",
+            "funded",
 
-            mode:
-                "funded",
+            {
 
-            payout,
+                payout,
 
-            consistency,
+                consistency,
 
-            drawdown,
+                drawdown,
 
-            tradingDays,
+                dll,
 
-            winningDays
+                tradingDays,
 
-        };
+                winningDays,
+
+                cycleProfit
+
+            }
+        );
 
     }
 
 
     /*
     =====================================
-    WINNING DAYS FEHLEN
+    3. WINNING DAYS FEHLEN
     =====================================
     */
 
@@ -715,130 +666,350 @@ function analyzeFundedPayout(
         ) > 0
     ) {
 
-        return {
+        return buildPayoutResult(
+            "WAIT",
 
-            status:
-                "WAIT",
+            `Noch ${
+                winningDays.remaining
+            } Winning Day(s) erforderlich.`,
 
-            message:
-                `Noch ${
-                    winningDays.remaining
-                } Winning Day(s) erforderlich.`,
+            `Pro Tag mindestens ${
+                formatPayoutMoney(
+                    winningDays
+                        .minimumDayProfit
+                )
+            } erreichen.`,
 
-            action:
-                `Pro Tag mindestens ${
-                    formatPayoutMoney(
-                        winningDays.minimumDayProfit
-                    )
-                } erreichen.`,
+            "funded",
 
-            mode:
-                "funded",
+            {
 
-            payout,
+                payout,
 
-            consistency,
+                consistency,
 
-            drawdown,
+                drawdown,
 
-            tradingDays,
+                dll,
 
-            winningDays
+                tradingDays,
 
-        };
+                winningDays,
+
+                cycleProfit
+
+            }
+        );
 
     }
 
-
     /*
     =====================================
-    CONSISTENCY
+    4. CONSISTENCY
     =====================================
     */
 
     if(
-        consistency &&
-        Number(
-            consistency.current
-        ) >
-        Number(
-            consistency.limit
+        isConsistencyFailed(
+            consistency
         )
     ) {
 
-        return {
+        const needed =
+            toFiniteNumber(
+                consistency
+                    .minimumProfitNeeded
+            );
 
-            status:
-                "CONSISTENCY",
 
-            message:
-                `Consistency ${
-                    Number(
-                        consistency.current
-                    ).toFixed(1)
-                }% / ${
-                    Number(
-                        consistency.limit
-                    ).toFixed(1)
-                }%.`,
+        return buildPayoutResult(
+            "CONSISTENCY",
 
-            action:
-                `${
+            `Consistency ${
+                formatPayoutPercent(
+                    consistency.current
+                )
+            } / ${
+                formatPayoutPercent(
+                    consistency.limit
+                )
+            }.`,
+
+            (
+                needed !== null &&
+                needed > 0
+            )
+                ? `${
                     formatPayoutMoney(
-                        consistency.minimumProfitNeeded
+                        needed
                     )
-                } zusätzlicher Net Profit erforderlich.`,
+                } zusätzlicher Net Profit erforderlich.`
 
-            mode:
-                "funded",
+                : "Weitere kontrollierte Green Days aufbauen.",
 
-            payout,
+            "funded",
 
-            consistency,
+            {
 
-            drawdown,
+                payout,
 
-            tradingDays,
+                consistency,
 
-            winningDays
+                drawdown,
 
-        };
+                dll,
+
+                tradingDays,
+
+                winningDays,
+
+                cycleProfit
+
+            }
+        );
 
     }
 
 
     /*
     =====================================
-    MIN PAYOUT NOCH NICHT ERREICHT
+    5. CYCLE PROFIT GOAL
+
+    z. B. LucidPro
+    =====================================
+    */
+
+    const payoutProfitGoal =
+        toFiniteNumber(
+            rules.payoutProfitGoal
+        );
+
+
+    if(
+        payoutProfitGoal !== null &&
+        payoutProfitGoal > 0 &&
+        cycleProfit <
+            payoutProfitGoal
+    ) {
+
+        const needed =
+            payoutProfitGoal -
+            cycleProfit;
+
+
+        return buildPayoutResult(
+            "BUILD",
+
+            `${
+                formatPayoutMoney(
+                    needed
+                )
+            } bis zum Cycle Profit Goal.`,
+
+            "Payout-Zyklus kontrolliert weiter aufbauen.",
+
+            "funded",
+
+            {
+
+                payout,
+
+                consistency,
+
+                drawdown,
+
+                dll,
+
+                tradingDays,
+
+                winningDays,
+
+                cycleProfit,
+
+                payoutProfitGoal,
+
+                cycleProfitRemaining:
+                    needed
+
+            }
+        );
+
+    }
+
+
+    /*
+    =====================================
+    POSITIVER CYCLE P&L
+
+    z. B. LucidFlex / andere Programme
     =====================================
     */
 
     if(
-        Number(
+        rules.requirePositiveCyclePnL ===
+            true &&
+        cycleProfit <= 0
+    ) {
+
+        return buildPayoutResult(
+            "BUILD",
+            "Payout Cycle ist noch nicht positiv.",
+            "Cycle Net P&L über $0 aufbauen.",
+            "funded",
+            {
+
+                payout,
+
+                consistency,
+
+                drawdown,
+
+                dll,
+
+                tradingDays,
+
+                winningDays,
+
+                cycleProfit
+
+            }
+        );
+
+    }
+
+
+    /*
+    =====================================
+    6. MINIMUM PAYOUT
+    =====================================
+    */
+
+    const potentialAvailable =
+        toFiniteNumber(
             payout.potentialAvailable
-        ) <
-        Number(
+        ) ?? 0;
+
+
+    const minPayout =
+        toFiniteNumber(
             payout.minPayout
-        )
+        ) ?? 0;
+
+
+    if(
+        potentialAvailable <
+        minPayout
     ) {
 
-        return {
+        const stillNeeded =
+            toFiniteNumber(
+                payout.stillNeeded
+            );
 
-            status:
-                "BUILD",
 
-            message:
-                "Minimum Payout noch nicht erreicht.",
+        return buildPayoutResult(
+            "BUILD",
+            "Minimum Payout noch nicht erreicht.",
 
-            action:
-                `${
+            (
+                stillNeeded !== null &&
+                stillNeeded > 0
+            )
+                ? `${
                     formatPayoutMoney(
-                        payout.stillNeeded
+                        stillNeeded
                     )
-                } bis zum Mindestpayout.`,
+                } bis zum Mindestpayout.`
 
-            mode:
-                "funded",
+                : "Account weiter kontrolliert aufbauen.",
+
+            "funded",
+
+            {
+
+                payout,
+
+                consistency,
+
+                drawdown,
+
+                dll,
+
+                tradingDays,
+
+                winningDays,
+
+                cycleProfit
+
+            }
+        );
+
+    }
+
+
+    /*
+    =====================================
+    7. PAYOUT READY
+    =====================================
+    */
+
+    if(
+        payout.eligible ===
+        true
+    ) {
+
+        return buildPayoutResult(
+            "READY",
+
+            `${
+                formatPayoutMoney(
+                    payout.available
+                )
+            } aktuell payout-ready.`,
+
+            "Payout prüfen und unnötiges Risiko vermeiden.",
+
+            "funded",
+
+            {
+
+                payout,
+
+                consistency,
+
+                drawdown,
+
+                dll,
+
+                tradingDays,
+
+                winningDays,
+
+                cycleProfit
+
+            }
+        );
+
+    }
+
+
+    /*
+    =====================================
+    8. SONSTIGE RULE-BEDINGUNG
+    =====================================
+    */
+
+    return buildPayoutResult(
+        "WAIT",
+
+        payout.reason ||
+        "Payout-Bedingungen noch nicht vollständig erfüllt.",
+
+        "Account weiter kontrolliert aufbauen.",
+
+        "funded",
+
+        {
 
             payout,
 
@@ -846,45 +1017,503 @@ function analyzeFundedPayout(
 
             drawdown,
 
+            dll,
+
             tradingDays,
 
-            winningDays
+            winningDays,
 
-        };
+            cycleProfit
+
+        }
+    );
+
+}
+
+
+
+/*
+=========================================
+CURRENT PROFIT
+=========================================
+*/
+
+function getPayoutCurrentProfit(
+    account
+) {
+
+    if(
+        typeof getAccountCurrentProfit ===
+        "function"
+    ) {
+
+        const value =
+            Number(
+                getAccountCurrentProfit(
+                    account
+                )
+            );
+
+
+        if(
+            Number.isFinite(
+                value
+            )
+        ) {
+
+            return value;
+
+        }
+
+    }
+
+
+    const balance =
+        Number(
+            account.balance
+        );
+
+
+    const startingBalance =
+        Number(
+            account.startingBalance
+        );
+
+
+    if(
+        Number.isFinite(
+            balance
+        ) &&
+        Number.isFinite(
+            startingBalance
+        )
+    ) {
+
+        return (
+            balance -
+            startingBalance
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+
+/*
+=========================================
+PAYOUT AVAILABILITY
+=========================================
+*/
+
+function getPayoutAvailability(
+    account
+) {
+
+    if(
+        typeof getAccountPayoutAvailability !==
+        "function"
+    ) {
+
+        return null;
+
+    }
+
+
+    return getAccountPayoutAvailability(
+        account
+    );
+
+}
+
+
+
+/*
+=========================================
+CONSISTENCY
+=========================================
+*/
+
+function getPayoutConsistency(
+    account
+) {
+
+    if(
+        typeof getAccountConsistencyInfo !==
+        "function"
+    ) {
+
+        return null;
+
+    }
+
+
+    return getAccountConsistencyInfo(
+        account
+    );
+
+}
+
+
+
+/*
+=========================================
+DRAWDOWN
+=========================================
+*/
+
+function getPayoutDrawdown(
+    account
+) {
+
+    if(
+        typeof getAccountDrawdownInfo !==
+        "function"
+    ) {
+
+        return null;
+
+    }
+
+
+    return getAccountDrawdownInfo(
+        account
+    );
+
+}
+
+
+
+/*
+=========================================
+DLL
+=========================================
+*/
+
+function getPayoutDLL(
+    account
+) {
+
+    if(
+        typeof getAccountDLLInfo !==
+        "function"
+    ) {
+
+        return null;
+
+    }
+
+
+    return getAccountDLLInfo(
+        account
+    );
+
+}
+
+
+
+/*
+=========================================
+TRADING DAYS
+=========================================
+*/
+
+function getPayoutTradingDays(
+    account
+) {
+
+    if(
+        typeof getAccountTradingDayRequirement !==
+        "function"
+    ) {
+
+        return null;
+
+    }
+
+
+    return getAccountTradingDayRequirement(
+        account
+    );
+
+}
+
+
+
+/*
+=========================================
+WINNING DAYS
+=========================================
+*/
+
+function getPayoutWinningDays(
+    account
+) {
+
+    if(
+        typeof getAccountWinningDaysInfo !==
+        "function"
+    ) {
+
+        return null;
+
+    }
+
+
+    return getAccountWinningDaysInfo(
+        account
+    );
+
+}
+
+
+
+/*
+=========================================
+PAYOUT CYCLE PROFIT
+=========================================
+*/
+
+function getPayoutCycleProfit(
+    account
+) {
+
+    if(
+        typeof getAccountCycleDailyPnL ===
+        "function"
+    ) {
+
+        const daily =
+            getAccountCycleDailyPnL(
+                account
+            );
+
+
+        if(
+            daily &&
+            typeof daily ===
+                "object"
+        ) {
+
+            return Object.values(
+                daily
+            ).reduce(
+                (
+                    sum,
+                    value
+                ) => {
+
+                    const number =
+                        Number(
+                            value
+                        );
+
+
+                    return (
+                        sum +
+                        (
+                            Number.isFinite(
+                                number
+                            )
+                                ? number
+                                : 0
+                        )
+                    );
+
+                },
+                0
+            );
+
+        }
 
     }
 
 
     /*
-    =====================================
-    SONSTIGE RULE-BEDINGUNG
-    =====================================
+    Solange noch kein Cycle Start
+    gesetzt wurde, ist Current Profit
+    unser Fallback.
     */
+
+    return getPayoutCurrentProfit(
+        account
+    );
+
+}
+
+/*
+=========================================
+LOGIC HELPERS
+=========================================
+*/
+
+function isCriticalDrawdown(
+    drawdown
+) {
+
+    if(!drawdown) {
+
+        return false;
+
+    }
+
+
+    const remaining =
+        toFiniteNumber(
+            drawdown.remaining
+        );
+
+
+    if(
+        remaining ===
+        null
+    ) {
+
+        return false;
+
+    }
+
+
+    return (
+        remaining <=
+        250
+    );
+
+}
+
+
+function isConsistencyFailed(
+    consistency
+) {
+
+    if(!consistency) {
+
+        return false;
+
+    }
+
+
+    const current =
+        toFiniteNumber(
+            consistency.current
+        );
+
+
+    const limit =
+        toFiniteNumber(
+            consistency.limit
+        );
+
+
+    if(
+        current === null ||
+        limit === null
+    ) {
+
+        return false;
+
+    }
+
+
+    return (
+        current >
+        limit
+    );
+
+}
+
+
+function toFiniteNumber(
+    value
+) {
+
+    if(
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return null;
+
+    }
+
+
+    const number =
+        Number(
+            value
+        );
+
+
+    return Number.isFinite(
+        number
+    )
+        ? number
+        : null;
+
+}
+
+
+function clampPercent(
+    value
+) {
+
+    const number =
+        Number(
+            value
+        );
+
+
+    if(
+        !Number.isFinite(
+            number
+        )
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Math.max(
+        0,
+        Math.min(
+            100,
+            number
+        )
+    );
+
+}
+
+
+
+/*
+=========================================
+RESULT BUILDER
+=========================================
+*/
+
+function buildPayoutResult(
+    status,
+    message,
+    action,
+    mode,
+    extra = {}
+) {
 
     return {
 
-        status:
-            "WAIT",
+        status,
 
-        message:
-            payout.reason ||
-            "Payout-Bedingungen noch nicht vollständig erfüllt.",
+        message,
 
-        action:
-            "Account weiter kontrolliert aufbauen.",
+        action,
 
-        mode:
-            "funded",
+        mode,
 
-        payout,
-
-        consistency,
-
-        drawdown,
-
-        tradingDays,
-
-        winningDays
+        ...extra
 
     };
 
@@ -894,14 +1523,18 @@ function analyzeFundedPayout(
 
 /*
 =========================================
-FORMAT
+FORMAT MONEY
 =========================================
 */
 
-function formatPayoutMoney(value) {
+function formatPayoutMoney(
+    value
+) {
 
     const number =
-        Number(value);
+        Number(
+            value
+        );
 
 
     if(
@@ -918,6 +1551,7 @@ function formatPayoutMoney(value) {
     return number.toLocaleString(
         "en-US",
         {
+
             style:
                 "currency",
 
@@ -929,7 +1563,46 @@ function formatPayoutMoney(value) {
 
             maximumFractionDigits:
                 2
+
         }
+    );
+
+}
+
+
+
+/*
+=========================================
+FORMAT PERCENT
+=========================================
+*/
+
+function formatPayoutPercent(
+    value
+) {
+
+    const number =
+        Number(
+            value
+        );
+
+
+    if(
+        !Number.isFinite(
+            number
+        )
+    ) {
+
+        return "--";
+
+    }
+
+
+    return (
+        number.toFixed(
+            1
+        ) +
+        "%"
     );
 
 }
