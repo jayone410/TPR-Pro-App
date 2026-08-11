@@ -867,6 +867,22 @@ function renderAccounts() {
                     ? "+"
                     : "";
 
+            const payoutButtonHtml =
+                String(
+                    account.stage || ""
+                ).toLowerCase() === "funded"
+            
+                    ? `
+                        <button
+                            class="payoutAccountButton"
+                            data-account-id="${account.id}"
+                            title="Payout buchen"
+                        >
+                            💰
+                        </button>
+                    `
+            
+                    : "";
 
             row.innerHTML = `
 
@@ -1016,6 +1032,15 @@ function renderAccounts() {
                         📄
                     </button>
 
+                    ${payoutButtonHtml}
+
+                    <button
+                        class="payoutAccountButton"
+                        data-account-id="${account.id}"
+                        title="Payout buchen"
+                    >
+                        💰
+                    </button>
 
                     <button
                         class="rulesAccountButton"
@@ -1407,6 +1432,256 @@ function renderAccounts() {
             }
         );
 
+    /*
+=========================================
+PAYOUT BUCHEN
+=========================================
+*/
+
+document
+    .querySelectorAll(
+        ".payoutAccountButton"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const accountId =
+                        button.dataset
+                            .accountId;
+
+
+                    const account =
+                        getAccount(
+                            accountId
+                        );
+
+
+                    if(!account) {
+
+                        return;
+
+                    }
+
+
+                    if(
+                        String(
+                            account.stage || ""
+                        ).toLowerCase() !==
+                        "funded"
+                    ) {
+
+                        alert(
+                            "Payouts können nur für Funded Accounts gebucht werden."
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                    Betrag
+                    */
+
+                    const payoutInfo =
+                        typeof getAccountPayoutAvailability ===
+                        "function"
+
+                            ? getAccountPayoutAvailability(
+                                account
+                            )
+
+                            : null;
+
+
+                    const suggestedAmount =
+                        payoutInfo &&
+                        Number.isFinite(
+                            Number(
+                                payoutInfo.available
+                            )
+                        )
+
+                            ? Number(
+                                payoutInfo.available
+                            ).toFixed(2)
+
+                            : "";
+
+
+                    const amountInput =
+                        prompt(
+                            `Payout-Betrag für "${account.accountName}":`,
+                            suggestedAmount
+                        );
+
+
+                    if(
+                        amountInput ===
+                        null
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const amount =
+                        Number(
+                            String(
+                                amountInput
+                            )
+                                .trim()
+                                .replace(
+                                    /\s/g,
+                                    ""
+                                )
+                                .replace(
+                                    "$",
+                                    ""
+                                )
+                                .replace(
+                                    ",",
+                                    "."
+                                )
+                        );
+
+
+                    if(
+                        !Number.isFinite(
+                            amount
+                        ) ||
+                        amount <= 0
+                    ) {
+
+                        alert(
+                            "Bitte einen gültigen Payout-Betrag eingeben."
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                    Datum
+                    */
+
+                    const today =
+                        new Date()
+                            .toISOString()
+                            .slice(
+                                0,
+                                10
+                            );
+
+
+                    const dateInput =
+                        prompt(
+                            "Payout-Datum (YYYY-MM-DD):",
+                            today
+                        );
+
+
+                    if(
+                        dateInput ===
+                        null
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const payoutDate =
+                        String(
+                            dateInput
+                        ).trim();
+
+
+                    if(
+                        !/^\d{4}-\d{2}-\d{2}$/
+                            .test(
+                                payoutDate
+                            )
+                    ) {
+
+                        alert(
+                            "Bitte Datum als YYYY-MM-DD eingeben."
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                    Zusammenfassung
+                    */
+
+                    const confirmed =
+                        confirm(
+                            `Payout buchen?\n\n` +
+                            `Account: ${account.accountName}\n` +
+                            `Betrag: $${amount.toFixed(2)}\n` +
+                            `Datum: ${payoutDate}`
+                        );
+
+
+                    if(!confirmed) {
+
+                        return;
+
+                    }
+
+
+                    /*
+                    Speichern
+                    */
+
+                    const result =
+                        addAccountPayout(
+                            accountId,
+                            amount,
+                            payoutDate
+                        );
+
+
+                    if(
+                        !result ||
+                        result.success !==
+                        true
+                    ) {
+
+                        alert(
+                            result?.message ||
+                            "Payout konnte nicht gespeichert werden."
+                        );
+
+                        return;
+
+                    }
+
+
+                    alert(
+                        `Payout gespeichert.\n\n` +
+                        `Cycle #${result.payout.cycleNumber}\n` +
+                        `Betrag: $${amount.toFixed(2)}\n` +
+                        `Neuer Cycle Start: ${result.nextCycleStart || "--"}`
+                    );
+
+
+                    refreshAccountUI();
+
+                }
+            );
+
+        }
+    );
 
     /*
     =====================================
