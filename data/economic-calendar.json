@@ -6,6 +6,11 @@
   },
   {
     "date": "2026-08-12",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-08-12",
     "release_id": 454,
     "release_name": "Average Price Data"
   },
@@ -173,11 +178,6 @@
     "date": "2026-08-12",
     "release_id": 483,
     "release_name": "SOFR Averages and Index Data"
-  },
-  {
-    "date": "2026-08-12",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
   },
   {
     "date": "2026-08-12",
