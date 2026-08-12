@@ -995,3 +995,221 @@ RESPONSIVE
     grid-column: 1 / -1;
     margin-top: 24px;
 }
+
+/*
+=========================================
+MARKET INTELLIGENCE
+=========================================
+*/
+
+.market-intelligence-top {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-top: 12px;
+}
+
+
+.market-intelligence-metric {
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+}
+
+
+.market-intelligence-metric span {
+    display: block;
+
+    font-size: 10px;
+
+    opacity: 0.55;
+
+    margin-bottom: 4px;
+}
+
+
+.market-intelligence-metric strong {
+    font-size: 16px;
+}
+
+
+.market-primary-event {
+    margin-top: 14px;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.025);
+}
+
+
+.market-primary-event span {
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing: 0.08em;
+
+    opacity: 0.5;
+
+    margin-bottom: 4px;
+}
+
+
+.market-primary-event strong {
+    display: block;
+
+    font-size: 15px;
+}
+
+
+.market-primary-event small {
+    display: block;
+
+    margin-top: 3px;
+
+    opacity: 0.55;
+}
+
+
+.market-event-list {
+    display: grid;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+
+.market-event {
+    display: grid;
+
+    grid-template-columns:
+        64px minmax(0, 1fr) 40px;
+
+    gap: 10px;
+
+    align-items: center;
+
+    padding: 10px 12px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border:
+        1px solid rgba(255,255,255,0.05);
+}
+
+
+.market-event-time {
+    font-weight: 700;
+
+    font-size: 12px;
+}
+
+
+.market-event-content strong {
+    display: block;
+
+    font-size: 12px;
+}
+
+
+.market-event-content span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    opacity: 0.55;
+}
+
+
+.market-event-risk {
+    text-align: right;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+.market-event-high {
+    border-left:
+        3px solid #ef4444;
+}
+
+
+.market-event-medium {
+    border-left:
+        3px solid #f59e0b;
+}
+
+
+.market-event-low {
+    border-left:
+        3px solid #22c55e;
+}
+
+
+.market-recommendation {
+    margin-top: 14px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+}
+
+
+.market-recommendation span {
+    display: block;
+
+    font-size: 10px;
+
+    opacity: 0.5;
+
+    letter-spacing: 0.08em;
+
+    margin-bottom: 4px;
+}
+
+
+.market-recommendation strong {
+    font-size: 13px;
+}
+
+
+.market-event-empty {
+    padding: 14px;
+
+    opacity: 0.55;
+
+    text-align: center;
+}
+
+
+@media (
+    max-width: 700px
+) {
+
+    .market-intelligence-top {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
