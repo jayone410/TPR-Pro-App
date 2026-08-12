@@ -3032,3 +3032,120 @@ button:hover {
 /* ========================================
    END TPR PRO AI DESIGN SYSTEM
 ======================================== */
+
+/* ========================================
+   ACCOUNT GUIDANCE - MARKET ROW
+======================================== */
+
+.mission-market-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    margin-top:
+        10px;
+
+    padding:
+        8px 10px;
+
+    border-radius:
+        8px;
+
+    border:
+        1px solid rgba(255,255,255,.06);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.mission-market-label {
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .08em;
+
+    color:
+        var(--text-muted);
+
+}
+
+
+.mission-market-row strong {
+
+    font-size:
+        11px;
+
+    line-height:
+        1.2;
+
+}
+
+
+.mission-market-extreme {
+
+    border-color:
+        rgba(239,68,68,.26);
+
+    background:
+        rgba(239,68,68,.07);
+
+}
+
+
+.mission-market-extreme strong {
+
+    color:
+        #f87171;
+
+}
+
+
+.mission-market-high {
+
+    border-color:
+        rgba(249,115,22,.26);
+
+    background:
+        rgba(249,115,22,.07);
+
+}
+
+
+.mission-market-high strong {
+
+    color:
+        #fb923c;
+
+}
+
+
+.mission-market-medium {
+
+    border-color:
+        rgba(234,179,8,.24);
+
+    background:
+        rgba(234,179,8,.06);
+
+}
+
+
+.mission-market-medium strong {
+
+    color:
+        #facc15;
+
+}
