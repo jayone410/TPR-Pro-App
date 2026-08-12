@@ -735,7 +735,8 @@ MISSION CONTROL
 */
 
 .mission-control-section {
-    margin-top: 24px;
+    grid-column: 1 / -1;
+    margin-top: 0;
 }
 
 .mission-control-header {
@@ -1229,7 +1230,7 @@ MISSION TOP GRID
     gap: 18px;
 
     margin-top: 24px;
-    margin-bottom: 26px;
+    margin-bottom: 18px;
 }
 
 
@@ -1316,19 +1317,21 @@ PORTFOLIO OVERVIEW GRID
 }
 
 
-.portfolio-overview-item span {
+.portfolio-overview-item strong {
     display: block;
+    margin-top: 4px;
 
-    font-size: 11px;
-
-    opacity: 0.58;
-
-    margin-bottom: 3px;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.1;
 }
 
-
-.portfolio-overview-item strong {
-    font-size: 17px;
+.portfolio-overview-item span {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.55;
 }
 
 
