@@ -160,14 +160,36 @@ function renderMissionControlSummary(
 
 
     if(stop) {
-
+    
         stop.textContent =
             guidance.filter(
-                item =>
-                    item.todayAction ===
-                    "STOP TODAY"
+                item => {
+    
+                    const action =
+                        String(
+                            item.todayAction ||
+                            ""
+                        ).toUpperCase();
+    
+    
+                    const riskMode =
+                        String(
+                            item.riskMode ||
+                            ""
+                        ).toUpperCase();
+    
+    
+                    return (
+                        action === "STOP TODAY" ||
+                        action === "NO TRADING REQUIRED" ||
+                        action.startsWith("WAIT FOR") ||
+                        riskMode === "PAUSE" ||
+                        riskMode === "STOP"
+                    );
+    
+                }
             ).length;
-
+    
     }
 
 
