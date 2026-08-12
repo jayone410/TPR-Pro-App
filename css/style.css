@@ -1313,7 +1313,8 @@ PORTFOLIO OVERVIEW GRID
 
     gap: 14px 18px;
 
-    margin-top: 20px;
+    margin-top: 24px;
+    row-gap: 22px;
 }
 
 
@@ -1355,6 +1356,10 @@ TODAY SUMMARY
 =========================================
 */
 
+.mission-top-grid > .mission-panel {
+    min-height: 300px;
+}
+
 .mission-priority-summary-grid {
     display: grid;
 
@@ -1363,7 +1368,7 @@ TODAY SUMMARY
 
     gap: 12px;
 
-    margin-top: 22px;
+    margin-top: 26px;
 }
 
 
@@ -1611,3 +1616,4 @@ MISSION CONTROL
 
     padding-top: 10px;
 }
+
