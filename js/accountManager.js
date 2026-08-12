@@ -32,6 +32,15 @@ function refreshAccountUI() {
         renderPortfolioOverview();
     }
 
+    if(
+        typeof renderMissionControl ===
+        "function"
+    ) {
+    
+        renderMissionControl();
+    
+    }
+
 }
 
 
