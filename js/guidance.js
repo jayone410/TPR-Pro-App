@@ -1951,15 +1951,27 @@ function isGuidanceDLLCritical(
     }
 
 
+    const limit =
+        guidanceFiniteNumber(
+            dll.limit
+        );
+
+
     const remaining =
         guidanceFiniteNumber(
             dll.remaining
         );
 
 
+    /*
+    Kein aktives DLL vorhanden.
+    0 bedeutet hier NICHT:
+    Tageslimit ausgeschöpft.
+    */
+
     if(
-        remaining ===
-        null
+        limit === null ||
+        limit <= 0
     ) {
 
         return false;
@@ -1967,14 +1979,14 @@ function isGuidanceDLLCritical(
     }
 
 
-    /*
-    Daily Loss Limit = Tagesrisiko.
+    if(
+        remaining === null
+    ) {
 
-    Unter $50 Rest-DLL betrachten
-    wir den Handelstag als beendet.
+        return false;
 
-    Das ändert NICHT das Account Goal.
-    */
+    }
+
 
     return (
         remaining <=
