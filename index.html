@@ -220,83 +220,180 @@
          Portfolio Overview 
     ====================================== -->
     
-    <section class="portfolio-overview">
+    <section class="mission-top-grid">
     
-        <div class="portfolio-title-row">
+        <div class="mission-panel portfolio-panel">
     
-            <div>
-                <div class="portfolio-label">
-                    MISSION CONTROL
+            <div class="mission-panel-header">
+    
+                <div>
+    
+                    <div class="mission-eyebrow">
+                        MISSION CONTROL
+                    </div>
+    
+                    <h2>
+                        Portfolio Overview
+                    </h2>
+    
                 </div>
     
-                <h2>
-                    Portfolio Overview
-                </h2>
+    
+                <div
+                    id="portfolioOverallStatus"
+                    class="mission-status-badge"
+                >
+                    READY
+                </div>
+    
             </div>
     
-            <div
-                id="portfolioOverallStatus"
-                class="portfolio-status"
-            >
-                ● READY
+    
+            <div class="portfolio-overview-grid">
+    
+                <div class="portfolio-overview-item">
+    
+                    <span>
+                        Accounts
+                    </span>
+    
+                    <strong id="portfolioAccountCount">
+                        0
+                    </strong>
+    
+                </div>
+    
+    
+                <div class="portfolio-overview-item">
+    
+                    <span>
+                        NET ACCOUNT GROWTH
+                    </span>
+    
+                    <strong
+                        id="portfolioBalance"
+                        class="positive-value"
+                    >
+                        $0.00
+                    </strong>
+    
+                </div>
+    
+    
+                <div class="portfolio-overview-item">
+    
+                    <span>
+                        Payout Ready
+                    </span>
+    
+                    <strong id="portfolioPayoutReady">
+                        0
+                    </strong>
+    
+                </div>
+    
+    
+                <div class="portfolio-overview-item">
+    
+                    <span>
+                        Trade Today
+                    </span>
+    
+                    <strong id="portfolioTradeToday">
+                        0
+                    </strong>
+    
+                </div>
+    
+    
+                <div class="portfolio-overview-item">
+    
+                    <span>
+                        Risk / Pause
+                    </span>
+    
+                    <strong id="portfolioRiskCount">
+                        0
+                    </strong>
+    
+                </div>
+    
             </div>
     
         </div>
     
     
-        <div class="portfolio-metrics">
+        <div class="mission-panel priorities-panel">
     
-            <div class="portfolio-metric">
+            <div class="mission-panel-header">
     
-                <span>Accounts</span>
+                <div>
     
-                <strong id="portfolioAccountCount">
-                    0
-                </strong>
+                    <div class="mission-eyebrow">
+                        TODAY'S PRIORITIES
+                    </div>
     
-            </div>
+                    <p>
+                        Was heute mit deinen Accounts zu tun ist.
+                    </p>
     
-    
-            <div class="portfolio-metric">
-    
-                <span>NET ACCOUNT GROWTH</span>
-    
-                <strong id="portfolioBalance">
-                    $0.00
-                </strong>
+                </div>
     
             </div>
     
     
-            <div class="portfolio-metric">
+            <div class="mission-priority-summary-grid">
     
-                <span>Payout Ready</span>
+                <div class="priority-summary-card priority-summary-blue">
     
-                <strong id="portfolioPayoutReady">
-                    0
-                </strong>
+                    <span>
+                        Accounts
+                    </span>
     
-            </div>
+                    <strong id="missionControlAccountCount">
+                        0
+                    </strong>
     
-    
-            <div class="portfolio-metric">
-    
-                <span>Trade Today</span>
-    
-                <strong id="portfolioTradeToday">
-                    0
-                </strong>
-    
-            </div>
+                </div>
     
     
-            <div class="portfolio-metric">
+                <div class="priority-summary-card priority-summary-yellow">
     
-                <span>Risk / Pause</span>
+                    <span>
+                        Stop Today
+                    </span>
     
-                <strong id="portfolioRiskCount">
-                    0
-                </strong>
+                    <strong id="missionControlStopCount">
+                        0
+                    </strong>
+    
+                </div>
+    
+    
+                <div class="priority-summary-card priority-summary-orange">
+    
+                    <span>
+                        Defensive
+                    </span>
+    
+                    <strong id="missionControlDefensiveCount">
+                        0
+                    </strong>
+    
+                </div>
+    
+    
+                <div class="priority-summary-card priority-summary-green">
+    
+                    <span>
+                        Payout Ready
+                    </span>
+    
+                    <strong id="missionControlPayoutCount">
+                        0
+                    </strong>
+    
+                </div>
     
             </div>
     
@@ -329,32 +426,6 @@
                 </div>
         
             </div>
-        
-        
-            <div class="mission-control-summary">
-        
-                <div class="mission-summary-card">
-                    <span>Accounts</span>
-                    <strong id="missionControlAccountCount">0</strong>
-                </div>
-        
-                <div class="mission-summary-card">
-                    <span>Stop Today</span>
-                    <strong id="missionControlStopCount">0</strong>
-                </div>
-        
-                <div class="mission-summary-card">
-                    <span>Defensive</span>
-                    <strong id="missionControlDefensiveCount">0</strong>
-                </div>
-        
-                <div class="mission-summary-card">
-                    <span>Payout Ready</span>
-                    <strong id="missionControlPayoutCount">0</strong>
-                </div>
-        
-            </div>
-        
         
             <div
                 id="missionControlPriorities"
