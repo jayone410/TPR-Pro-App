@@ -1,5 +1,5 @@
 /* ========================================
-   TPR PRO AI - Design System v1.0
+   TPR PRO AI - Design System v1.1
 ======================================== */
 
 :root {
@@ -26,17 +26,21 @@
     --transition: .25s ease;
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
 
-    background:var(--bg);
+body {
 
-    color:var(--text);
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
 
     font-family:
         Inter,
@@ -44,1434 +48,2612 @@ body{
         Arial,
         sans-serif;
 
-    min-height:100vh;
+    min-height:
+        100vh;
 }
 
-.container{
 
-    width:min(1400px,94%);
+.container {
 
-    margin:auto;
+    width:
+        min(1400px,94%);
 
-    padding:30px;
+    margin:
+        auto;
+
+    padding:
+        30px;
 }
 
-.header{
 
-    display:flex;
+/* ========================================
+   HEADER
+======================================== */
 
-    justify-content:space-between;
+.header {
 
-    align-items:center;
+    display:
+        flex;
 
-    margin-bottom:30px;
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        30px;
 }
 
-.logo{
 
-    font-size:32px;
+.logo {
 
-    font-weight:700;
+    font-size:
+        32px;
+
+    font-weight:
+        700;
 }
 
-.subtitle{
 
-    color:var(--text-muted);
+.subtitle {
 
-    margin-top:4px;
+    color:
+        var(--text-muted);
+
+    margin-top:
+        4px;
 }
 
-.grid{
 
-    display:grid;
+/* ========================================
+   GLOBAL GRID / CARDS
+======================================== */
+
+.grid {
+
+    display:
+        grid;
 
     grid-template-columns:
-        repeat(auto-fit,minmax(320px,1fr));
+        repeat(
+            auto-fit,
+            minmax(320px,1fr)
+        );
 
-    gap:24px;
+    gap:
+        24px;
 }
 
-.card{
 
-    background:var(--surface);
+.card {
 
-    border:1px solid var(--border);
+    background:
+        var(--surface);
 
-    border-radius:var(--radius);
+    border:
+        1px solid var(--border);
 
-    padding:24px;
+    border-radius:
+        var(--radius);
 
-    box-shadow:var(--shadow);
+    padding:
+        24px;
 
-    transition:var(--transition);
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        var(--transition);
 }
 
-.card:hover{
 
-    transform:translateY(-4px);
+.card:hover {
 
-    border-color:var(--blue);
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--blue);
 }
 
-.card-title{
 
-    color:var(--text-muted);
+.card-title {
 
-    font-size:14px;
+    color:
+        var(--text-muted);
 
-    text-transform:uppercase;
+    font-size:
+        14px;
 
-    letter-spacing:1px;
+    text-transform:
+        uppercase;
 
-    margin-bottom:14px;
+    letter-spacing:
+        1px;
+
+    margin-bottom:
+        14px;
 }
 
-.big-number{
 
-    font-size:46px;
+.full-width {
 
-    font-weight:700;
+    grid-column:
+        1 / -1;
 }
 
-.status-green{
-    color:var(--green);
+
+.big-number {
+
+    font-size:
+        46px;
+
+    font-weight:
+        700;
 }
 
-.status-yellow{
-    color:var(--yellow);
+
+/* ========================================
+   STATUS COLORS
+======================================== */
+
+.status-green {
+
+    color:
+        var(--green);
 }
 
-.status-red{
-    color:var(--red);
+
+.status-yellow {
+
+    color:
+        var(--yellow);
 }
 
-button{
 
-    background:var(--blue);
+.status-red {
 
-    color:white;
-
-    border:none;
-
-    border-radius:10px;
-
-    padding:12px 18px;
-
-    cursor:pointer;
-
-    transition:var(--transition);
-
-    font-size:15px;
+    color:
+        var(--red);
 }
 
-button:hover{
 
-    opacity:.9;
+.positive-value {
+
+    font-weight:
+        700;
 }
+
+
+.negative-value {
+
+    font-weight:
+        700;
+}
+
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+button {
+
+    background:
+        var(--blue);
+
+    color:
+        white;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    padding:
+        12px 18px;
+
+    cursor:
+        pointer;
+
+    transition:
+        var(--transition);
+
+    font-size:
+        15px;
+}
+
+
+button:hover {
+
+    opacity:
+        .9;
+}
+
+
+/* ========================================
+   ACCOUNT MANAGER
+======================================== */
 
 .account-toolbar {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    align-items:
+        center;
+
+    flex-wrap:
+        wrap;
 }
+
+
+.account-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        20px;
+
+    flex-wrap:
+        wrap;
+}
+
+
+.account-actions {
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    flex-wrap:
+        wrap;
+}
+
 
 .account-table-wrapper {
-    overflow-x: auto;
+
+    overflow-x:
+        auto;
 }
 
+
 .account-table {
-    width: 100%;
-    border-collapse: collapse;
+
+    width:
+        100%;
+
+    border-collapse:
+        collapse;
 }
+
 
 .account-table th,
 .account-table td {
-    padding: 12px;
-    border-bottom: 1px solid var(--border);
-    text-align: left;
+
+    padding:
+        12px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    text-align:
+        left;
 }
+
 
 .account-table th {
-    color: var(--text-muted);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: .8px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        12px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .8px;
 }
+
 
 .account-table tr:hover {
-    background: var(--surface-2);
+
+    background:
+        var(--surface-2);
 }
 
-.full-width {
-    grid-column: 1 / -1;
-}
-
-.account-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.account-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.csv-inline-status {
-    margin-top: 12px;
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(150px, 1fr));
-    gap: 16px;
-}
-
-.stat-item {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.stat-item span {
-    display: block;
-    color: var(--text-muted);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: .7px;
-    margin-bottom: 8px;
-}
-
-.stat-item strong {
-    font-size: 22px;
-}
-
-
-.stat-item small {
-    display: block;
-    margin-top: 8px;
-    color: var(--text-muted);
-}
-
-.analytics-insight {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-}
-
-.chart-wrapper {
-    position: relative;
-    height: 360px;
-    width: 100%;
-}
-
-.layout-presets {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-}
-
-#dashboardSettingsPanel label {
-    display: inline-block;
-    margin: 6px 0;
-    cursor: pointer;
-}
-
-#dashboardSettingsPanel input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-
-.readiness-card {
-    grid-column: span 1;
-}
-
-.readiness-hero {
-    text-align: center;
-    padding: 20px 0 24px;
-}
-
-.readiness-status {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1.4px;
-    margin-bottom: 10px;
-}
-
-.readiness-score {
-    font-size: 54px;
-    font-weight: 800;
-    margin-bottom: 8px;
-}
-
-.readiness-recommendation {
-    color: var(--text-muted);
-}
-
-.readiness-green {
-    color: var(--green);
-}
-
-.readiness-yellow {
-    color: var(--yellow);
-}
-
-.readiness-red {
-    color: var(--red);
-}
-
-.readiness-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 18px;
-}
-
-.readiness-item {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-}
-
-.readiness-item span {
-    display: block;
-    color: var(--text-muted);
-    font-size: 12px;
-    margin-bottom: 7px;
-}
-
-.readiness-item strong {
-    display: block;
-    font-size: 19px;
-}
-
-.readiness-item small {
-    display: block;
-    color: var(--text-muted);
-    margin-top: 6px;
-    line-height: 1.4;
-}
-
-.readiness-ai {
-    margin-top: 16px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    line-height: 1.7;
-}
-
-.readiness-ai strong {
-    display: block;
-    margin-bottom: 8px;
-}
-
-.readiness-details {
-    margin-top: 16px;
-}
-
-.readiness-details summary {
-    cursor: pointer;
-    color: var(--text-muted);
-}
 
 .balance-cell {
-    white-space: nowrap;
+
+    white-space:
+        nowrap;
 }
+
 
 .balance-cell .editBalanceButton {
-    margin-left: 6px;
-    padding: 3px 6px;
-    font-size: 11px;
-    opacity: 0.65;
+
+    margin-left:
+        6px;
+
+    padding:
+        3px 6px;
+
+    font-size:
+        11px;
+
+    opacity:
+        .65;
 }
+
 
 .balance-cell .editBalanceButton:hover {
-    opacity: 1;
+
+    opacity:
+        1;
 }
 
-.positive-value {
-    font-weight: 700;
-}
-
-.negative-value {
-    font-weight: 700;
-}
-
-.account-status {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.account-status-green {
-    background: rgba(0, 200, 120, 0.12);
-}
-
-.account-status-yellow {
-    background: rgba(255, 190, 0, 0.12);
-}
-
-.account-status-red {
-    background: rgba(255, 70, 70, 0.12);
-}
 
 .account-actions-cell {
-    white-space: nowrap;
+
+    white-space:
+        nowrap;
 }
+
 
 .account-actions-cell button {
-    padding: 5px 7px;
-    margin-right: 3px;
+
+    padding:
+        5px 7px;
+
+    margin-right:
+        3px;
 }
+
 
 .account-expand-button {
-    border: none;
-    background: transparent;
-    padding: 2px 6px;
-    cursor: pointer;
-    opacity: 0.7;
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    padding:
+        2px 6px;
+
+    cursor:
+        pointer;
+
+    opacity:
+        .7;
 }
+
 
 .account-expand-button:hover {
-    opacity: 1;
+
+    opacity:
+        1;
 }
 
-.account-details-container {
-    padding: 18px 10px 24px;
+
+.csv-inline-status {
+
+    margin-top:
+        12px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        14px;
 }
 
-.account-detail-content {
-    padding: 18px;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.06);
+
+/* ========================================
+   ACCOUNT STATUS
+======================================== */
+
+.account-status {
+
+    display:
+        inline-block;
+
+    padding:
+        5px 9px;
+
+    border-radius:
+        999px;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    white-space:
+        nowrap;
 }
 
-.account-detail-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(5, minmax(120px, 1fr));
-    gap: 10px;
+
+.account-status-green {
+
+    background:
+        rgba(0,200,120,.12);
 }
 
-.account-detail-item {
-    padding: 13px;
-    border-radius: 11px;
-    background: rgba(255,255,255,0.035);
+
+.account-status-yellow {
+
+    background:
+        rgba(255,190,0,.12);
 }
 
-.account-detail-item span {
-    display: block;
-    font-size: 11px;
-    opacity: 0.55;
-    margin-bottom: 6px;
+
+.account-status-red {
+
+    background:
+        rgba(255,70,70,.12);
 }
 
-.account-detail-item strong {
-    font-size: 16px;
-}
-
-.account-detail-section {
-    margin-top: 18px;
-}
-
-.account-detail-section-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    opacity: 0.6;
-    margin-bottom: 10px;
-}
-
-@media (max-width: 900px) {
-
-    .account-detail-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-}
-
-@media (max-width: 500px) {
-
-    .account-detail-grid {
-        grid-template-columns:
-            1fr;
-    }
-
-}
-
-/* =========================================
-   RULES EDITOR
-========================================= */
-
-.rules-editor-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(6px);
-}
-
-.rules-editor-modal {
-    width: min(820px, 100%);
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 24px;
-    border-radius: 18px;
-    background: #11151c;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.rules-editor-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    margin-bottom: 15px;
-}
-
-.rules-editor-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    opacity: 0.55;
-}
-
-.rules-editor-header h2 {
-    margin: 5px 0 0;
-}
-
-.rules-editor-close {
-    border: none;
-    background: transparent;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.rules-editor-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.rules-editor-meta span {
-    padding: 6px 9px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.05);
-    font-size: 11px;
-}
-
-.rules-editor-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.rules-editor-field {
-    padding: 13px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.035);
-}
-
-.rules-editor-field label {
-    display: block;
-    margin-bottom: 7px;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.rules-editor-field input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 9px 10px;
-}
-
-.rules-editor-field small {
-    display: block;
-    margin-top: 6px;
-    opacity: 0.5;
-}
-
-.rules-editor-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 22px;
-}
-
-@media (max-width: 600px) {
-
-    .rules-editor-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-.account-detail-program {
-    margin-bottom: 14px;
-    font-size: 12px;
-    font-weight: 700;
-    opacity: 0.55;
-    letter-spacing: 0.8px;
-}
-
-.account-detail-item small {
-    display: block;
-    margin-top: 5px;
-    font-size: 10px;
-    opacity: 0.5;
-}
-
-.account-next-action {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    margin-top: 18px;
-    padding: 16px;
-    border-radius: 13px;
-}
-
-.account-next-action-icon {
-    font-size: 25px;
-}
-
-.account-next-action strong {
-    font-size: 14px;
-}
-
-.account-next-action p {
-    margin: 4px 0 0;
-    font-size: 12px;
-    opacity: 0.7;
-}
-
-.account-next-action-green {
-    background: rgba(0, 200, 120, 0.08);
-    border: 1px solid rgba(0, 200, 120, 0.14);
-}
-
-.account-next-action-yellow {
-    background: rgba(255, 190, 0, 0.08);
-    border: 1px solid rgba(255, 190, 0, 0.14);
-}
-
-.account-next-action-red {
-    background: rgba(255, 70, 70, 0.08);
-    border: 1px solid rgba(255, 70, 70, 0.14);
-}
 
 .account-status-evaluation {
-    background: rgba(255, 80, 170, 0.14);
-    color: #ff6fb7;
-    border: 1px solid rgba(255, 80, 170, 0.22);
+
+    background:
+        rgba(255,80,170,.14);
+
+    color:
+        #ff6fb7;
+
+    border:
+        1px solid rgba(255,80,170,.22);
 }
+
 
 .account-status-funded-building {
-    background: rgba(255, 150, 40, 0.14);
-    color: #ff9d3d;
-    border: 1px solid rgba(255, 150, 40, 0.22);
+
+    background:
+        rgba(255,150,40,.14);
+
+    color:
+        #ff9d3d;
+
+    border:
+        1px solid rgba(255,150,40,.22);
 }
+
 
 .account-status-funded-ready {
-    background: rgba(0, 200, 120, 0.14);
-    color: #35d98a;
-    border: 1px solid rgba(0, 200, 120, 0.22);
+
+    background:
+        rgba(0,200,120,.14);
+
+    color:
+        #35d98a;
+
+    border:
+        1px solid rgba(0,200,120,.22);
 }
+
 
 .account-status-unknown {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.65);
-    border: 1px solid rgba(255,255,255,0.10);
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:
+        rgba(255,255,255,.65);
+
+    border:
+        1px solid rgba(255,255,255,.10);
 }
 
-.rules-editor-stage {
-    margin-bottom: 20px;
-    padding: 14px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.035);
+/* ========================================
+   ACCOUNT DETAILS
+======================================== */
+
+.account-detail-row td {
+
+    padding:
+        0 !important;
+
+    background:
+        rgba(255,255,255,.015);
 }
 
-.rules-editor-stage label {
-    display: block;
-    margin-bottom: 7px;
-    font-size: 12px;
-    font-weight: 700;
+
+.account-detail-panel {
+
+    padding:
+        18px;
+
+    border-top:
+        1px solid var(--border);
 }
 
-.rules-editor-stage select {
-    width: 100%;
-    padding: 9px 10px;
-    box-sizing: border-box;
+
+.account-detail-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(140px,1fr)
+        );
+
+    gap:
+        12px;
+
+    margin-bottom:
+        16px;
 }
 
-/*
-=========================================
-MISSION CONTROL
-=========================================
-*/
+
+.account-detail-item {
+
+    background:
+        var(--surface-2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        10px;
+
+    padding:
+        12px;
+}
+
+
+.account-detail-item span {
+
+    display:
+        block;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+
+    margin-bottom:
+        5px;
+}
+
+
+.account-detail-item strong {
+
+    font-size:
+        15px;
+}
+
+
+.account-detail-actions {
+
+    display:
+        flex;
+
+    gap:
+        8px;
+
+    flex-wrap:
+        wrap;
+}
+
+
+.account-detail-actions button {
+
+    padding:
+        8px 11px;
+
+    font-size:
+        12px;
+}
+
+
+/* ========================================
+   CSV DROP ZONE
+======================================== */
+
+.csv-drop-zone {
+
+    border:
+        2px dashed var(--border);
+
+    border-radius:
+        14px;
+
+    padding:
+        32px 20px;
+
+    text-align:
+        center;
+
+    transition:
+        var(--transition);
+
+    cursor:
+        pointer;
+}
+
+
+.csv-drop-zone:hover,
+.csv-drop-zone.dragover {
+
+    border-color:
+        var(--blue);
+
+    background:
+        rgba(88,166,255,.05);
+}
+
+
+.csv-drop-zone strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+}
+
+
+.csv-drop-zone span {
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        13px;
+}
+
+
+/* ========================================
+   READINESS / RISK
+======================================== */
+
+.readiness {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+}
+
+
+.readiness-score {
+
+    font-size:
+        48px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
+}
+
+
+.readiness-content {
+
+    min-width:
+        0;
+}
+
+
+.readiness-title {
+
+    font-size:
+        18px;
+
+    font-weight:
+        700;
+}
+
+
+.readiness-description {
+
+    margin-top:
+        5px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+}
+
+
+.risk-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(130px,1fr)
+        );
+
+    gap:
+        10px;
+
+    margin-top:
+        16px;
+}
+
+
+.risk-item {
+
+    padding:
+        12px;
+
+    background:
+        var(--surface-2);
+
+    border-radius:
+        10px;
+
+    border:
+        1px solid var(--border);
+}
+
+
+.risk-item span {
+
+    display:
+        block;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+
+    margin-bottom:
+        5px;
+}
+
+
+.risk-item strong {
+
+    font-size:
+        15px;
+}
+
+
+/* ========================================
+   PAYOUT INTELLIGENCE
+======================================== */
+
+.payout-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(150px,1fr)
+        );
+
+    gap:
+        12px;
+
+    margin-top:
+        15px;
+}
+
+
+.payout-item {
+
+    padding:
+        13px;
+
+    background:
+        var(--surface-2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        10px;
+}
+
+
+.payout-item span {
+
+    display:
+        block;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+
+    margin-bottom:
+        5px;
+}
+
+
+.payout-item strong {
+
+    font-size:
+        16px;
+}
+
+
+.payout-message {
+
+    margin-top:
+        14px;
+
+    padding:
+        12px;
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(88,166,255,.06);
+
+    border:
+        1px solid rgba(88,166,255,.15);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+}
+
+
+/* ========================================
+   DAILY PLAN
+======================================== */
+
+.daily-plan-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(140px,1fr)
+        );
+
+    gap:
+        12px;
+
+    margin-top:
+        15px;
+}
+
+
+.daily-plan-item {
+
+    padding:
+        13px;
+
+    background:
+        var(--surface-2);
+
+    border-radius:
+        10px;
+
+    border:
+        1px solid var(--border);
+}
+
+
+.daily-plan-item span {
+
+    display:
+        block;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+
+    margin-bottom:
+        5px;
+}
+
+
+.daily-plan-item strong {
+
+    font-size:
+        16px;
+}
+
+
+.daily-plan-advice {
+
+    margin-top:
+        15px;
+}
+
+
+.daily-plan-advice ul {
+
+    padding-left:
+        18px;
+}
+
+
+.daily-plan-advice li {
+
+    margin-bottom:
+        7px;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.45;
+}
+
+
+/* ========================================
+   ANALYTICS
+======================================== */
+
+.analytics-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(150px,1fr)
+        );
+
+    gap:
+        12px;
+}
+
+
+.analytics-item {
+
+    padding:
+        14px;
+
+    background:
+        var(--surface-2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        10px;
+}
+
+
+.analytics-item span {
+
+    display:
+        block;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+
+    margin-bottom:
+        6px;
+}
+
+
+.analytics-item strong {
+
+    font-size:
+        18px;
+}
+
+
+/* ========================================
+   RULES EDITOR
+======================================== */
+
+.rules-editor {
+
+    display:
+        grid;
+
+    gap:
+        18px;
+}
+
+
+.rules-provider {
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        12px;
+
+    overflow:
+        hidden;
+}
+
+
+.rules-provider-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    padding:
+        14px 16px;
+
+    background:
+        var(--surface-2);
+}
+
+
+.rules-provider-header h3 {
+
+    font-size:
+        16px;
+}
+
+
+.rules-provider-content {
+
+    padding:
+        16px;
+}
+
+
+.rules-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(180px,1fr)
+        );
+
+    gap:
+        12px;
+}
+
+
+.rule-field {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        6px;
+}
+
+
+.rule-field label {
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        11px;
+
+    font-weight:
+        600;
+}
+
+
+.rule-field input,
+.rule-field select {
+
+    width:
+        100%;
+
+    padding:
+        10px 11px;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        8px;
+
+    outline:
+        none;
+}
+
+
+.rule-field input:focus,
+.rule-field select:focus {
+
+    border-color:
+        var(--blue);
+}
+
+
+.rules-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        10px;
+
+    margin-top:
+        16px;
+}
+
+
+/* ========================================
+   MODALS / FORMS
+======================================== */
+
+.modal {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    background:
+        rgba(0,0,0,.72);
+
+    z-index:
+        1000;
+}
+
+
+.modal.active {
+
+    display:
+        flex;
+}
+
+
+.modal-content {
+
+    width:
+        min(560px,100%);
+
+    max-height:
+        90vh;
+
+    overflow-y:
+        auto;
+
+    background:
+        var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        16px;
+
+    padding:
+        22px;
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.modal-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    margin-bottom:
+        18px;
+}
+
+
+.modal-header h2 {
+
+    font-size:
+        20px;
+}
+
+
+.modal-close {
+
+    background:
+        transparent;
+
+    padding:
+        5px 8px;
+
+    font-size:
+        18px;
+
+    color:
+        var(--text-muted);
+}
+
+
+.form-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:
+        14px;
+}
+
+
+.form-group {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        6px;
+}
+
+
+.form-group.full {
+
+    grid-column:
+        1 / -1;
+}
+
+
+.form-group label {
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        12px;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width:
+        100%;
+
+    padding:
+        11px;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        9px;
+
+    outline:
+        none;
+}
+
+
+.form-group textarea {
+
+    min-height:
+        100px;
+
+    resize:
+        vertical;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color:
+        var(--blue);
+}
+
+
+.modal-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        10px;
+
+    margin-top:
+        20px;
+}
+
+/* ========================================
+   MISSION CONTROL
+   ACCOUNT GUIDANCE
+======================================== */
 
 .mission-control-section {
-    grid-column: 1 / -1;
-    margin-top: 0;
+
+    grid-column:
+        1 / -1;
+
+    margin-top:
+        12px;
 }
 
-.mission-control-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 16px;
+
+.account-guidance-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+
+    margin-bottom:
+        14px;
 }
 
-.mission-control-header h2 {
-    margin: 4px 0 4px;
+
+.account-guidance-header h2 {
+
+    margin-top:
+        4px;
+
+    font-size:
+        24px;
+
+    line-height:
+        1.15;
 }
 
-.mission-control-header p {
-    margin: 0;
-    opacity: 0.7;
+
+.account-guidance-header p {
+
+    margin-top:
+        4px;
+
+    color:
+        var(--text-muted);
+
+    line-height:
+        1.45;
 }
 
+
+.mission-eyebrow,
 .section-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    opacity: 0.55;
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .12em;
+
+    text-transform:
+        uppercase;
+
+    color:
+        var(--text-muted);
 }
 
-.mission-control-summary {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.mission-summary-card {
-    padding: 14px 16px;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    background: rgba(255,255,255,0.025);
-}
-
-.mission-summary-card span {
-    display: block;
-    font-size: 12px;
-    opacity: 0.6;
-    margin-bottom: 5px;
-}
-
-.mission-summary-card strong {
-    font-size: 22px;
-}
 
 .mission-control-priorities {
-    display: grid;
-    gap: 12px;
+
+    display:
+        grid;
+
+    gap:
+        12px;
 }
+
 
 .mission-priority-card {
-    display: grid;
-    grid-template-columns: 42px minmax(0, 1fr);
-    gap: 14px;
 
-    padding: 16px;
+    display:
+        grid;
 
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
+    grid-template-columns:
+        42px minmax(0, 1fr);
 
-    background: rgba(255,255,255,0.025);
+    gap:
+        14px;
+
+    padding:
+        16px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255,255,255,.025);
 }
+
 
 .mission-priority-critical {
-    border-left: 4px solid #ef4444;
+
+    border-left:
+        4px solid #ef4444;
 }
+
 
 .mission-priority-high {
-    border-left: 4px solid #f59e0b;
+
+    border-left:
+        4px solid #f59e0b;
 }
+
 
 .mission-priority-normal {
-    border-left: 4px solid #eab308;
+
+    border-left:
+        4px solid #eab308;
 }
+
 
 .mission-priority-complete {
-    border-left: 4px solid #22c55e;
+
+    border-left:
+        4px solid #22c55e;
 }
+
 
 .mission-priority-rank {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
 
-    font-size: 18px;
-    font-weight: 800;
+    display:
+        flex;
 
-    opacity: 0.55;
+    align-items:
+        flex-start;
+
+    justify-content:
+        center;
+
+    font-size:
+        18px;
+
+    font-weight:
+        800;
+
+    opacity:
+        .55;
 }
+
+
+.mission-priority-main {
+
+    min-width:
+        0;
+}
+
 
 .mission-priority-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    align-items: flex-start;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-start;
+
+    gap:
+        12px;
 }
+
 
 .mission-account-name {
-    font-size: 16px;
-    font-weight: 800;
+
+    font-size:
+        16px;
+
+    font-weight:
+        800;
 }
+
 
 .mission-account-meta {
-    margin-top: 3px;
-    font-size: 11px;
-    opacity: 0.55;
+
+    margin-top:
+        3px;
+
+    font-size:
+        11px;
+
+    color:
+        var(--text-muted);
 }
+
 
 .mission-today-status {
-    font-size: 12px;
-    font-weight: 800;
-    white-space: nowrap;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+    white-space:
+        nowrap;
 }
+
 
 .mission-goal-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
 
-    margin-top: 12px;
+    display:
+        flex;
 
-    font-size: 12px;
+    gap:
+        10px;
+
+    align-items:
+        center;
+
+    margin-top:
+        12px;
+
+    font-size:
+        12px;
 }
+
 
 .mission-label {
-    opacity: 0.55;
+
+    color:
+        var(--text-muted);
 }
+
 
 .mission-headline {
-    margin-top: 6px;
 
-    font-size: 15px;
-    font-weight: 700;
+    margin-top:
+        6px;
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
 }
+
 
 .mission-reason {
-    margin-top: 5px;
 
-    font-size: 13px;
-    opacity: 0.75;
+    margin-top:
+        5px;
+
+    font-size:
+        13px;
+
+    color:
+        var(--text-muted);
 }
 
+
 .mission-metrics {
-    display: grid;
+
+    display:
+        grid;
+
     grid-template-columns:
         repeat(5, minmax(0, 1fr));
 
-    gap: 8px;
+    gap:
+        8px;
 
-    margin-top: 14px;
+    margin-top:
+        14px;
 }
+
 
 .mission-metric {
-    padding: 9px 10px;
 
-    border-radius: 9px;
+    min-width:
+        0;
+
+    padding:
+        9px 10px;
+
+    border-radius:
+        9px;
 
     background:
-        rgba(255,255,255,0.035);
+        rgba(255,255,255,.035);
 }
+
 
 .mission-metric span {
-    display: block;
 
-    font-size: 10px;
-    opacity: 0.55;
+    display:
+        block;
 
-    margin-bottom: 4px;
+    margin-bottom:
+        4px;
+
+    font-size:
+        10px;
+
+    color:
+        var(--text-muted);
 }
+
 
 .mission-metric strong {
-    font-size: 12px;
+
+    font-size:
+        12px;
 }
+
 
 .mission-next-action {
-    margin-top: 14px;
 
-    padding-top: 12px;
+    margin-top:
+        14px;
+
+    padding-top:
+        12px;
 
     border-top:
-        1px solid rgba(255,255,255,0.06);
+        1px solid rgba(255,255,255,.06);
 }
+
 
 .mission-next-action span {
-    display: block;
 
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    display:
+        block;
 
-    opacity: 0.5;
+    margin-bottom:
+        4px;
 
-    margin-bottom: 4px;
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        .08em;
+
+    color:
+        var(--text-muted);
 }
+
 
 .mission-next-action strong {
-    font-size: 13px;
+
+    font-size:
+        13px;
 }
+
 
 .mission-empty {
-    padding: 20px;
-    text-align: center;
-    opacity: 0.6;
+
+    padding:
+        20px;
+
+    text-align:
+        center;
+
+    color:
+        var(--text-muted);
 }
 
 
-/*
-=========================================
-RESPONSIVE
-=========================================
-*/
+/* ========================================
+   TOP MISSION CONTROL GRID
 
-@media (
-    max-width: 900px
-) {
+   Desktop:
+   Portfolio | Priorities | Market
+======================================== */
 
-    .mission-control-summary {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+.mission-top-grid {
 
-    .mission-metrics {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+    display:
+        grid;
 
-}
-
-
-@media (
-    max-width: 600px
-) {
-
-    .mission-priority-card {
-        grid-template-columns:
-            30px minmax(0, 1fr);
-    }
-
-    .mission-priority-top {
-        flex-direction: column;
-    }
-
-    .mission-control-summary {
-        grid-template-columns:
-            1fr 1fr;
-    }
-
-}
-
-.mission-control-section {
-    grid-column: 1 / -1;
-    margin-top: 24px;
-}
-
-/*
-=========================================
-MARKET INTELLIGENCE
-=========================================
-*/
-
-.market-intelligence-top {
-    display: grid;
     grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+        repeat(3, minmax(0, 1fr));
 
-    gap: 10px;
+    gap:
+        16px;
 
-    margin-top: 12px;
+    align-items:
+        stretch;
+
+    margin-top:
+        24px;
+
+    margin-bottom:
+        12px;
+}
+
+
+/*
+   Alle drei Cards bekommen dieselbe Höhe.
+   Dadurch entsteht oben keine Treppenoptik.
+*/
+
+.mission-panel {
+
+    min-width:
+        0;
+
+    height:
+        100%;
+
+    min-height:
+        300px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:
+        16px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.14);
+}
+
+
+.mission-panel-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-start;
+
+    gap:
+        16px;
+}
+
+
+.mission-panel-header h2 {
+
+    margin:
+        4px 0 0;
+
+    font-size:
+        22px;
+
+    line-height:
+        1.15;
+}
+
+
+.mission-panel-header p {
+
+    margin:
+        6px 0 0;
+
+    color:
+        var(--text-muted);
+
+    line-height:
+        1.4;
+}
+
+
+/* ========================================
+   PORTFOLIO OVERVIEW
+======================================== */
+
+.portfolio-overview-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap:
+        18px;
+
+    margin-top:
+        24px;
+}
+
+
+.portfolio-overview-item {
+
+    min-width:
+        0;
+}
+
+
+.portfolio-overview-item span {
+
+    display:
+        block;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .04em;
+
+    color:
+        var(--text-muted);
+}
+
+
+.portfolio-overview-item strong {
+
+    display:
+        block;
+
+    margin-top:
+        5px;
+
+    font-size:
+        20px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1.1;
+}
+
+
+.portfolio-overview-item:nth-child(4),
+.portfolio-overview-item:nth-child(5) {
+
+    padding-top:
+        14px;
+
+    border-top:
+        1px solid rgba(255,255,255,.06);
+}
+
+
+/* ========================================
+   PORTFOLIO STATUS BADGES
+======================================== */
+
+.portfolio-status,
+.mission-status-badge {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        6px 10px;
+
+    border-radius:
+        6px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
+
+    border:
+        1px solid transparent;
+}
+
+
+.portfolio-status-green,
+.mission-status-badge {
+
+    color:
+        #4ade80;
+
+    background:
+        rgba(34,197,94,.14);
+
+    border-color:
+        rgba(34,197,94,.24);
+}
+
+
+.portfolio-status-yellow {
+
+    color:
+        #facc15;
+
+    background:
+        rgba(234,179,8,.14);
+
+    border-color:
+        rgba(234,179,8,.24);
+}
+
+
+.portfolio-status-red {
+
+    color:
+        #f87171;
+
+    background:
+        rgba(239,68,68,.14);
+
+    border-color:
+        rgba(239,68,68,.24);
+}
+
+
+/* ========================================
+   TODAY'S PRIORITIES
+======================================== */
+
+.priorities-panel {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+}
+
+
+.mission-priority-summary-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        10px;
+
+    margin-top:
+        18px;
+}
+
+
+.priority-summary-card {
+
+    min-width:
+        0;
+
+    padding:
+        13px;
+
+    border-radius:
+        10px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.02);
+}
+
+
+.priority-summary-card span {
+
+    display:
+        block;
+
+    min-height:
+        28px;
+
+    margin-bottom:
+        6px;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.2;
+
+    color:
+        rgba(240,246,252,.75);
+}
+
+
+.priority-summary-card strong {
+
+    font-size:
+        22px;
+
+    line-height:
+        1;
+}
+
+
+.priority-summary-blue {
+
+    border-color:
+        rgba(59,130,246,.55);
+
+    background:
+        rgba(59,130,246,.07);
+}
+
+
+.priority-summary-yellow {
+
+    border-color:
+        rgba(234,179,8,.55);
+
+    background:
+        rgba(234,179,8,.07);
+}
+
+
+.priority-summary-orange {
+
+    border-color:
+        rgba(249,115,22,.55);
+
+    background:
+        rgba(249,115,22,.07);
+}
+
+
+.priority-summary-green {
+
+    border-color:
+        rgba(34,197,94,.55);
+
+    background:
+        rgba(34,197,94,.07);
+}
+
+
+/* ========================================
+   MARKET INTELLIGENCE
+======================================== */
+
+.market-panel {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    min-width:
+        0;
+}
+
+
+.market-panel .market-intelligence-top,
+.market-intelligence-top {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        10px;
+
+    margin-top:
+        14px;
 }
 
 
 .market-intelligence-metric {
-    padding: 12px;
 
-    border-radius: 10px;
+    min-width:
+        0;
+
+    padding:
+        11px 12px;
+
+    border-radius:
+        10px;
 
     background:
-        rgba(255,255,255,0.035);
+        rgba(255,255,255,.035);
 
     border:
-        1px solid rgba(255,255,255,0.06);
+        1px solid rgba(255,255,255,.06);
 }
 
 
 .market-intelligence-metric span {
-    display: block;
 
-    font-size: 10px;
+    display:
+        block;
 
-    opacity: 0.55;
+    margin-bottom:
+        4px;
 
-    margin-bottom: 4px;
+    font-size:
+        10px;
+
+    color:
+        var(--text-muted);
 }
 
 
 .market-intelligence-metric strong {
-    font-size: 16px;
+
+    display:
+        block;
+
+    margin-top:
+        4px;
+
+    font-size:
+        18px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1.1;
 }
 
 
+/* ========================================
+   PRIMARY MARKET EVENT
+======================================== */
+
 .market-primary-event {
-    margin-top: 14px;
 
-    padding: 14px;
+    margin-top:
+        8px;
 
-    border-radius: 10px;
+    padding:
+        10px 12px;
+
+    border-radius:
+        10px;
 
     background:
-        rgba(255,255,255,0.025);
+        rgba(255,255,255,.025);
 }
 
 
 .market-primary-event span {
-    display: block;
 
-    font-size: 10px;
+    display:
+        block;
 
-    letter-spacing: 0.08em;
+    margin-bottom:
+        4px;
 
-    opacity: 0.5;
+    font-size:
+        10px;
 
-    margin-bottom: 4px;
+    letter-spacing:
+        .08em;
+
+    color:
+        var(--text-muted);
 }
 
 
 .market-primary-event strong {
-    display: block;
 
-    font-size: 15px;
+    display:
+        block;
+
+    font-size:
+        15px;
 }
 
 
 .market-primary-event small {
-    display: block;
 
-    margin-top: 3px;
+    display:
+        block;
 
-    opacity: 0.55;
+    margin-top:
+        3px;
+
+    color:
+        var(--text-muted);
 }
 
 
+/* ========================================
+   MARKET EVENT LIST
+======================================== */
+
 .market-event-list {
-    display: grid;
 
-    gap: 8px;
+    display:
+        grid;
 
-    margin-top: 12px;
+    gap:
+        7px;
+
+    margin-top:
+        8px;
 }
 
 
 .market-event {
-    display: grid;
+
+    display:
+        grid;
 
     grid-template-columns:
-        64px minmax(0, 1fr) 40px;
+        54px minmax(0, 1fr) 34px;
 
-    gap: 10px;
+    gap:
+        9px;
 
-    align-items: center;
+    align-items:
+        center;
 
-    padding: 10px 12px;
+    padding:
+        9px 10px;
 
-    border-radius: 9px;
+    border-radius:
+        9px;
 
     background:
-        rgba(255,255,255,0.025);
+        rgba(255,255,255,.025);
 
     border:
-        1px solid rgba(255,255,255,0.05);
+        1px solid rgba(255,255,255,.05);
 }
 
 
 .market-event-time {
-    font-weight: 700;
 
-    font-size: 12px;
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+}
+
+
+.market-event-title-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    flex-wrap:
+        wrap;
 }
 
 
 .market-event-content strong {
-    display: block;
 
-    font-size: 12px;
+    display:
+        block;
+
+    font-size:
+        12px;
 }
 
 
 .market-event-content span {
-    display: block;
 
-    margin-top: 2px;
+    display:
+        block;
 
-    font-size: 10px;
+    margin-top:
+        2px;
 
-    opacity: 0.55;
+    font-size:
+        10px;
+
+    color:
+        var(--text-muted);
 }
 
 
 .market-event-risk {
-    text-align: right;
 
-    font-size: 12px;
+    text-align:
+        right;
 
-    font-weight: 800;
+    font-size:
+        12px;
+
+    font-weight:
+        800;
 }
 
 
 .market-event-high {
+
     border-left:
         3px solid #ef4444;
 }
 
 
 .market-event-medium {
+
     border-left:
         3px solid #f59e0b;
 }
 
 
 .market-event-low {
+
     border-left:
         3px solid #22c55e;
 }
 
 
-.market-recommendation {
-    margin-top: 14px;
+.market-primary-badge {
 
-    padding-top: 12px;
+    display:
+        inline-flex;
+
+    padding:
+        2px 5px;
+
+    border-radius:
+        4px;
+
+    font-size:
+        8px !important;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .06em;
+
+    color:
+        #f87171 !important;
+
+    background:
+        rgba(239,68,68,.10);
+
+    border:
+        1px solid rgba(239,68,68,.20);
+
+    opacity:
+        1 !important;
+}
+
+
+/* ========================================
+   MARKET TRADING GUIDANCE
+======================================== */
+
+.market-recommendation {
+
+    margin-top:
+        auto;
+
+    padding-top:
+        10px;
 
     border-top:
-        1px solid rgba(255,255,255,0.06);
+        1px solid rgba(255,255,255,.06);
 }
 
 
 .market-recommendation span {
-    display: block;
 
-    font-size: 10px;
+    display:
+        block;
 
-    opacity: 0.5;
+    margin-bottom:
+        4px;
 
-    letter-spacing: 0.08em;
+    font-size:
+        10px;
 
-    margin-bottom: 4px;
+    letter-spacing:
+        .08em;
+
+    color:
+        var(--text-muted);
 }
 
 
 .market-recommendation strong {
-    font-size: 13px;
+
+    display:
+        block;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.35;
 }
 
 
 .market-event-empty {
-    padding: 14px;
 
-    opacity: 0.55;
+    padding:
+        12px;
 
-    text-align: center;
-}
-
-
-@media (
-    max-width: 700px
-) {
-
-    .market-intelligence-top {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-}
-
-/*
-=========================================
-MISSION TOP GRID
-=========================================
-*/
-
-.mission-top-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 16px;
-
-    align-items: stretch;
-
-    margin-top: 24px;
-    margin-bottom: 12px;
-}
-
-
-.mission-panel {
-
-    height: 100%;
-   
-    border:
-        1px solid rgba(255,255,255,0.08);
-
-    border-radius: 16px;
-
-    background:
-        rgba(255,255,255,0.025);
-
-    padding: 20px;
-}
-
-
-.mission-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-}
-
-
-.mission-panel-header h2 {
-    margin: 4px 0 0;
-    font-size: 22px;
-}
-
-
-.mission-panel-header p {
-    margin: 6px 0 0;
-    opacity: 0.68;
-}
-
-
-.mission-eyebrow {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    opacity: 0.58;
-}
-
-
-.mission-status-badge {
-    padding: 5px 10px;
-
-    border-radius: 6px;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    background:
-        rgba(34,197,94,0.16);
+    text-align:
+        center;
 
     color:
-        #4ade80;
-
-    border:
-        1px solid rgba(34,197,94,0.22);
+        var(--text-muted);
 }
 
-
-/*
-=========================================
-PORTFOLIO OVERVIEW GRID
-=========================================
-*/
-
-.portfolio-overview-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 14px 18px;
-
-    margin-top: 24px;
-    row-gap: 22px;
-}
-
-
-.portfolio-overview-item {
-    min-width: 0;
-}
-
-
-.portfolio-overview-item strong {
-    display: block;
-    margin-top: 4px;
-
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 1.1;
-}
-
-.portfolio-overview-item span {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    opacity: 0.55;
-}
-
-
-.portfolio-overview-item:nth-child(4),
-.portfolio-overview-item:nth-child(5) {
-    padding-top: 14px;
-
-    border-top:
-        1px solid rgba(255,255,255,0.06);
-}
-
-
-/*
-=========================================
-TODAY SUMMARY
-=========================================
-*/
-
-.mission-top-grid > .mission-panel {
-    min-height: 300px;
-}
-
-.mission-priority-summary-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 12px;
-
-    margin-top: 26px;
-}
-
-
-.priority-summary-card {
-    padding: 14px;
-
-    border-radius: 10px;
-
-    border:
-        1px solid rgba(255,255,255,0.08);
-
-    background:
-        rgba(255,255,255,0.02);
-}
-
-
-.priority-summary-card span {
-    display: block;
-
-    font-size: 11px;
-
-    margin-bottom: 7px;
-
-    opacity: 0.75;
-}
-
-
-.priority-summary-card strong {
-    font-size: 22px;
-}
-
-
-.priority-summary-blue {
-    border-color:
-        rgba(59,130,246,0.55);
-
-    background:
-        rgba(59,130,246,0.07);
-}
-
-
-.priority-summary-yellow {
-    border-color:
-        rgba(234,179,8,0.55);
-
-    background:
-        rgba(234,179,8,0.07);
-}
-
-
-.priority-summary-orange {
-    border-color:
-        rgba(249,115,22,0.55);
-
-    background:
-        rgba(249,115,22,0.07);
-}
-
-
-.priority-summary-green {
-    border-color:
-        rgba(34,197,94,0.55);
-
-    background:
-        rgba(34,197,94,0.07);
-}
-
-
-/*
-=========================================
-ACCOUNT GUIDANCE HEADER
-=========================================
-*/
-
-.account-guidance-header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 14px;
-}
-
-
-/*
-=========================================
-RESPONSIVE
-=========================================
-*/
+/* ========================================
+   RESPONSIVE - MISSION CONTROL
+======================================== */
 
 @media (
     max-width: 1200px
 ) {
 
     .mission-top-grid {
+
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
+
     }
 
+
     .market-panel {
+
         grid-column:
             1 / -1;
+
+        min-height:
+            0;
+
+    }
+
+
+    .market-panel
+    .market-intelligence-top {
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+    }
+
+}
+
+
+@media (
+    max-width: 900px
+) {
+
+    .mission-metrics {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .portfolio-overview-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
     }
 
 }
@@ -1482,13 +2664,167 @@ RESPONSIVE
 ) {
 
     .mission-top-grid {
+
         grid-template-columns:
             1fr;
+
     }
 
+
+    .mission-top-grid >
+    .mission-panel {
+
+        min-height:
+            0;
+
+    }
+
+
     .market-panel {
+
         grid-column:
             auto;
+
+    }
+
+
+    .market-panel
+    .market-intelligence-top {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+@media (
+    max-width: 600px
+) {
+
+    .mission-priority-card {
+
+        grid-template-columns:
+            30px minmax(0, 1fr);
+
+    }
+
+
+    .mission-priority-top {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .mission-priority-summary-grid,
+    .portfolio-overview-grid,
+    .market-intelligence-top {
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+
+    .account-guidance-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+}
+
+
+@media (
+    max-width: 430px
+) {
+
+    .mission-priority-summary-grid,
+    .portfolio-overview-grid,
+    .market-intelligence-top {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .market-event {
+
+        grid-template-columns:
+            50px minmax(0, 1fr);
+
+    }
+
+
+    .market-event-risk {
+
+        display:
+            none;
+
+    }
+
+}
+
+
+/* ========================================
+   GLOBAL RESPONSIVE
+======================================== */
+
+@media (
+    max-width: 900px
+) {
+
+    .container {
+
+        width:
+            96%;
+
+        padding:
+            20px;
+
+    }
+
+
+    .header {
+
+        gap:
+            18px;
+
+        flex-wrap:
+            wrap;
+
+    }
+
+
+    .grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .account-detail-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .chart-wrapper {
+
+        height:
+            300px;
+
     }
 
 }
@@ -1498,122 +2834,201 @@ RESPONSIVE
     max-width: 700px
 ) {
 
-    .mission-priority-summary-grid {
+    .form-grid {
+
         grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+            1fr;
+
     }
 
-    .portfolio-overview-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+
+    .form-group.full {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .account-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .account-actions {
+
+        width:
+            100%;
+
+    }
+
+
+    .account-actions button {
+
+        flex:
+            1;
+
     }
 
 }
 
-.portfolio-status {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
 
-    padding: 6px 10px;
+@media (
+    max-width: 600px
+) {
 
-    border-radius: 6px;
+    .container {
 
-    font-size: 12px;
-    font-weight: 800;
+        width:
+            100%;
 
-    line-height: 1;
+        padding:
+            14px;
 
-    border: 1px solid transparent;
+    }
+
+
+    .header {
+
+        margin-bottom:
+            20px;
+
+    }
+
+
+    .logo {
+
+        font-size:
+            26px;
+
+    }
+
+
+    .subtitle {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .card {
+
+        padding:
+            18px;
+
+    }
+
+
+    .mission-panel {
+
+        padding:
+            16px;
+
+    }
+
+
+    .mission-panel-header h2 {
+
+        font-size:
+            19px;
+
+    }
+
+
+    .account-detail-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .risk-grid,
+    .payout-grid,
+    .daily-plan-grid,
+    .analytics-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .readiness {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .readiness-score {
+
+        font-size:
+            42px;
+
+    }
+
+
+    .chart-wrapper {
+
+        height:
+            250px;
+
+    }
+
 }
 
 
-.portfolio-status-green {
-    color: #4ade80;
+/* ========================================
+   SMALL UTILITIES
+======================================== */
 
-    background:
-        rgba(34,197,94,0.14);
+.text-muted {
 
-    border-color:
-        rgba(34,197,94,0.24);
+    color:
+        var(--text-muted);
 }
 
 
-.portfolio-status-yellow {
-    color: #facc15;
+.text-green {
 
-    background:
-        rgba(234,179,8,0.14);
-
-    border-color:
-        rgba(234,179,8,0.24);
+    color:
+        var(--green);
 }
 
 
-.portfolio-status-red {
-    color: #f87171;
+.text-yellow {
 
-    background:
-        rgba(239,68,68,0.14);
-
-    border-color:
-        rgba(239,68,68,0.24);
-}
-
-/*
-=========================================
-MARKET INTELLIGENCE
-MISSION CONTROL
-=========================================
-*/
-
-.market-panel {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
+    color:
+        var(--yellow);
 }
 
 
-.market-panel .market-intelligence-top {
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+.text-red {
 
-    gap: 10px;
-
-    margin-top: 14px;
+    color:
+        var(--red);
 }
 
 
-.market-panel .market-intelligence-metric {
-    padding: 11px 12px;
+.text-blue {
+
+    color:
+        var(--blue);
 }
 
 
-.market-panel .market-intelligence-metric strong {
-    display: block;
-
-    margin-top: 4px;
-
-    font-size: 18px;
-    font-weight: 800;
-}
-
-
-.market-panel .market-primary-event {
-    margin-top: 8px;
-
-    padding: 11px 12px;
-}
-
-
-.market-panel .market-event-list {
-    margin-top: 8px;
-}
-
-
-.market-panel .market-recommendation {
-    margin-top: auto;
-
-    padding-top: 10px;
-}
-
+/* ========================================
+   END TPR PRO AI DESIGN SYSTEM
+======================================== */
