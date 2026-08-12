@@ -41,6 +41,14 @@ function refreshAccountUI() {
     
     }
 
+    if(
+        typeof renderMarketIntelligence ===
+        "function"
+    ) {
+    
+        renderMarketIntelligence();
+    
+    }
 }
 
 
