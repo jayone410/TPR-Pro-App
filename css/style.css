@@ -1223,11 +1223,13 @@ MISSION TOP GRID
 
 .mission-top-grid {
     display: grid;
-    grid-template-columns:
-        minmax(0, 0.95fr)
-        minmax(0, 1.1fr);
 
-    gap: 18px;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+
+    align-items: stretch;
 
     margin-top: 24px;
     margin-bottom: 18px;
@@ -1451,12 +1453,34 @@ RESPONSIVE
 */
 
 @media (
-    max-width: 1000px
+    max-width: 1200px
+) {
+
+    .mission-top-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .market-panel {
+        grid-column:
+            1 / -1;
+    }
+
+}
+
+
+@media (
+    max-width: 760px
 ) {
 
     .mission-top-grid {
         grid-template-columns:
             1fr;
+    }
+
+    .market-panel {
+        grid-column:
+            auto;
     }
 
 }
@@ -1526,4 +1550,59 @@ RESPONSIVE
 
     border-color:
         rgba(239,68,68,0.24);
+}
+
+/*
+=========================================
+MARKET INTELLIGENCE
+MISSION CONTROL
+=========================================
+*/
+
+.market-panel {
+    min-width: 0;
+}
+
+
+.market-panel .market-intelligence-top {
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+
+.market-panel .market-intelligence-metric {
+    padding: 11px 12px;
+}
+
+
+.market-panel .market-intelligence-metric strong {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+
+.market-panel .market-primary-event {
+    margin-top: 12px;
+
+    padding: 11px 12px;
+}
+
+
+.market-panel .market-event-list {
+    margin-top: 10px;
+}
+
+
+.market-panel .market-recommendation {
+    margin-top: 12px;
+
+    padding-top: 10px;
 }
