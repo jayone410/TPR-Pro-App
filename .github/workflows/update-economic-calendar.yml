@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: "5,20,35,50 * * * *"
+    - cron: "15 */3 * * *"
 
 permissions:
   contents: write
@@ -21,45 +21,52 @@ jobs:
         uses: actions/checkout@v5
 
 
-      - name: Download economic calendar
+      - name: Download FRED release calendar
         env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
 
         run: |
 
           mkdir -p data
 
-          FROM=$(date -u +"%Y-%m-%d")
+          TODAY=$(date -u +"%Y-%m-%d")
           TO=$(date -u -d "+7 days" +"%Y-%m-%d")
 
-          echo "From: ${FROM}"
+          echo "From: ${TODAY}"
           echo "To: ${TO}"
 
-          HTTP_CODE=$(curl \
+          curl \
+            --fail \
             --silent \
             --show-error \
-            --output /tmp/fmp-response.json \
-            --write-out "%{http_code}" \
-            "https://financialmodelingprep.com/stable/economic-calendar?from=${FROM}&to=${TO}&apikey=${FMP_API_KEY}")
+            "https://api.stlouisfed.org/fred/releases/dates?api_key=${FRED_API_KEY}&file_type=json&realtime_start=${TODAY}&realtime_end=${TO}&include_release_dates_with_no_data=true&limit=1000&sort_order=asc" \
+            -o /tmp/fred-calendar.json
 
-          echo "HTTP Status: ${HTTP_CODE}"
 
-          echo "API Response:"
-          cat /tmp/fmp-response.json
+      - name: Convert FRED calendar
+        run: |
 
-          echo ""
-
-          if [ "${HTTP_CODE}" -lt 200 ] || [ "${HTTP_CODE}" -ge 300 ]; then
-            echo "FMP request failed."
-            exit 1
-          fi
-
-          cp /tmp/fmp-response.json data/economic-calendar.json
+          jq '
+          [
+            .release_dates[]
+            |
+            {
+              date: .date,
+              release_id: .release_id,
+              release_name: .release_name
+            }
+          ]
+          ' /tmp/fred-calendar.json \
+          > data/economic-calendar.json
 
 
       - name: Validate JSON
         run: |
+
           jq empty data/economic-calendar.json
+
+          echo "Calendar entries:"
+          jq length data/economic-calendar.json
 
 
       - name: Commit updated calendar
