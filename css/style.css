@@ -990,3 +990,8 @@ RESPONSIVE
     }
 
 }
+
+.mission-control-section {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+}
