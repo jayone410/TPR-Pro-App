@@ -727,3 +727,266 @@ button:hover{
     padding: 9px 10px;
     box-sizing: border-box;
 }
+
+/*
+=========================================
+MISSION CONTROL
+=========================================
+*/
+
+.mission-control-section {
+    margin-top: 24px;
+}
+
+.mission-control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+}
+
+.mission-control-header h2 {
+    margin: 4px 0 4px;
+}
+
+.mission-control-header p {
+    margin: 0;
+    opacity: 0.7;
+}
+
+.section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.55;
+}
+
+.mission-control-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.mission-summary-card {
+    padding: 14px 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.025);
+}
+
+.mission-summary-card span {
+    display: block;
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 5px;
+}
+
+.mission-summary-card strong {
+    font-size: 22px;
+}
+
+.mission-control-priorities {
+    display: grid;
+    gap: 12px;
+}
+
+.mission-priority-card {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+
+    padding: 16px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.025);
+}
+
+.mission-priority-critical {
+    border-left: 4px solid #ef4444;
+}
+
+.mission-priority-high {
+    border-left: 4px solid #f59e0b;
+}
+
+.mission-priority-normal {
+    border-left: 4px solid #eab308;
+}
+
+.mission-priority-complete {
+    border-left: 4px solid #22c55e;
+}
+
+.mission-priority-rank {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    opacity: 0.55;
+}
+
+.mission-priority-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.mission-account-name {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.mission-account-meta {
+    margin-top: 3px;
+    font-size: 11px;
+    opacity: 0.55;
+}
+
+.mission-today-status {
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.mission-goal-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    margin-top: 12px;
+
+    font-size: 12px;
+}
+
+.mission-label {
+    opacity: 0.55;
+}
+
+.mission-headline {
+    margin-top: 6px;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.mission-reason {
+    margin-top: 5px;
+
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.mission-metrics {
+    display: grid;
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-top: 14px;
+}
+
+.mission-metric {
+    padding: 9px 10px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,0.035);
+}
+
+.mission-metric span {
+    display: block;
+
+    font-size: 10px;
+    opacity: 0.55;
+
+    margin-bottom: 4px;
+}
+
+.mission-metric strong {
+    font-size: 12px;
+}
+
+.mission-next-action {
+    margin-top: 14px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+}
+
+.mission-next-action span {
+    display: block;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+
+    opacity: 0.5;
+
+    margin-bottom: 4px;
+}
+
+.mission-next-action strong {
+    font-size: 13px;
+}
+
+.mission-empty {
+    padding: 20px;
+    text-align: center;
+    opacity: 0.6;
+}
+
+
+/*
+=========================================
+RESPONSIVE
+=========================================
+*/
+
+@media (
+    max-width: 900px
+) {
+
+    .mission-control-summary {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .mission-metrics {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (
+    max-width: 600px
+) {
+
+    .mission-priority-card {
+        grid-template-columns:
+            30px minmax(0, 1fr);
+    }
+
+    .mission-priority-top {
+        flex-direction: column;
+    }
+
+    .mission-control-summary {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
