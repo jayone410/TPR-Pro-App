@@ -251,14 +251,14 @@ function getFredReleaseTime(
 
     const times = {
 
-        10: "14:30 CET/CEST",   // CPI
-        46: "14:30 CET/CEST",   // PPI
-        180: "14:30 CET/CEST",  // Jobless Claims
-        9: "14:30 CET/CEST",    // Retail Sales
-        321: "14:30 CET/CEST",  // Empire State
-        13: "15:15 CET/CEST",   // Industrial Production
-        27: "14:30 CET/CEST",   // Housing Starts
-        188: "14:30 CET/CEST"   // Import / Export Prices
+        10: "08:30",   // CPI
+        46: "08:30",   // PPI
+        180: "08:30",  // Jobless Claims
+        9: "08:30",    // Retail Sales
+        321: "08:30",  // Empire State
+        13: "09:15",   // Industrial Production
+        27: "08:30",   // Housing Starts
+        188: "08:30"   // Import / Export Prices
 
     };
 
@@ -545,6 +545,18 @@ function getEventVolatility(
     event
 ) {
 
+    /*
+    FRED Rule hat Vorrang.
+    */
+
+    if(
+        event?.volatility
+    ) {
+
+        return event.volatility;
+
+    }
+
     const special =
         getSpecialEventType(
             event
@@ -604,15 +616,6 @@ function getEventVolatility(
         return "MEDIUM";
 
     }
-
-    if(
-        event?.volatility
-    ) {
-    
-        return event.volatility;
-
-    }
-
 
     return "LOW";
 
