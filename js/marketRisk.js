@@ -30,23 +30,245 @@ durch eine API gefüllt.
 =========================================
 */
 
-const marketEvents = [
+let marketEvents = [];
 
-    /*
-    Beispiel:
 
-    {
-        date: "2026-08-12",
-        time: "14:30",
+/*
+=========================================
+FRED RELEASE RULES
+MNQ / NQ RELEVANT EVENTS
+=========================================
+*/
+
+const MARKET_RELEASE_RULES = {
+
+    10: {
         title: "CPI",
         impact: "high",
-        relevance: "nasdaq"
+        volatility: "EXTREME"
+    },
+
+    46: {
+        title: "PPI",
+        impact: "high",
+        volatility: "HIGH"
+    },
+
+    180: {
+        title: "Initial Jobless Claims",
+        impact: "medium",
+        volatility: "MEDIUM"
+    },
+
+    9: {
+        title: "Retail Sales",
+        impact: "high",
+        volatility: "HIGH"
+    },
+
+    321: {
+        title: "Empire State Manufacturing",
+        impact: "medium",
+        volatility: "MEDIUM"
+    },
+
+    13: {
+        title: "Industrial Production",
+        impact: "medium",
+        volatility: "MEDIUM"
+    },
+
+    27: {
+        title: "Housing Starts",
+        impact: "medium",
+        volatility: "MEDIUM"
+    },
+
+    188: {
+        title: "Import / Export Prices",
+        impact: "medium",
+        volatility: "MEDIUM"
     }
 
+};
+
+/*
+=========================================
+LOAD FRED ECONOMIC CALENDAR
+=========================================
+*/
+
+async function loadEconomicCalendar() {
+
+    try {
+
+        const response =
+            await fetch(
+                "data/economic-calendar.json?t=" +
+                Date.now()
+            );
+
+
+        if(!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const raw =
+            await response.json();
+
+
+        if(!Array.isArray(raw)) {
+
+            throw new Error(
+                "Economic Calendar ist kein Array."
+            );
+
+        }
+
+
+        marketEvents =
+            raw
+                .map(
+                    normalizeFredEvent
+                )
+                .filter(Boolean);
+
+
+        console.log(
+            "✅ FRED Calendar:",
+            raw.length,
+            "Releases geladen /",
+            marketEvents.length,
+            "MNQ-relevant"
+        );
+
+
+        return marketEvents;
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "❌ FRED Calendar:",
+            error
+        );
+
+        marketEvents = [];
+
+        return [];
+
+    }
+
+}
+
+/*
+=========================================
+NORMALIZE + FILTER FRED
+=========================================
+*/
+
+function normalizeFredEvent(raw) {
+
+    if(!raw) {
+
+        return null;
+
+    }
+
+
+    const releaseId =
+        Number(
+            raw.release_id
+        );
+
+
+    const rule =
+        MARKET_RELEASE_RULES[
+            releaseId
+        ];
+
+
+    /*
+    Nicht in unserer Whitelist
+    = für TPR ignorieren.
     */
 
-];
+    if(!rule) {
 
+        return null;
+
+    }
+
+
+    return {
+
+        date:
+            raw.date,
+
+        time:
+            getFredReleaseTime(
+                releaseId
+            ),
+
+        title:
+            rule.title,
+
+        impact:
+            rule.impact,
+
+        relevance:
+            "nasdaq",
+
+        volatility:
+            rule.volatility,
+
+        releaseId,
+
+        sourceTitle:
+            raw.release_name
+
+    };
+
+}
+
+/*
+=========================================
+FRED RELEASE TIMES
+Berlin time is calculated separately later.
+These are US Eastern release times.
+=========================================
+*/
+
+function getFredReleaseTime(
+    releaseId
+) {
+
+    const times = {
+
+        10: "08:30",   // CPI
+        46: "08:30",   // PPI
+        180: "08:30",  // Jobless Claims
+        9: "08:30",    // Retail Sales
+        321: "08:30",  // Empire State
+        13: "09:15",   // Industrial Production
+        27: "08:30",   // Housing Starts
+        188: "08:30"   // Import / Export Prices
+
+    };
+
+
+    return (
+        times[releaseId] ||
+        null
+    );
+
+}
 
 /*
 =========================================
@@ -380,6 +602,14 @@ function getEventVolatility(
     ) {
 
         return "MEDIUM";
+
+    }
+
+    if(
+        event?.volatility
+    ) {
+    
+        return event.volatility;
 
     }
 
