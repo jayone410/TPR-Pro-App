@@ -865,7 +865,9 @@ function renderAccounts() {
             const bufferPrefix =
                 buffer > 0
                     ? "+"
-                    : "";
+                    : buffer < 0
+                        ? "-"
+                        : "";
             
             
             /*
