@@ -1052,8 +1052,10 @@ function renderMarketIntelligence() {
         if(primaryTime) {
 
             primaryTime.textContent =
-                result.primaryEvent.time ||
-                "--";
+                convertEasternToBerlin(
+                    result.primaryEvent.date,
+                    result.primaryEvent.time
+                );
 
         }
 
@@ -1174,8 +1176,10 @@ function buildMarketEventHtml(
 
             <div class="market-event-time">
                 ${escapeMarketHtml(
-                    event.time ||
-                    "--"
+                    convertEasternToBerlin(
+                        event.date,
+                        event.time
+                    )
                 )}
             </div>
 
@@ -1266,9 +1270,189 @@ function convertEasternToBerlin(
 
     }
 
+
+    const [
+        year,
+        month,
+        day
+    ] =
+        String(
+            dateString
+        )
+            .split("-")
+            .map(Number);
+
+
+    const [
+        hour,
+        minute
+    ] =
+        String(
+            easternTime
+        )
+            .split(":")
+            .map(Number);
+
+
+    if(
+        !year ||
+        !month ||
+        !day ||
+        !Number.isFinite(hour) ||
+        !Number.isFinite(minute)
+    ) {
+
+        return "--";
+
+    }
+
+
     /*
-    Wird im nächsten Schritt mit
-    timezone-aware Umrechnung umgesetzt.
+    Wir erzeugen zunächst einen UTC-Zeitpunkt
+    und ermitteln dann iterativ den Offset
+    von America/New_York.
     */
+
+    let utcGuess =
+        new Date(
+            Date.UTC(
+                year,
+                month - 1,
+                day,
+                hour,
+                minute
+            )
+        );
+
+
+    const easternFormatter =
+        new Intl.DateTimeFormat(
+            "en-US",
+            {
+                timeZone:
+                    "America/New_York",
+
+                year:
+                    "numeric",
+
+                month:
+                    "2-digit",
+
+                day:
+                    "2-digit",
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit",
+
+                hour12:
+                    false
+            }
+        );
+
+
+    /*
+    Offset korrigieren.
+    Zwei Iterationen reichen,
+    auch rund um DST-Wechsel.
+    */
+
+    for(
+        let i = 0;
+        i < 2;
+        i++
+    ) {
+
+        const parts =
+            easternFormatter
+                .formatToParts(
+                    utcGuess
+                );
+
+
+        const values =
+            {};
+
+
+        parts.forEach(
+            part => {
+
+                if(
+                    part.type !==
+                    "literal"
+                ) {
+
+                    values[
+                        part.type
+                    ] =
+                        Number(
+                            part.value
+                        );
+
+                }
+
+            }
+        );
+
+
+        const representedAsUTC =
+            Date.UTC(
+                values.year,
+                values.month - 1,
+                values.day,
+                values.hour,
+                values.minute
+            );
+
+
+        const desiredAsUTC =
+            Date.UTC(
+                year,
+                month - 1,
+                day,
+                hour,
+                minute
+            );
+
+
+        const diff =
+            desiredAsUTC -
+            representedAsUTC;
+
+
+        utcGuess =
+            new Date(
+                utcGuess.getTime() +
+                diff
+            );
+
+    }
+
+
+    const berlinFormatter =
+        new Intl.DateTimeFormat(
+            "de-DE",
+            {
+                timeZone:
+                    "Europe/Berlin",
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit",
+
+                hour12:
+                    false
+            }
+        );
+
+
+    return berlinFormatter
+        .format(
+            utcGuess
+        );
 
 }
