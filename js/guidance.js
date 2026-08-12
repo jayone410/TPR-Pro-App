@@ -2825,7 +2825,909 @@ function getGuidancePriorityScore(
 
 }
 
+/*
+=========================================
+MARKET RISK OVERLAY
+=========================================
 
+Account Risk wird zuerst berechnet.
+
+Danach darf Market Risk die Guidance
+nur VERSCHÄRFEN.
+
+Market Risk darf niemals:
+
+STOP TODAY -> TRADE
+DEFENSIVE -> NORMAL
+
+machen.
+
+=========================================
+*/
+
+
+function applyMarketRiskToGuidance(
+    guidance
+) {
+
+    if(!guidance) {
+
+        return guidance;
+
+    }
+
+
+    /*
+    =====================================
+    MARKET ENGINE VERFÜGBAR?
+    =====================================
+    */
+
+    if(
+        typeof analyzeTodayMarketRisk !==
+        "function"
+    ) {
+
+        return guidance;
+
+    }
+
+
+    const market =
+        analyzeTodayMarketRisk();
+
+
+    if(!market) {
+
+        return guidance;
+
+    }
+
+
+    const primaryEvent =
+        market.primaryEvent ||
+        null;
+
+
+    const marketLevel =
+        String(
+            market.level ||
+            "LOW"
+        ).toUpperCase();
+
+
+    const marketVolatility =
+        String(
+            market.volatility ||
+            "NORMAL"
+        ).toUpperCase();
+
+
+    const eventName =
+        primaryEvent?.title ||
+        null;
+
+
+    const eventTime =
+        getGuidanceMarketEventBerlinTime(
+            primaryEvent
+        );
+
+
+    /*
+    =====================================
+    MARKET META
+
+    Diese Felder werden immer ergänzt,
+    auch wenn die Account Guidance nicht
+    verändert wird.
+    =====================================
+    */
+
+    const baseResult = {
+
+        ...guidance,
+
+        marketRisk:
+            marketLevel,
+
+        marketVolatility,
+
+        marketScore:
+            Number(
+                market.score
+            ) || 0,
+
+        marketEvent:
+            eventName,
+
+        marketEventTime:
+            eventTime,
+
+        marketRiskMultiplier:
+            Number(
+                market.riskMultiplier
+            ) || 1
+
+    };
+
+
+    /*
+    =====================================
+    HARTE ACCOUNT-REGELN HABEN VORRANG
+    =====================================
+
+    STOP TODAY
+    NO TRADING REQUIRED
+    PAUSE
+    STOP
+
+    werden niemals vom Markt überschrieben.
+    =====================================
+    */
+
+    if(
+        guidance.todayAction ===
+            "STOP TODAY" ||
+        guidance.todayAction ===
+            "NO TRADING REQUIRED" ||
+        guidance.riskMode ===
+            "PAUSE" ||
+        guidance.riskMode ===
+            "STOP"
+    ) {
+
+        return baseResult;
+
+    }
+
+
+    /*
+    =====================================
+    KEIN RELEVANTES MARKET RISK
+    =====================================
+    */
+
+    if(
+        marketLevel ===
+        "LOW"
+    ) {
+
+        return baseResult;
+
+    }
+
+
+    /*
+    =====================================
+    EVENT TIMING
+    =====================================
+    */
+
+    const timing =
+        getGuidanceMarketTiming(
+            primaryEvent
+        );
+
+
+    /*
+    =====================================
+    EXTREME MARKET RISK
+
+    Beispiel:
+    CPI
+    NFP
+    FOMC
+    =====================================
+    */
+
+    if(
+        marketLevel ===
+        "EXTREME"
+    ) {
+
+        /*
+        ---------------------------------
+        60 MIN VOR EVENT
+        BIS EVENT
+        ---------------------------------
+        */
+
+        if(
+            timing &&
+            timing.minutesToEvent >= 0 &&
+            timing.minutesToEvent <= 60
+        ) {
+
+            return {
+
+                ...baseResult,
+
+                todayAction:
+                    eventName
+                        ? `WAIT FOR ${eventName}`
+                        : "WAIT FOR NEWS",
+
+                todayPriority:
+                    "critical",
+
+                todayReason:
+                    eventName &&
+                    eventTime
+
+                        ? `${eventName} um ${eventTime}. Keine neuen Trades vor dem Event.`
+
+                        : "Extreme News stehen unmittelbar bevor. Keine neuen Trades.",
+
+                riskMode:
+                    "PAUSE",
+
+                targetToday:
+                    0,
+
+                maxLossToday:
+                    0,
+
+                warnings:
+                    addGuidanceWarning(
+                        guidance.warnings,
+                        "Extreme Market Risk: vor News pausieren."
+                    )
+
+            };
+
+        }
+
+
+        /*
+        ---------------------------------
+        EVENT BIS 15 MIN DANACH
+        ---------------------------------
+        */
+
+        if(
+            timing &&
+            timing.minutesToEvent < 0 &&
+            timing.minutesToEvent >= -15
+        ) {
+
+            return {
+
+                ...baseResult,
+
+                todayAction:
+                    "WAIT FOR VOLATILITY",
+
+                todayPriority:
+                    "critical",
+
+                todayReason:
+                    eventName
+
+                        ? `${eventName} wurde veröffentlicht. Mindestens 15 Minuten auf Marktstabilisierung warten.`
+
+                        : "Extreme News veröffentlicht. Auf Marktstabilisierung warten.",
+
+                riskMode:
+                    "PAUSE",
+
+                targetToday:
+                    0,
+
+                maxLossToday:
+                    0,
+
+                warnings:
+                    addGuidanceWarning(
+                        guidance.warnings,
+                        "Post-News Volatilität abwarten."
+                    )
+
+            };
+
+        }
+
+
+        /*
+        ---------------------------------
+        MEHR ALS 60 MIN VOR EVENT
+        ODER >15 MIN NACH EVENT
+
+        Trading möglich,
+        aber defensiv.
+        ---------------------------------
+        */
+
+        return {
+
+            ...baseResult,
+
+            todayAction:
+                guidance.riskMode ===
+                    "DEFENSIVE"
+
+                    ? guidance.todayAction
+
+                    : "TRADE DEFENSIVE",
+
+            todayPriority:
+                guidance.todayPriority ===
+                    "critical"
+
+                    ? "critical"
+
+                    : "high",
+
+            todayReason:
+                buildExtremeMarketReason(
+                    guidance,
+                    eventName,
+                    eventTime,
+                    timing
+                ),
+
+            riskMode:
+                "DEFENSIVE",
+
+            targetToday:
+                reduceGuidanceValue(
+                    guidance.targetToday,
+                    0.50
+                ),
+
+            maxLossToday:
+                reduceGuidanceValue(
+                    guidance.maxLossToday,
+                    0.50
+                ),
+
+            warnings:
+                addGuidanceWarning(
+                    guidance.warnings,
+                    "Extreme Market Risk: Tagesrisiko reduziert."
+                )
+
+        };
+
+    }
+
+
+    /*
+    =====================================
+    HIGH MARKET RISK
+    =====================================
+    */
+
+    if(
+        marketLevel ===
+        "HIGH"
+    ) {
+
+        /*
+        30 Minuten vor Event bis
+        10 Minuten danach:
+        keine aggressiven Entries.
+        */
+
+        if(
+            timing &&
+            timing.minutesToEvent <= 30 &&
+            timing.minutesToEvent >= -10
+        ) {
+
+            return {
+
+                ...baseResult,
+
+                todayAction:
+                    "TRADE DEFENSIVE",
+
+                todayPriority:
+                    "high",
+
+                todayReason:
+                    eventName &&
+                    eventTime
+
+                        ? `${eventName} um ${eventTime}. News-Fenster meiden und Risiko reduzieren.`
+
+                        : "High-Impact-News: News-Fenster meiden.",
+
+                riskMode:
+                    "DEFENSIVE",
+
+                targetToday:
+                    reduceGuidanceValue(
+                        guidance.targetToday,
+                        0.60
+                    ),
+
+                maxLossToday:
+                    reduceGuidanceValue(
+                        guidance.maxLossToday,
+                        0.60
+                    ),
+
+                warnings:
+                    addGuidanceWarning(
+                        guidance.warnings,
+                        "High Market Risk."
+                    )
+
+            };
+
+        }
+
+
+        /*
+        Sonst HIGH:
+        ebenfalls etwas defensiver.
+        */
+
+        return {
+
+            ...baseResult,
+
+            todayAction:
+                guidance.riskMode ===
+                    "DEFENSIVE"
+
+                    ? guidance.todayAction
+
+                    : "TRADE DEFENSIVE",
+
+            todayPriority:
+                guidance.todayPriority ===
+                    "critical"
+
+                    ? "critical"
+
+                    : "high",
+
+            todayReason:
+                eventName &&
+                eventTime
+
+                    ? `${eventName} heute um ${eventTime}. Erhöhte Volatilität berücksichtigen.`
+
+                    : "Erhöhtes Marktrisiko. Selektiver handeln.",
+
+            riskMode:
+                "DEFENSIVE",
+
+            targetToday:
+                reduceGuidanceValue(
+                    guidance.targetToday,
+                    0.75
+                ),
+
+            maxLossToday:
+                reduceGuidanceValue(
+                    guidance.maxLossToday,
+                    0.75
+                ),
+
+            warnings:
+                addGuidanceWarning(
+                    guidance.warnings,
+                    "High Market Risk: Risiko reduziert."
+                )
+
+        };
+
+    }
+
+
+    /*
+    =====================================
+    MEDIUM
+
+    Noch keine automatische Änderung
+    der Account Limits.
+
+    Market Meta wird aber mitgegeben.
+    =====================================
+    */
+
+    return baseResult;
+
+}
+
+
+
+/*
+=========================================
+MARKET EVENT TIME
+=========================================
+*/
+
+function getGuidanceMarketEventBerlinTime(
+    event
+) {
+
+    if(!event) {
+
+        return null;
+
+    }
+
+
+    if(
+        typeof convertEasternToBerlin ===
+        "function"
+    ) {
+
+        const converted =
+            convertEasternToBerlin(
+                event.date,
+                event.time
+            );
+
+
+        if(
+            converted &&
+            converted !== "--"
+        ) {
+
+            return converted;
+
+        }
+
+    }
+
+
+    return (
+        event.time ||
+        null
+    );
+
+}
+
+
+
+/*
+=========================================
+CURRENT BERLIN TIME
+=========================================
+*/
+
+function getGuidanceBerlinTimeParts() {
+
+    const formatter =
+        new Intl.DateTimeFormat(
+            "en-CA",
+            {
+
+                timeZone:
+                    "Europe/Berlin",
+
+                year:
+                    "numeric",
+
+                month:
+                    "2-digit",
+
+                day:
+                    "2-digit",
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit",
+
+                hour12:
+                    false
+
+            }
+        );
+
+
+    const parts =
+        formatter
+            .formatToParts(
+                new Date()
+            );
+
+
+    const values =
+        {};
+
+
+    parts.forEach(
+        part => {
+
+            if(
+                part.type !==
+                "literal"
+            ) {
+
+                values[
+                    part.type
+                ] =
+                    part.value;
+
+            }
+
+        }
+    );
+
+
+    return {
+
+        date:
+            `${values.year}-${values.month}-${values.day}`,
+
+        hour:
+            Number(
+                values.hour
+            ),
+
+        minute:
+            Number(
+                values.minute
+            )
+
+    };
+
+}
+
+
+
+/*
+=========================================
+MARKET EVENT TIMING
+=========================================
+*/
+
+function getGuidanceMarketTiming(
+    event
+) {
+
+    if(!event) {
+
+        return null;
+
+    }
+
+
+    const berlinTime =
+        getGuidanceMarketEventBerlinTime(
+            event
+        );
+
+
+    if(
+        !berlinTime ||
+        !berlinTime.includes(":")
+    ) {
+
+        return null;
+
+    }
+
+
+    const now =
+        getGuidanceBerlinTimeParts();
+
+
+    /*
+    Market Engine analysiert ohnehin
+    Today's Events.
+
+    Trotzdem Date Check als Sicherheit.
+    */
+
+    if(
+        event.date &&
+        now.date !== event.date
+    ) {
+
+        return null;
+
+    }
+
+
+    const [
+        eventHour,
+        eventMinute
+    ] =
+        berlinTime
+            .split(":")
+            .map(Number);
+
+
+    if(
+        !Number.isFinite(
+            eventHour
+        ) ||
+        !Number.isFinite(
+            eventMinute
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    const nowMinutes =
+        (
+            now.hour *
+            60
+        ) +
+        now.minute;
+
+
+    const eventMinutes =
+        (
+            eventHour *
+            60
+        ) +
+        eventMinute;
+
+
+    return {
+
+        berlinTime,
+
+        nowMinutes,
+
+        eventMinutes,
+
+        minutesToEvent:
+            eventMinutes -
+            nowMinutes
+
+    };
+
+}
+
+
+
+/*
+=========================================
+EXTREME MARKET REASON
+=========================================
+*/
+
+function buildExtremeMarketReason(
+    guidance,
+    eventName,
+    eventTime,
+    timing
+) {
+
+    if(
+        timing &&
+        timing.minutesToEvent < -15
+    ) {
+
+        return eventName
+
+            ? `${eventName} ist vorbei. Nur defensive Post-News-Setups handeln.`
+
+            : "Extreme News sind vorbei. Nur defensive Post-News-Setups handeln.";
+
+    }
+
+
+    if(
+        eventName &&
+        eventTime
+    ) {
+
+        return `${eventName} heute um ${eventTime}. Tagesrisiko wegen extremer Volatilität reduzieren.`;
+
+    }
+
+
+    return (
+        guidance.todayReason ||
+        "Extreme Marktvolatilität. Risiko reduzieren."
+    );
+
+}
+
+
+
+/*
+=========================================
+REDUCE GUIDANCE VALUE
+=========================================
+*/
+
+function reduceGuidanceValue(
+    value,
+    multiplier
+) {
+
+    const number =
+        guidanceFiniteNumber(
+            value
+        );
+
+
+    if(
+        number ===
+        null ||
+        number <= 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    const factor =
+        guidanceFiniteNumber(
+            multiplier
+        );
+
+
+    if(
+        factor ===
+        null ||
+        factor <= 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Math.max(
+        0,
+        Math.round(
+            number *
+            factor
+        )
+    );
+
+}
+
+
+
+/*
+=========================================
+ADD GUIDANCE WARNING
+=========================================
+*/
+
+function addGuidanceWarning(
+    warnings,
+    message
+) {
+
+    const result =
+        Array.isArray(
+            warnings
+        )
+
+            ? [
+                ...warnings
+            ]
+
+            : [];
+
+
+    if(
+        message &&
+        !result.includes(
+            message
+        )
+    ) {
+
+        result.push(
+            message
+        );
+
+    }
+
+
+    return result;
+
+}
 
 /*
 =========================================
@@ -2856,14 +3758,23 @@ function buildAllAccountGuidance(
             );
 
 
-    return source
-        .map(
-            account =>
-                buildAccountGuidance(
-                    account
-                )
-        )
-        .sort(
+         return source
+             .map(
+                 account => {
+         
+                     const accountGuidance =
+                         buildAccountGuidance(
+                             account
+                         );
+         
+         
+                     return applyMarketRiskToGuidance(
+                         accountGuidance
+                     );
+         
+                 }
+             )
+             .sort(
             (
                 a,
                 b
@@ -3093,6 +4004,22 @@ function debugAccountGuidance() {
 
                 riskMode:
                     item.riskMode,
+
+               marketRisk:
+                   item.marketRisk ||
+                   "--",
+               
+               marketEvent:
+                   item.marketEvent ||
+                   "--",
+               
+               marketTime:
+                   item.marketEventTime ||
+                   "--",
+               
+               marketVol:
+                   item.marketVolatility ||
+                   "--",
 
                 target:
                     item.targetToday,
