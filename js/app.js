@@ -12,22 +12,95 @@ document.addEventListener(
         );
 
 
+        /*
+        =====================================
+        ACCOUNT MANAGER
+        =====================================
+        */
+
         initAccountManager();
+
+
+        /*
+        =====================================
+        PORTFOLIO OVERVIEW
+        =====================================
+        */
 
         if(
             typeof renderPortfolioOverview ===
             "function"
         ) {
 
-    renderPortfolioOverview();
+            renderPortfolioOverview();
 
-}
+        }
+
+
+        /*
+        =====================================
+        MISSION CONTROL
+        =====================================
+        */
+
+        if(
+            typeof renderMissionControl ===
+            "function"
+        ) {
+
+            renderMissionControl();
+
+        }
+
+
+        /*
+        =====================================
+        MARKET INTELLIGENCE
+        =====================================
+        */
+
+        if(
+            typeof renderMarketIntelligence ===
+            "function"
+        ) {
+
+            renderMarketIntelligence();
+
+        }
+
+
+        /*
+        =====================================
+        CSV IMPORT
+        =====================================
+        */
 
         initCsvImport();
 
+
+        /*
+        =====================================
+        DASHBOARD LAYOUT
+        =====================================
+        */
+
         initDashboardLayout();
 
-        renderPortfolio();
+
+        /*
+        =====================================
+        PORTFOLIO
+        =====================================
+        */
+
+        if(
+            typeof renderPortfolio ===
+            "function"
+        ) {
+
+            renderPortfolio();
+
+        }
 
     }
 );
