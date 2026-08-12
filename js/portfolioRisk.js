@@ -504,9 +504,9 @@ function analyzePortfolioRisk() {
 
         evaluationAccounts,
 
-        activeExposureAccounts,
-
         tradableAccounts,
+
+        activeExposureAccounts,
 
         pausedAccounts,
 
@@ -1363,6 +1363,9 @@ function debugPortfolioRisk() {
 
                 tradable:
                     risk.tradableAccounts,
+                
+                activeExposure:
+                    risk.activeExposureAccounts,
 
                 paused:
                     risk.pausedAccounts,
@@ -1391,8 +1394,6 @@ function debugPortfolioRisk() {
                 weakest:
                     risk.weakestAccount
 
-                activeExposure:
-                    risk.activeExposureAccounts,
 
             }
         ]
