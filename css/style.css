@@ -1213,3 +1213,264 @@ MARKET INTELLIGENCE
     }
 
 }
+
+/*
+=========================================
+MISSION TOP GRID
+=========================================
+*/
+
+.mission-top-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 0.95fr)
+        minmax(0, 1.1fr);
+
+    gap: 18px;
+
+    margin-top: 24px;
+    margin-bottom: 26px;
+}
+
+
+.mission-panel {
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    padding: 20px;
+}
+
+
+.mission-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+
+.mission-panel-header h2 {
+    margin: 4px 0 0;
+    font-size: 22px;
+}
+
+
+.mission-panel-header p {
+    margin: 6px 0 0;
+    opacity: 0.68;
+}
+
+
+.mission-eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.58;
+}
+
+
+.mission-status-badge {
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    background:
+        rgba(34,197,94,0.16);
+
+    color:
+        #4ade80;
+
+    border:
+        1px solid rgba(34,197,94,0.22);
+}
+
+
+/*
+=========================================
+PORTFOLIO OVERVIEW GRID
+=========================================
+*/
+
+.portfolio-overview-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 14px 18px;
+
+    margin-top: 20px;
+}
+
+
+.portfolio-overview-item {
+    min-width: 0;
+}
+
+
+.portfolio-overview-item span {
+    display: block;
+
+    font-size: 11px;
+
+    opacity: 0.58;
+
+    margin-bottom: 3px;
+}
+
+
+.portfolio-overview-item strong {
+    font-size: 17px;
+}
+
+
+.portfolio-overview-item:nth-child(4),
+.portfolio-overview-item:nth-child(5) {
+    padding-top: 14px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+}
+
+
+/*
+=========================================
+TODAY SUMMARY
+=========================================
+*/
+
+.mission-priority-summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+
+.priority-summary-card {
+    padding: 14px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    background:
+        rgba(255,255,255,0.02);
+}
+
+
+.priority-summary-card span {
+    display: block;
+
+    font-size: 11px;
+
+    margin-bottom: 7px;
+
+    opacity: 0.75;
+}
+
+
+.priority-summary-card strong {
+    font-size: 22px;
+}
+
+
+.priority-summary-blue {
+    border-color:
+        rgba(59,130,246,0.55);
+
+    background:
+        rgba(59,130,246,0.07);
+}
+
+
+.priority-summary-yellow {
+    border-color:
+        rgba(234,179,8,0.55);
+
+    background:
+        rgba(234,179,8,0.07);
+}
+
+
+.priority-summary-orange {
+    border-color:
+        rgba(249,115,22,0.55);
+
+    background:
+        rgba(249,115,22,0.07);
+}
+
+
+.priority-summary-green {
+    border-color:
+        rgba(34,197,94,0.55);
+
+    background:
+        rgba(34,197,94,0.07);
+}
+
+
+/*
+=========================================
+ACCOUNT GUIDANCE HEADER
+=========================================
+*/
+
+.account-guidance-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+}
+
+
+/*
+=========================================
+RESPONSIVE
+=========================================
+*/
+
+@media (
+    max-width: 1000px
+) {
+
+    .mission-top-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media (
+    max-width: 700px
+) {
+
+    .mission-priority-summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .portfolio-overview-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
