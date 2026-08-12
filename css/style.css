@@ -1232,7 +1232,7 @@ MISSION TOP GRID
     align-items: start;
 
     margin-top: 24px;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 
@@ -1570,7 +1570,7 @@ MISSION CONTROL
 
     gap: 10px;
 
-    margin-top: 22px;
+    margin-top: 14px;
 }
 
 
@@ -1590,7 +1590,7 @@ MISSION CONTROL
 
 
 .market-panel .market-primary-event {
-    margin-top: 12px;
+    margin-top: 8px;
 
     padding: 11px 12px;
 }
@@ -1602,7 +1602,7 @@ MISSION CONTROL
 
 
 .market-panel .market-recommendation {
-    margin-top: 12px;
+    margin-top: 8px;
 
-    padding-top: 10px;
+    padding-top: 8px;
 }
