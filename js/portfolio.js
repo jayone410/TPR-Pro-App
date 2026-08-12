@@ -674,7 +674,7 @@ function renderPortfolioOverview() {
         ) {
 
             overallStatus.textContent =
-                "● NO SELECTION";
+                "NO SELECTION";
 
             overallStatus.className =
                 "portfolio-status";
@@ -693,7 +693,7 @@ function renderPortfolioOverview() {
         ) {
 
             overallStatus.textContent =
-                "● RISK";
+                "RISK";
 
             overallStatus.className =
                 "portfolio-status portfolio-status-red";
@@ -712,7 +712,7 @@ function renderPortfolioOverview() {
         ) {
 
             overallStatus.textContent =
-                "● ATTENTION";
+                "ATTENTION";
 
             overallStatus.className =
                 "portfolio-status portfolio-status-yellow";
@@ -727,7 +727,7 @@ function renderPortfolioOverview() {
         */
 
         overallStatus.textContent =
-            "● READY";
+            "READY";
 
         overallStatus.className =
             "portfolio-status portfolio-status-green";
