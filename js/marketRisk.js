@@ -684,3 +684,337 @@ function debugMarketRisk() {
     return result;
 
 }
+
+/*
+=========================================
+MARKET INTELLIGENCE UI
+=========================================
+*/
+
+function renderMarketIntelligence() {
+
+    if(
+        typeof analyzeTodayMarketRisk !==
+        "function"
+    ) {
+
+        return;
+
+    }
+
+
+    const result =
+        analyzeTodayMarketRisk();
+
+
+    const riskLevel =
+        document.getElementById(
+            "marketRiskLevel"
+        );
+
+
+    const volatility =
+        document.getElementById(
+            "marketVolatility"
+        );
+
+
+    const eventCount =
+        document.getElementById(
+            "marketEventCount"
+        );
+
+
+    const highImpact =
+        document.getElementById(
+            "marketHighImpactCount"
+        );
+
+
+    const primaryEvent =
+        document.getElementById(
+            "marketPrimaryEvent"
+        );
+
+
+    const primaryTime =
+        document.getElementById(
+            "marketPrimaryEventTime"
+        );
+
+
+    const recommendation =
+        document.getElementById(
+            "marketRecommendation"
+        );
+
+
+    const eventList =
+        document.getElementById(
+            "marketEventList"
+        );
+
+
+    /*
+    =====================================
+    SUMMARY
+    =====================================
+    */
+
+    if(riskLevel) {
+
+        riskLevel.textContent =
+            result.level;
+
+        riskLevel.dataset.level =
+            String(
+                result.level
+            ).toLowerCase();
+
+    }
+
+
+    if(volatility) {
+
+        volatility.textContent =
+            result.volatility;
+
+    }
+
+
+    if(eventCount) {
+
+        eventCount.textContent =
+            result.eventCount;
+
+    }
+
+
+    if(highImpact) {
+
+        highImpact.textContent =
+            result.highImpactCount;
+
+    }
+
+
+    /*
+    =====================================
+    PRIMARY EVENT
+    =====================================
+    */
+
+    if(
+        result.primaryEvent
+    ) {
+
+        if(primaryEvent) {
+
+            primaryEvent.textContent =
+                result.primaryEvent.title;
+
+        }
+
+
+        if(primaryTime) {
+
+            primaryTime.textContent =
+                result.primaryEvent.time ||
+                "--";
+
+        }
+
+    }
+
+    else {
+
+        if(primaryEvent) {
+
+            primaryEvent.textContent =
+                "Keine relevanten Events";
+
+        }
+
+
+        if(primaryTime) {
+
+            primaryTime.textContent =
+                "--";
+
+        }
+
+    }
+
+
+    /*
+    =====================================
+    RECOMMENDATION
+    =====================================
+    */
+
+    if(recommendation) {
+
+        recommendation.textContent =
+            result.recommendation;
+
+    }
+
+
+    /*
+    =====================================
+    EVENT LIST
+    =====================================
+    */
+
+    if(!eventList) {
+
+        return;
+
+    }
+
+
+    if(
+        !Array.isArray(
+            result.events
+        ) ||
+        result.events.length ===
+        0
+    ) {
+
+        eventList.innerHTML = `
+            <div class="market-event-empty">
+                Keine Nasdaq-relevanten Events erkannt.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    eventList.innerHTML =
+        result.events
+            .map(
+                event =>
+                    buildMarketEventHtml(
+                        event
+                    )
+            )
+            .join("");
+
+}
+
+
+/*
+=========================================
+EVENT HTML
+=========================================
+*/
+
+function buildMarketEventHtml(
+    event
+) {
+
+    const impact =
+        String(
+            event.impact ||
+            "low"
+        ).toLowerCase();
+
+
+    const volatility =
+        String(
+            event.volatility ||
+            "LOW"
+        );
+
+
+    const special =
+        event.specialType
+            ? event.specialType
+            : "";
+
+
+    return `
+
+        <div class="market-event market-event-${impact}">
+
+            <div class="market-event-time">
+                ${escapeMarketHtml(
+                    event.time ||
+                    "--"
+                )}
+            </div>
+
+
+            <div class="market-event-content">
+
+                <strong>
+                    ${escapeMarketHtml(
+                        event.title ||
+                        "Event"
+                    )}
+                </strong>
+
+                <span>
+                    ${escapeMarketHtml(
+                        impact.toUpperCase()
+                    )}
+                    ${special ? " · " + escapeMarketHtml(special) : ""}
+                    ·
+                    ${escapeMarketHtml(volatility)}
+                </span>
+
+            </div>
+
+
+            <div class="market-event-risk">
+                ${Number(
+                    event.riskScore ||
+                    0
+                )}
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/*
+=========================================
+ESCAPE
+=========================================
+*/
+
+function escapeMarketHtml(
+    value
+) {
+
+    return String(
+        value ??
+        ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
