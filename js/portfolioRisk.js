@@ -214,9 +214,15 @@ function analyzePortfolioRisk() {
     =====================================
     */
 
+    const activeExposureAccounts =
+        getActivePortfolioExposureCount(
+            tradableGuidance
+        );
+    
+    
     const concentration =
         calculatePortfolioConcentration(
-            tradableAccounts
+            activeExposureAccounts
         );
 
 
@@ -237,7 +243,7 @@ function analyzePortfolioRisk() {
     */
 
     if(
-        tradableAccounts >= 4
+        activeExposureAccounts >= 4
     ) {
 
         score +=
@@ -245,7 +251,7 @@ function analyzePortfolioRisk() {
 
     }
     else if(
-        tradableAccounts === 3
+        activeExposureAccounts === 3
     ) {
 
         score +=
@@ -253,7 +259,7 @@ function analyzePortfolioRisk() {
 
     }
     else if(
-        tradableAccounts === 2
+        activeExposureAccounts === 2
     ) {
 
         score +=
@@ -498,6 +504,8 @@ function analyzePortfolioRisk() {
 
         evaluationAccounts,
 
+        activeExposureAccounts,
+
         tradableAccounts,
 
         pausedAccounts,
@@ -678,7 +686,39 @@ function findWeakestPortfolioAccount(
 
 }
 
+function getActivePortfolioExposureCount(
+    tradableGuidance
+) {
 
+    if(
+        !Array.isArray(
+            tradableGuidance
+        ) ||
+        tradableGuidance.length === 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    /*
+    v1 Default:
+    Noch keine Live-Positionsdaten vorhanden.
+
+    Deshalb behandeln wir zunächst
+    EINEN Account als aktive Exposure.
+
+    Später ersetzen wir das durch:
+    - offene Positionen
+    - Account Selection
+    - Copy Trading Groups
+    - Symbol Exposure
+    */
+
+    return 1;
+
+}
 
 /*
 =========================================
@@ -1350,6 +1390,9 @@ function debugPortfolioRisk() {
 
                 weakest:
                     risk.weakestAccount
+
+                activeExposure:
+                    risk.activeExposureAccounts,
 
             }
         ]
