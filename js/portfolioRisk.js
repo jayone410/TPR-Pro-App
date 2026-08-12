@@ -120,13 +120,14 @@ function analyzePortfolioRisk() {
     DRAWDOWN
     =====================================
     */
-
+    
     const remainingDDValues =
         guidance
             .map(
                 item =>
                     portfolioFiniteNumber(
-                        item.remainingDD
+                        item.drawdown
+                            ?.remaining
                     )
             )
             .filter(
@@ -537,7 +538,8 @@ function analyzePortfolioRisk() {
         weakestAccountDD:
             weakestGuidance
                 ? roundPortfolioMoney(
-                    weakestGuidance.remainingDD
+                    weakestGuidance.drawdown
+                        ?.remaining
                 )
                 : null
 
@@ -632,9 +634,9 @@ function findWeakestPortfolioAccount(
 
                     const dd =
                         portfolioFiniteNumber(
-                            item.remainingDD
+                            item.drawdown
+                                ?.remaining
                         );
-
 
                     return (
                         dd !== null &&
@@ -646,16 +648,18 @@ function findWeakestPortfolioAccount(
             .sort(
                 (a,b) => {
 
-                    const ddA =
-                        portfolioFiniteNumber(
-                            a.remainingDD
-                        ) || 0;
-
-
-                    const ddB =
-                        portfolioFiniteNumber(
-                            b.remainingDD
-                        ) || 0;
+                const ddA =
+                    portfolioFiniteNumber(
+                        a.drawdown
+                            ?.remaining
+                    ) || 0;
+                
+                
+                const ddB =
+                    portfolioFiniteNumber(
+                        b.drawdown
+                            ?.remaining
+                    ) || 0;
 
 
                     return (
