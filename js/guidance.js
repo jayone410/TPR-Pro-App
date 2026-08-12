@@ -3124,7 +3124,5 @@ function debugAccountGuidance() {
     return guidance;
 
 }
-    );
 
-}
 
