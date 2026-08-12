@@ -32,12 +32,29 @@ jobs:
           FROM=$(date -u +"%Y-%m-%d")
           TO=$(date -u -d "+7 days" +"%Y-%m-%d")
 
-          curl \
-            --fail \
+          echo "From: ${FROM}"
+          echo "To: ${TO}"
+
+          HTTP_CODE=$(curl \
             --silent \
             --show-error \
-            "https://financialmodelingprep.com/stable/economic-calendar?from=${FROM}&to=${TO}&apikey=${FMP_API_KEY}" \
-            -o data/economic-calendar.json
+            --output /tmp/fmp-response.json \
+            --write-out "%{http_code}" \
+            "https://financialmodelingprep.com/stable/economic-calendar?from=${FROM}&to=${TO}&apikey=${FMP_API_KEY}")
+
+          echo "HTTP Status: ${HTTP_CODE}"
+
+          echo "API Response:"
+          cat /tmp/fmp-response.json
+
+          echo ""
+
+          if [ "${HTTP_CODE}" -lt 200 ] || [ "${HTTP_CODE}" -ge 300 ]; then
+            echo "FMP request failed."
+            exit 1
+          fi
+
+          cp /tmp/fmp-response.json data/economic-calendar.json
 
 
       - name: Validate JSON
