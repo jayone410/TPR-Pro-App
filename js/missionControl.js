@@ -349,6 +349,9 @@ function buildMissionPriorityCard(
                     )}
                 </div>
 
+                ${buildMissionMarketHtml(
+                    item
+                )}
 
                 <div class="mission-reason">
                     ${escapeMissionHtml(
@@ -517,6 +520,125 @@ function getMissionPriorityIcon(
 METRIC HTML
 =========================================
 */
+
+function buildMissionMarketHtml(
+    item
+) {
+
+    const marketRisk =
+        String(
+            item.marketRisk ||
+            ""
+        ).toUpperCase();
+
+
+    if(
+        !marketRisk ||
+        marketRisk === "LOW"
+    ) {
+
+        return "";
+
+    }
+
+
+    const event =
+        item.marketEvent
+            ? String(
+                item.marketEvent
+            )
+            : null;
+
+
+    const time =
+        item.marketEventTime
+            ? String(
+                item.marketEventTime
+            )
+            : null;
+
+
+    const volatility =
+        item.marketVolatility
+            ? String(
+                item.marketVolatility
+            ).toUpperCase()
+            : null;
+
+
+    const levelClass =
+        marketRisk.toLowerCase();
+
+
+    const textParts =
+        [];
+
+
+    if(event) {
+
+        textParts.push(
+            event
+        );
+
+    }
+
+
+    if(time) {
+
+        textParts.push(
+            time
+        );
+
+    }
+
+
+    if(volatility) {
+
+        textParts.push(
+            volatility
+        );
+
+    }
+
+
+    return `
+
+        <div
+            class="
+                mission-market-row
+                mission-market-${escapeMissionHtml(
+                    levelClass
+                )}
+            "
+        >
+
+            <span class="mission-market-label">
+                MARKET
+            </span>
+
+
+            <strong>
+                ${escapeMissionHtml(
+                    marketRisk
+                )}
+
+                ${
+                    textParts.length
+                        ? " · " +
+                          escapeMissionHtml(
+                              textParts.join(
+                                  " · "
+                              )
+                          )
+                        : ""
+                }
+            </strong>
+
+        </div>
+
+    `;
+
+}
 
 function buildMissionMetricHtml(
     label,
