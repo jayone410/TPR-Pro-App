@@ -1,106 +1,26 @@
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+/*
+=====================================
+MARKET INTELLIGENCE
+=====================================
+*/
 
-        console.log(
-            "TPR PRO AI gestartet"
-        );
+if(
+    typeof loadEconomicCalendar ===
+    "function"
+) {
 
-        console.log(
-            "Accounts:",
-            accounts
-        );
+    loadEconomicCalendar()
+        .then(() => {
 
+            if(
+                typeof renderMarketIntelligence ===
+                "function"
+            ) {
 
-        /*
-        =====================================
-        ACCOUNT MANAGER
-        =====================================
-        */
+                renderMarketIntelligence();
 
-        initAccountManager();
+            }
 
+        });
 
-        /*
-        =====================================
-        PORTFOLIO OVERVIEW
-        =====================================
-        */
-
-        if(
-            typeof renderPortfolioOverview ===
-            "function"
-        ) {
-
-            renderPortfolioOverview();
-
-        }
-
-
-        /*
-        =====================================
-        MISSION CONTROL
-        =====================================
-        */
-
-        if(
-            typeof renderMissionControl ===
-            "function"
-        ) {
-
-            renderMissionControl();
-
-        }
-
-
-        /*
-        =====================================
-        MARKET INTELLIGENCE
-        =====================================
-        */
-
-        if(
-            typeof renderMarketIntelligence ===
-            "function"
-        ) {
-
-            renderMarketIntelligence();
-
-        }
-
-
-        /*
-        =====================================
-        CSV IMPORT
-        =====================================
-        */
-
-        initCsvImport();
-
-
-        /*
-        =====================================
-        DASHBOARD LAYOUT
-        =====================================
-        */
-
-        initDashboardLayout();
-
-
-        /*
-        =====================================
-        PORTFOLIO
-        =====================================
-        */
-
-        if(
-            typeof renderPortfolio ===
-            "function"
-        ) {
-
-            renderPortfolio();
-
-        }
-
-    }
-);
+}
