@@ -2494,7 +2494,12 @@ function formatGuidanceMoney(
             maximumFractionDigits:
                 2
 
-        }/*
+        }
+    );
+
+}   
+
+/*
 =========================================
 RESULT BUILDER
 =========================================
