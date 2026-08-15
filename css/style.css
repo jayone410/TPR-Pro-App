@@ -4179,3 +4179,74 @@ RESPONSIVE
     }
 
 }
+
+/* ========================================
+   PERFORMANCE INSIGHTS - FINAL GRID
+======================================== */
+
+#performanceInsights {
+    display: grid !important;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr)) !important;
+
+    gap: 14px !important;
+
+    width: 100% !important;
+
+    margin-top: 24px;
+}
+
+
+#performanceInsights .performance-insight-card {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    padding: 18px 20px;
+
+    box-sizing: border-box;
+}
+
+
+#performanceInsights .performance-insight-value {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+
+#performanceInsights .performance-insight-meta {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+
+    margin-top: 8px;
+
+    line-height: 1.4;
+}
+
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+
+    #performanceInsights {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr)) !important;
+    }
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    #performanceInsights {
+        grid-template-columns:
+            1fr !important;
+    }
+
+}
