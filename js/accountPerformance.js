@@ -188,7 +188,236 @@ function renderAccountPerformance() {
         "Gross W / Gross L"
     );
 
-
+    /*
+    =====================================
+    PERFORMANCE INSIGHTS
+    =====================================
+    */
+    
+    
+    /*
+    BEST / WORST DAY
+    */
+    
+    if(
+        insights.bestDay
+    ) {
+    
+        setPerformanceText(
+            "performanceBestDay",
+            `Best · ${insights.bestDay.name}`
+        );
+    
+    
+        setPerformanceValue(
+            "performanceBestDay",
+            `Best · ${insights.bestDay.name}`,
+            insights.bestDay.pnl
+        );
+    
+    
+        setPerformanceText(
+            "performanceWorstDay",
+            `Worst · ${insights.worstDay.name} · ${formatPerformanceMoney(
+                insights.worstDay.pnl
+            )}`
+        );
+    
+    }
+    else {
+    
+        setPerformanceText(
+            "performanceBestDay",
+            "--"
+        );
+    
+    
+        setPerformanceText(
+            "performanceWorstDay",
+            "--"
+        );
+    
+    }
+    
+    
+    /*
+    BEST SESSION
+    */
+    
+    if(
+        insights.bestSession
+    ) {
+    
+        setPerformanceText(
+            "performanceBestSession",
+            insights.bestSession.name
+        );
+    
+    
+        setPerformanceText(
+            "performanceBestSessionMeta",
+            `${formatPerformanceMoney(
+                insights.bestSession.pnl
+            )} · ${insights.bestSession.trades} Trades`
+        );
+    
+    }
+    else {
+    
+        setPerformanceText(
+            "performanceBestSession",
+            "--"
+        );
+    
+    
+        setPerformanceText(
+            "performanceBestSessionMeta",
+            "--"
+        );
+    
+    }
+    
+    
+    /*
+    WORST SESSION
+    */
+    
+    if(
+        insights.worstSession
+    ) {
+    
+        setPerformanceText(
+            "performanceWorstSession",
+            insights.worstSession.name
+        );
+    
+    
+        setPerformanceText(
+            "performanceWorstSessionMeta",
+            `${formatPerformanceMoney(
+                insights.worstSession.pnl
+            )} · ${insights.worstSession.trades} Trades`
+        );
+    
+    }
+    else {
+    
+        setPerformanceText(
+            "performanceWorstSession",
+            "--"
+        );
+    
+    
+        setPerformanceText(
+            "performanceWorstSessionMeta",
+            "--"
+        );
+    
+    }
+    
+    
+    /*
+    BEST HOUR
+    */
+    
+    if(
+        insights.bestHour
+    ) {
+    
+        setPerformanceText(
+            "performanceBestHour",
+            insights.bestHour.name
+        );
+    
+    
+        setPerformanceText(
+            "performanceBestHourMeta",
+            `${formatPerformanceMoney(
+                insights.bestHour.pnl
+            )} · ${insights.bestHour.trades} Trades`
+        );
+    
+    }
+    else {
+    
+        setPerformanceText(
+            "performanceBestHour",
+            "--"
+        );
+    
+    
+        setPerformanceText(
+            "performanceBestHourMeta",
+            "--"
+        );
+    
+    }
+    
+    
+    /*
+    AVG HOLD
+    */
+    
+    setPerformanceText(
+        "performanceAvgHold",
+        formatPerformanceDuration(
+            insights.avgHoldSeconds
+        )
+    );
+    
+    
+    setPerformanceText(
+        "performanceAvgHoldMeta",
+        insights.holdTradeCount > 0
+            ? `across ${insights.holdTradeCount} Trades`
+            : "--"
+    );
+    
+    
+    /*
+    P&L BY FIRM
+    */
+    
+    if(
+        insights.bestFirm
+    ) {
+    
+        setPerformanceText(
+            "performanceBestFirm",
+            `Best · ${insights.bestFirm.name}`
+        );
+    
+    
+        if(
+            insights.worstFirm
+        ) {
+    
+            setPerformanceText(
+                "performanceWorstFirm",
+                `Worst · ${insights.worstFirm.name} · ${formatPerformanceMoney(
+                    insights.worstFirm.pnl
+                )}`
+            );
+    
+        }
+    
+    }
+    else {
+    
+        setPerformanceText(
+            "performanceBestFirm",
+            "--"
+        );
+    
+    
+        setPerformanceText(
+            "performanceWorstFirm",
+            "--"
+        );
+    
+    }
+    
+    
     updateAccountPerformancePeriodLabel();
 
 }
@@ -334,23 +563,28 @@ function normalizePerformanceTrade(
 
 
     return {
-
+    
         accountId:
             account.id,
-
+    
         accountName:
             account.accountName,
-
+    
         provider:
             account.provider,
-
+    
         pnl,
-
+    
         date,
-
+    
+        durationSeconds:
+            getPerformanceTradeDurationSeconds(
+                trade
+            ),
+    
         raw:
             trade
-
+    
     };
 
 }
@@ -475,6 +709,238 @@ function getPerformanceTradeDate(
 
 }
 
+/*
+=========================================
+TRADE DURATION
+=========================================
+*/
+
+function getPerformanceTradeDurationSeconds(
+    trade
+) {
+
+    if(!trade) {
+
+        return null;
+
+    }
+
+
+    /*
+    =====================================
+    DIREKTE DURATION
+    Beispiele:
+    11min 20sec
+    32sec
+    1min 41sec
+    =====================================
+    */
+
+    if(
+        trade.duration !==
+        undefined &&
+        trade.duration !==
+        null
+    ) {
+
+        const text =
+            String(
+                trade.duration
+            ).toLowerCase();
+
+
+        let seconds =
+            0;
+
+
+        const hourMatch =
+            text.match(
+                /(\d+)\s*h/
+            );
+
+
+        const minuteMatch =
+            text.match(
+                /(\d+)\s*min/
+            );
+
+
+        const secondMatch =
+            text.match(
+                /(\d+)\s*sec/
+            );
+
+
+        if(hourMatch) {
+
+            seconds +=
+                Number(
+                    hourMatch[1]
+                ) * 3600;
+
+        }
+
+
+        if(minuteMatch) {
+
+            seconds +=
+                Number(
+                    minuteMatch[1]
+                ) * 60;
+
+        }
+
+
+        if(secondMatch) {
+
+            seconds +=
+                Number(
+                    secondMatch[1]
+                );
+
+        }
+
+
+        if(seconds > 0) {
+
+            return seconds;
+
+        }
+
+    }
+
+
+    /*
+    =====================================
+    FALLBACK:
+    ENTRY / EXIT ZEIT
+    =====================================
+    */
+
+    const entry =
+        getPerformanceTimestamp(
+            trade.boughtTimestamp ??
+            trade.entryTimestamp ??
+            trade.entryTime ??
+            trade.openedAt
+        );
+
+
+    const exit =
+        getPerformanceTimestamp(
+            trade.soldTimestamp ??
+            trade.exitTimestamp ??
+            trade.exitTime ??
+            trade.closedAt
+        );
+
+
+    if(
+        entry &&
+        exit
+    ) {
+
+        return Math.abs(
+            Math.round(
+                (
+                    exit.getTime() -
+                    entry.getTime()
+                ) / 1000
+            )
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+
+/*
+=========================================
+TIMESTAMP PARSER
+=========================================
+*/
+
+function getPerformanceTimestamp(
+    value
+) {
+
+    if(!value) {
+
+        return null;
+
+    }
+
+
+    const text =
+        String(
+            value
+        ).trim();
+
+
+    const usMatch =
+        text.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/
+        );
+
+
+    if(usMatch) {
+
+        const date =
+            new Date(
+
+                Number(
+                    usMatch[3]
+                ),
+
+                Number(
+                    usMatch[1]
+                ) - 1,
+
+                Number(
+                    usMatch[2]
+                ),
+
+                Number(
+                    usMatch[4] || 0
+                ),
+
+                Number(
+                    usMatch[5] || 0
+                ),
+
+                Number(
+                    usMatch[6] || 0
+                )
+
+            );
+
+
+        return Number.isNaN(
+            date.getTime()
+        )
+            ? null
+            : date;
+
+    }
+
+
+    const parsed =
+        new Date(
+            text
+        );
+
+
+    return Number.isNaN(
+        parsed.getTime()
+    )
+        ? null
+        : parsed;
+
+}
 
 /*
 =========================================
@@ -1072,6 +1538,742 @@ function calculateAccountPerformanceStats(
 
 }
 
+/*
+=========================================
+PERFORMANCE INSIGHTS
+=========================================
+*/
+
+function calculateAccountPerformanceInsights(
+    trades
+) {
+
+    const source =
+        Array.isArray(
+            trades
+        )
+            ? trades
+            : [];
+
+
+    if(
+        source.length ===
+        0
+    ) {
+
+        return buildEmptyPerformanceInsights();
+
+    }
+
+
+    const byWeekday =
+        {};
+
+
+    const bySession =
+        {};
+
+
+    const byHour =
+        {};
+
+
+    const byFirm =
+        {};
+
+
+    const durations =
+        [];
+
+
+    source.forEach(
+        trade => {
+
+            const pnl =
+                Number(
+                    trade.pnl
+                ) || 0;
+
+
+            /*
+            =================================
+            WEEKDAY
+            =================================
+            */
+
+            const weekday =
+                new Intl.DateTimeFormat(
+                    "en-US",
+                    {
+                        timeZone:
+                            "Europe/Berlin",
+
+                        weekday:
+                            "long"
+                    }
+                ).format(
+                    trade.date
+                );
+
+
+            addPerformanceGroupValue(
+                byWeekday,
+                weekday,
+                pnl
+            );
+
+
+            /*
+            =================================
+            SESSION
+            =================================
+            */
+
+            const session =
+                getPerformanceSession(
+                    trade.date
+                );
+
+
+            addPerformanceGroupValue(
+                bySession,
+                session,
+                pnl
+            );
+
+
+            /*
+            =================================
+            HOUR
+            =================================
+            */
+
+            const hour =
+                getPerformanceBerlinHour(
+                    trade.date
+                );
+
+
+            const hourLabel =
+                `${String(hour).padStart(
+                    2,
+                    "0"
+                )}:00–${String(
+                    (hour + 1) % 24
+                ).padStart(
+                    2,
+                    "0"
+                )}:00`;
+
+
+            addPerformanceGroupValue(
+                byHour,
+                hourLabel,
+                pnl
+            );
+
+
+            /*
+            =================================
+            FIRM
+            =================================
+            */
+
+            const firm =
+                String(
+                    trade.provider ||
+                    "UNKNOWN"
+                ).toUpperCase();
+
+
+            addPerformanceGroupValue(
+                byFirm,
+                firm,
+                pnl
+            );
+
+
+            /*
+            =================================
+            HOLD TIME
+            =================================
+            */
+
+            if(
+                Number.isFinite(
+                    trade.durationSeconds
+                ) &&
+                trade.durationSeconds >= 0
+            ) {
+
+                durations.push(
+                    trade.durationSeconds
+                );
+
+            }
+
+        }
+    );
+
+
+    const bestDay =
+        getBestPerformanceGroup(
+            byWeekday
+        );
+
+
+    const worstDay =
+        getWorstPerformanceGroup(
+            byWeekday
+        );
+
+
+    const bestSession =
+        getBestPerformanceGroup(
+            bySession
+        );
+
+
+    const worstSession =
+        getWorstPerformanceGroup(
+            bySession
+        );
+
+
+    const bestHour =
+        getBestPerformanceGroup(
+            byHour
+        );
+
+
+    const bestFirm =
+        getBestPerformanceGroup(
+            byFirm
+        );
+
+
+    const worstFirm =
+        getWorstPerformanceGroup(
+            byFirm
+        );
+
+
+    const avgHoldSeconds =
+        durations.length > 0
+
+            ? durations.reduce(
+                (sum, value) =>
+                    sum + value,
+                0
+            ) /
+            durations.length
+
+            : null;
+
+
+    return {
+
+        bestDay,
+
+        worstDay,
+
+        bestSession,
+
+        worstSession,
+
+        bestHour,
+
+        avgHoldSeconds,
+
+        holdTradeCount:
+            durations.length,
+
+        bestFirm,
+
+        worstFirm,
+
+        byWeekday,
+
+        bySession,
+
+        byHour,
+
+        byFirm
+
+    };
+
+}
+
+/*
+=========================================
+GROUP VALUE
+=========================================
+*/
+
+function addPerformanceGroupValue(
+    target,
+    key,
+    pnl
+) {
+
+    if(
+        !target[key]
+    ) {
+
+        target[key] = {
+
+            pnl:
+                0,
+
+            trades:
+                0
+
+        };
+
+    }
+
+
+    target[key].pnl +=
+        Number(
+            pnl
+        ) || 0;
+
+
+    target[key].trades++;
+
+}
+
+
+
+/*
+=========================================
+BEST GROUP
+=========================================
+*/
+
+function getBestPerformanceGroup(
+    groups
+) {
+
+    const entries =
+        Object.entries(
+            groups || {}
+        );
+
+
+    if(
+        entries.length ===
+        0
+    ) {
+
+        return null;
+
+    }
+
+
+    const [
+        name,
+        data
+    ] =
+        entries.sort(
+            (a,b) =>
+                b[1].pnl -
+                a[1].pnl
+        )[0];
+
+
+    return {
+
+        name,
+
+        pnl:
+            data.pnl,
+
+        trades:
+            data.trades
+
+    };
+
+}
+
+
+
+/*
+=========================================
+WORST GROUP
+=========================================
+*/
+
+function getWorstPerformanceGroup(
+    groups
+) {
+
+    const entries =
+        Object.entries(
+            groups || {}
+        );
+
+
+    if(
+        entries.length ===
+        0
+    ) {
+
+        return null;
+
+    }
+
+
+    const [
+        name,
+        data
+    ] =
+        entries.sort(
+            (a,b) =>
+                a[1].pnl -
+                b[1].pnl
+        )[0];
+
+
+    return {
+
+        name,
+
+        pnl:
+            data.pnl,
+
+        trades:
+            data.trades
+
+    };
+
+}
+
+
+
+/*
+=========================================
+BERLIN HOUR
+=========================================
+*/
+
+function getPerformanceBerlinHour(
+    date
+) {
+
+    const value =
+        new Intl.DateTimeFormat(
+            "en-GB",
+            {
+
+                timeZone:
+                    "Europe/Berlin",
+
+                hour:
+                    "2-digit",
+
+                hour12:
+                    false
+
+            }
+        ).format(
+            date
+        );
+
+
+    return Number(
+        value
+    );
+
+}
+
+
+
+/*
+=========================================
+TRADING SESSION
+=========================================
+
+Zeiten in Berlin-Zeit.
+
+ASIA
+00:00 – 08:00
+
+LONDON
+08:00 – 15:30
+
+NY OPEN
+15:30 – 16:15
+
+PM SESSION
+16:15 – 22:00
+
+LATE
+22:00 – 00:00
+=========================================
+*/
+
+function getPerformanceSession(
+    date
+) {
+
+    const formatter =
+        new Intl.DateTimeFormat(
+            "en-GB",
+            {
+
+                timeZone:
+                    "Europe/Berlin",
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit",
+
+                hour12:
+                    false
+
+            }
+        );
+
+
+    const parts =
+        formatter
+            .formatToParts(
+                date
+            );
+
+
+    let hour =
+        0;
+
+
+    let minute =
+        0;
+
+
+    parts.forEach(
+        part => {
+
+            if(
+                part.type ===
+                "hour"
+            ) {
+
+                hour =
+                    Number(
+                        part.value
+                    );
+
+            }
+
+
+            if(
+                part.type ===
+                "minute"
+            ) {
+
+                minute =
+                    Number(
+                        part.value
+                    );
+
+            }
+
+        }
+    );
+
+
+    const minutes =
+        (
+            hour *
+            60
+        ) +
+        minute;
+
+
+    if(
+        minutes <
+        8 * 60
+    ) {
+
+        return "ASIA";
+
+    }
+
+
+    if(
+        minutes <
+        (
+            15 * 60 +
+            30
+        )
+    ) {
+
+        return "LONDON";
+
+    }
+
+
+    if(
+        minutes <
+        (
+            16 * 60 +
+            15
+        )
+    ) {
+
+        return "NY OPEN";
+
+    }
+
+
+    if(
+        minutes <
+        22 * 60
+    ) {
+
+        return "PM SESSION";
+
+    }
+
+
+    return "LATE";
+
+}
+
+
+
+/*
+=========================================
+FORMAT HOLD TIME
+=========================================
+*/
+
+function formatPerformanceDuration(
+    seconds
+) {
+
+    if(
+        seconds === null ||
+        !Number.isFinite(
+            seconds
+        )
+    ) {
+
+        return "--";
+
+    }
+
+
+    const total =
+        Math.max(
+            0,
+            Math.round(
+                seconds
+            )
+        );
+
+
+    const hours =
+        Math.floor(
+            total /
+            3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (
+                total %
+                3600
+            ) /
+            60
+        );
+
+
+    const secs =
+        total %
+        60;
+
+
+    if(
+        hours > 0
+    ) {
+
+        return `${hours}h ${minutes}m`;
+
+    }
+
+
+    if(
+        minutes > 0
+    ) {
+
+        return `${minutes}m ${secs}s`;
+
+    }
+
+
+    return `${secs}s`;
+
+}
+
+
+
+/*
+=========================================
+EMPTY INSIGHTS
+=========================================
+*/
+
+function buildEmptyPerformanceInsights() {
+
+    return {
+
+        bestDay:
+            null,
+
+        worstDay:
+            null,
+
+        bestSession:
+            null,
+
+        worstSession:
+            null,
+
+        bestHour:
+            null,
+
+        avgHoldSeconds:
+            null,
+
+        holdTradeCount:
+            0,
+
+        bestFirm:
+            null,
+
+        worstFirm:
+            null,
+
+        byWeekday:
+            {},
+
+        bySession:
+            {},
+
+        byHour:
+            {},
+
+        byFirm:
+            {}
+
+    };
+
+}
 
 /*
 =========================================
@@ -1536,14 +2738,30 @@ function debugAccountPerformance() {
             trades
         );
 
+    const insights =
+    calculateAccountPerformanceInsights(
+        trades
+    );
+
+   const insights =
+    calculateAccountPerformanceInsights(
+        trades
+    );
+
 
     console.log(
         "TPR ACCOUNT PERFORMANCE",
         {
+    
             state:
                 accountPerformanceState,
+    
             trades,
-            stats
+    
+            stats,
+    
+            insights
+    
         }
     );
 
@@ -1584,6 +2802,36 @@ function debugAccountPerformance() {
 
                 avgLoss:
                     stats.avgLoss,
+
+                bestDay:
+                    insights.bestDay
+                        ?.name ||
+                    "--",
+                
+                bestSession:
+                    insights.bestSession
+                        ?.name ||
+                    "--",
+                
+                worstSession:
+                    insights.worstSession
+                        ?.name ||
+                    "--",
+                
+                bestHour:
+                    insights.bestHour
+                        ?.name ||
+                    "--",
+                
+                avgHold:
+                    formatPerformanceDuration(
+                        insights.avgHoldSeconds
+                    ),
+                
+                bestFirm:
+                    insights.bestFirm
+                        ?.name ||
+                    "--",
 
                 profitFactor:
                     stats.profitFactor
