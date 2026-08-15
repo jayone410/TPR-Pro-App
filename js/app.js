@@ -43,6 +43,20 @@ document.addEventListener(
 
         }
 
+        /*
+        =====================================
+        ACCOUNT PERFORMANCE
+        =====================================
+        */
+        
+        if(
+            typeof initAccountPerformance ===
+            "function"
+        ) {
+        
+            initAccountPerformance();
+        
+        }
 
         /*
         =====================================
@@ -219,11 +233,11 @@ document.addEventListener(
         */
 
         if(
-            typeof renderAccounts ===
+            typeof  ===
             "function"
         ) {
 
-            renderAccounts();
+            ();
 
         }
 
