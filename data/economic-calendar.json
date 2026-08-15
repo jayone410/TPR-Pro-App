@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-08-15",
+    "release_id": 280,
+    "release_name": "Cass Freight Index Report"
+  },
+  {
+    "date": "2026-08-15",
     "release_id": 101,
     "release_name": "FOMC Press Release"
   },
