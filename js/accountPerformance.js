@@ -57,6 +57,11 @@ function renderAccountPerformance() {
             trades
         );
 
+    const insights =
+    calculateAccountPerformanceInsights(
+        trades
+    );
+
 
     setPerformanceValue(
         "performanceNetPnl",
@@ -2742,12 +2747,6 @@ function debugAccountPerformance() {
     calculateAccountPerformanceInsights(
         trades
     );
-
-   const insights =
-    calculateAccountPerformanceInsights(
-        trades
-    );
-
 
     console.log(
         "TPR ACCOUNT PERFORMANCE",
