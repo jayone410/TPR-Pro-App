@@ -43,20 +43,22 @@ document.addEventListener(
 
         }
 
+
         /*
         =====================================
         ACCOUNT PERFORMANCE
         =====================================
         */
-        
+
         if(
             typeof initAccountPerformance ===
             "function"
         ) {
-        
+
             initAccountPerformance();
-        
+
         }
+
 
         /*
         =====================================
@@ -114,20 +116,22 @@ document.addEventListener(
                     }
 
 
-                    /*
-                    Nach geladenen Marktdaten
-                    Mission Control erneut rendern.
-
-                    Später kann Market Risk direkt
-                    in die Account Guidance einfließen.
-                    */
-
                     if(
                         typeof renderMissionControl ===
                         "function"
                     ) {
 
                         renderMissionControl();
+
+                    }
+
+
+                    if(
+                        typeof renderAccountPerformance ===
+                        "function"
+                    ) {
+
+                        renderAccountPerformance();
 
                     }
 
@@ -140,11 +144,6 @@ document.addEventListener(
                             error
                         );
 
-
-                        /*
-                        Auch bei API-/JSON-Fehler
-                        den Market-Block rendern.
-                        */
 
                         if(
                             typeof renderMarketIntelligence ===
@@ -161,10 +160,6 @@ document.addEventListener(
         }
 
         else {
-
-            /*
-            Fallback ohne Calendar Loader
-            */
 
             if(
                 typeof renderMarketIntelligence ===
@@ -233,11 +228,11 @@ document.addEventListener(
         */
 
         if(
-            typeof  ===
+            typeof renderAccounts ===
             "function"
         ) {
 
-            ();
+            renderAccounts();
 
         }
 
@@ -258,6 +253,26 @@ document.addEventListener(
         ) {
 
             renderMissionControl();
+
+        }
+
+
+        if(
+            typeof renderAccountPerformanceTabs ===
+            "function"
+        ) {
+
+            renderAccountPerformanceTabs();
+
+        }
+
+
+        if(
+            typeof renderAccountPerformance ===
+            "function"
+        ) {
+
+            renderAccountPerformance();
 
         }
 
