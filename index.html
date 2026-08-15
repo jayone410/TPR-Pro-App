@@ -559,6 +559,236 @@
         </section>            
 
         <!-- =====================================
+             ACCOUNT PERFORMANCE CENTER
+        ====================================== -->
+        
+        <section
+            id="accountPerformanceCenter"
+            class="account-performance-center full-width"
+        >
+        
+            <div class="performance-toolbar">
+        
+                <div class="performance-period-buttons">
+        
+                    <button
+                        data-performance-period="today"
+                    >
+                        Today
+                    </button>
+        
+                    <button
+                        class="active"
+                        data-performance-period="thisWeek"
+                    >
+                        This Week
+                    </button>
+        
+                    <button
+                        data-performance-period="thisMonth"
+                    >
+                        This Month
+                    </button>
+        
+                    <button
+                        data-performance-period="lastMonth"
+                    >
+                        Last Month
+                    </button>
+        
+                    <button
+                        data-performance-period="thisYear"
+                    >
+                        This Year
+                    </button>
+        
+                    <button
+                        data-performance-period="allTime"
+                    >
+                        All Time
+                    </button>
+        
+                </div>
+        
+        
+                <div
+                    id="performancePeriodLabel"
+                    class="performance-period-label"
+                >
+                    This Week
+                </div>
+        
+            </div>
+        
+        
+            <div
+                id="performanceAccountTabs"
+                class="performance-account-tabs"
+            >
+            </div>
+        
+        
+            <div class="performance-section-header">
+        
+                <div>
+        
+                    <div class="mission-eyebrow">
+                        ACCOUNT PERFORMANCE
+                    </div>
+        
+                    <h2>
+                        Performance Overview
+                    </h2>
+        
+                </div>
+        
+            </div>
+        
+        
+            <div class="performance-kpi-grid">
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        NET P&L
+                    </span>
+        
+                    <strong id="performanceNetPnl">
+                        $0.00
+                    </strong>
+        
+                    <small id="performanceTradeCount">
+                        0 Trades
+                    </small>
+        
+                </div>
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        TODAY
+                    </span>
+        
+                    <strong id="performanceTodayPnl">
+                        $0.00
+                    </strong>
+        
+                    <small id="performanceTodayTrades">
+                        0 Trades
+                    </small>
+        
+                </div>
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        YESTERDAY
+                    </span>
+        
+                    <strong id="performanceYesterdayPnl">
+                        $0.00
+                    </strong>
+        
+                    <small id="performanceYesterdayTrades">
+                        0 Trades
+                    </small>
+        
+                </div>
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        CHANGE
+                    </span>
+        
+                    <strong id="performanceChange">
+                        $0.00
+                    </strong>
+        
+                    <small id="performanceChangePercent">
+                        --
+                    </small>
+        
+                </div>
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        WIN RATE
+                    </span>
+        
+                    <strong id="performanceWinRate">
+                        0.0%
+                    </strong>
+        
+                    <small id="performanceWinRateDetail">
+                        0W · 0L
+                    </small>
+        
+                </div>
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        CONSISTENCY
+                    </span>
+        
+                    <strong id="performanceConsistency">
+                        N/A
+                    </strong>
+        
+                    <small id="performanceConsistencyDetail">
+                        --
+                    </small>
+        
+                </div>
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        AVG WIN / LOSS
+                    </span>
+        
+                    <strong id="performanceAvgWinLoss">
+                        $0 / $0
+                    </strong>
+        
+                    <small id="performanceAvgWinLossDetail">
+                        --
+                    </small>
+        
+                </div>
+        
+        
+                <div class="performance-kpi-card">
+        
+                    <span class="performance-kpi-label">
+                        PROFIT FACTOR
+                    </span>
+        
+                    <strong id="performanceProfitFactor">
+                        0.00
+                    </strong>
+        
+                    <small id="performanceProfitFactorDetail">
+                        Gross W / Gross L
+                    </small>
+        
+                </div>
+        
+        
+            </div>
+        
+        </section>
+        
+        <!-- =====================================
              ACCOUNT MANAGER
         ====================================== -->
 
@@ -1205,6 +1435,7 @@
 
 <script src="js/analytics.js?v=10"></script>
 
+<script src="js/accountPerformance.js?v=1"></script>
 
 
 <!-- =====================================
