@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-08-17",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -36,6 +41,16 @@
   },
   {
     "date": "2026-08-17",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
   },
@@ -46,6 +61,11 @@
   },
   {
     "date": "2026-08-17",
+    "release_id": 317,
+    "release_name": "National Rates and Rate Caps - Monthly Update"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
   },
@@ -53,6 +73,11 @@
     "date": "2026-08-17",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 365,
+    "release_name": "Primary Commodity Prices"
   },
   {
     "date": "2026-08-17",
@@ -81,6 +106,11 @@
   },
   {
     "date": "2026-08-17",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
   },
@@ -93,11 +123,6 @@
     "date": "2026-08-17",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
   },
   {
     "date": "2026-08-17",
@@ -136,23 +161,13 @@
   },
   {
     "date": "2026-08-17",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+    "release_id": 205,
+    "release_name": "Main Economic Indicators"
   },
   {
     "date": "2026-08-17",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 317,
-    "release_name": "National Rates and Rate Caps - Monthly Update"
   },
   {
     "date": "2026-08-17",
@@ -168,11 +183,6 @@
     "date": "2026-08-17",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-08-17",
