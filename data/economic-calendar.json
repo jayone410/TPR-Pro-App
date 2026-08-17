@@ -1,6 +1,16 @@
 [
   {
     "date": "2026-08-17",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 200,
     "release_name": "CBOE Market Statistics"
   },
@@ -33,11 +43,6 @@
     "date": "2026-08-17",
     "release_id": 321,
     "release_name": "Empire State Manufacturing Survey"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-08-17",
@@ -148,11 +153,6 @@
     "date": "2026-08-17",
     "release_id": 483,
     "release_name": "SOFR Averages and Index Data"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
   },
   {
     "date": "2026-08-17",
