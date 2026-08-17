@@ -41,6 +41,11 @@
   },
   {
     "date": "2026-08-17",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
   },
@@ -138,11 +143,6 @@
     "date": "2026-08-17",
     "release_id": 739,
     "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-08-17",
