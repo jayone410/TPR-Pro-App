@@ -1,13 +1,83 @@
 [
   {
     "date": "2026-08-17",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 321,
+    "release_name": "Empire State Manufacturing Survey"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-08-17",
+    "release_id": 378,
+    "release_name": "Federal Funds Data"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 504,
+    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 239,
+    "release_name": "International Financial Statistics"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 287,
+    "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 375,
+    "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 445,
+    "release_name": "Secured Overnight Financing Rate Data"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 483,
+    "release_name": "SOFR Averages and Index Data"
+  },
+  {
+    "date": "2026-08-17",
     "release_id": 492,
     "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 469,
+    "release_name": "State Unemployment Insurance Weekly Claims Report"
+  },
+  {
+    "date": "2026-08-17",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
   },
   {
     "date": "2026-08-17",
@@ -36,26 +106,6 @@
   },
   {
     "date": "2026-08-17",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 321,
-    "release_name": "Empire State Manufacturing Survey"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 378,
-    "release_name": "Federal Funds Data"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-08-17",
     "release_id": 17,
     "release_name": "H.10 Foreign Exchange Rates"
   },
@@ -63,11 +113,6 @@
     "date": "2026-08-17",
     "release_id": 18,
     "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 504,
-    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-08-17",
@@ -86,11 +131,6 @@
   },
   {
     "date": "2026-08-17",
-    "release_id": 239,
-    "release_name": "International Financial Statistics"
-  },
-  {
-    "date": "2026-08-17",
     "release_id": 4,
     "release_name": "Kansas City Fed Policy Rate Skew"
   },
@@ -98,11 +138,6 @@
     "date": "2026-08-17",
     "release_id": 739,
     "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
   },
   {
     "date": "2026-08-17",
@@ -121,38 +156,13 @@
   },
   {
     "date": "2026-08-17",
-    "release_id": 287,
-    "release_name": "Nikkei Indexes"
-  },
-  {
-    "date": "2026-08-17",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
   },
   {
     "date": "2026-08-17",
-    "release_id": 375,
-    "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-08-17",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 445,
-    "release_name": "Secured Overnight Financing Rate Data"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 483,
-    "release_name": "SOFR Averages and Index Data"
   },
   {
     "date": "2026-08-17",
@@ -168,11 +178,6 @@
     "date": "2026-08-17",
     "release_id": 3,
     "release_name": "Treasury International Capital: Continuous Securities Long Term (CSLT)"
-  },
-  {
-    "date": "2026-08-17",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
   },
   {
     "date": "2026-08-18",
