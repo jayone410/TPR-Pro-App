@@ -36,6 +36,11 @@
   },
   {
     "date": "2026-08-18",
+    "release_id": 386,
+    "release_name": "GDPNow"
+  },
+  {
+    "date": "2026-08-18",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
@@ -43,6 +48,11 @@
     "date": "2026-08-18",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-08-18",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-08-18",
@@ -58,6 +68,11 @@
     "date": "2026-08-18",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-18",
+    "release_id": 179,
+    "release_name": "Quarterly Retail E-Commerce Sales"
   },
   {
     "date": "2026-08-18",
@@ -116,11 +131,6 @@
   },
   {
     "date": "2026-08-18",
-    "release_id": 386,
-    "release_name": "GDPNow"
-  },
-  {
-    "date": "2026-08-18",
     "release_id": 18,
     "release_name": "H.15 Selected Interest Rates"
   },
@@ -151,11 +161,6 @@
   },
   {
     "date": "2026-08-18",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
-  },
-  {
-    "date": "2026-08-18",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
   },
@@ -163,11 +168,6 @@
     "date": "2026-08-18",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-08-18",
-    "release_id": 179,
-    "release_name": "Quarterly Retail E-Commerce Sales"
   },
   {
     "date": "2026-08-18",
