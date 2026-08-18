@@ -51,8 +51,23 @@
   },
   {
     "date": "2026-08-18",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-08-18",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-08-18",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-08-18",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-08-18",
@@ -156,23 +171,8 @@
   },
   {
     "date": "2026-08-18",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-08-18",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-08-18",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-08-18",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-08-18",
@@ -193,11 +193,6 @@
     "date": "2026-08-18",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-08-18",
-    "release_id": 234,
-    "release_name": "World Development Indicators"
   },
   {
     "date": "2026-08-19",
