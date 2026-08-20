@@ -1,6 +1,21 @@
 [
   {
     "date": "2026-08-20",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-08-20",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-08-20",
+    "release_id": 503,
+    "release_name": "Zillow Home Value Index (ZHVI)"
+  },
+  {
+    "date": "2026-08-20",
     "release_id": 742,
     "release_name": "Bankrate Monitor (BRM) National Index"
   },
@@ -38,11 +53,6 @@
     "date": "2026-08-20",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-08-20",
@@ -171,11 +181,6 @@
   },
   {
     "date": "2026-08-20",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
-  },
-  {
-    "date": "2026-08-20",
     "release_id": 189,
     "release_name": "Standard & Poors"
   },
@@ -198,11 +203,6 @@
     "date": "2026-08-20",
     "release_id": 465,
     "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 503,
-    "release_name": "Zillow Home Value Index (ZHVI)"
   },
   {
     "date": "2026-08-21",
