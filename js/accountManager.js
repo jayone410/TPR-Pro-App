@@ -362,11 +362,18 @@ function initAccountManager() {
                 "click",
                 () => {
 
-                    selectedAccountIds =
-                        accounts.map(
-                            account =>
-                                account.id
-                        );
+        selectedAccountIds =
+            accounts
+                .filter(
+                    account =>
+                        isAccountActive(
+                            account
+                        )
+                )
+                .map(
+                    account =>
+                        account.id
+                );
 
 
                     saveSelectedAccountIds(
@@ -860,72 +867,6 @@ function getAccountLifecycleClass(
 
 }
 
-/*
-=========================================
-ACCOUNT TABELLE
-=========================================
-*/
-
-function renderAccounts() {
-
-    const accountList =
-        document.getElementById(
-            "accountList"
-        );
-
-
-    const selectedAccountCount =
-        document.getElementById(
-            "selectedAccountCount"
-        );
-
-
-    if(!accountList) {
-
-        return;
-
-    }
-
-
-    accountList.innerHTML =
-        "";
-
-
-    /*
-    =====================================
-    KEINE ACCOUNTS
-    =====================================
-    */
-
-    if(accounts.length === 0) {
-
-        accountList.innerHTML = `
-
-            <tr>
-
-                <td colspan="10">
-
-                    Noch keine Accounts angelegt.
-
-                </td>
-
-            </tr>
-
-        `;
-
-
-        if(selectedAccountCount) {
-
-            selectedAccountCount.textContent =
-                "0 Accounts ausgewählt";
-
-        }
-
-
-        return;
-
-    }
-
     function setAccountLifecycleStatus(
     accountId,
     newStatus
@@ -1025,6 +966,74 @@ function renderAccounts() {
     return true;
 
 }
+
+
+/*
+=========================================
+ACCOUNT TABELLE
+=========================================
+*/
+
+function renderAccounts() {
+
+    const accountList =
+        document.getElementById(
+            "accountList"
+        );
+
+
+    const selectedAccountCount =
+        document.getElementById(
+            "selectedAccountCount"
+        );
+
+
+    if(!accountList) {
+
+        return;
+
+    }
+
+
+    accountList.innerHTML =
+        "";
+
+
+    /*
+    =====================================
+    KEINE ACCOUNTS
+    =====================================
+    */
+
+    if(accounts.length === 0) {
+
+        accountList.innerHTML = `
+
+            <tr>
+
+                <td colspan="10">
+
+                    Noch keine Accounts angelegt.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        if(selectedAccountCount) {
+
+            selectedAccountCount.textContent =
+                "0 Accounts ausgewählt";
+
+        }
+
+
+        return;
+
+    }
+
 
     /*
     =====================================
@@ -1141,12 +1150,17 @@ function renderAccounts() {
 
                 <td>
 
-                    <input
-                        type="checkbox"
-                        class="accountCheckbox"
-                        data-account-id="${account.id}"
-                        ${checked}
-                    >
+                <input
+                    type="checkbox"
+                    class="accountCheckbox"
+                    data-account-id="${account.id}"
+                    ${checked}
+                    ${
+                        lifecycleState !== "active"
+                            ? "disabled"
+                            : ""
+                    }
+                >
 
                 </td>
 
@@ -1298,10 +1312,16 @@ function renderAccounts() {
                     <button
                         class="lifecycleAccountButton"
                         data-account-id="${account.id}"
-                        title="Account deaktivieren"
+                        title="${
+                            getAccountLifecycleState(
+                                account
+                            ) === "active"
+                                ? "Account als LOST markieren"
+                                : "Account reaktivieren"
+                        }"
                     >
                         ${
-                            getAccountLifecycleStatus(
+                            getAccountLifecycleState(
                                 account
                             ) === "active"
                                 ? "⏸️"
