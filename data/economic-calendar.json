@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-08-20",
+    "release_id": 319,
+    "release_name": "BIS Effective Exchange Rate Indices"
+  },
+  {
+    "date": "2026-08-20",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -26,6 +31,16 @@
   },
   {
     "date": "2026-08-20",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-08-20",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-08-20",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
   },
@@ -36,6 +51,16 @@
   },
   {
     "date": "2026-08-20",
+    "release_id": 477,
+    "release_name": "Monthly State Retail Sales"
+  },
+  {
+    "date": "2026-08-20",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-08-20",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
   },
@@ -43,6 +68,11 @@
     "date": "2026-08-20",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-20",
+    "release_id": 190,
+    "release_name": "Primary Mortgage Market Survey"
   },
   {
     "date": "2026-08-20",
@@ -81,6 +111,11 @@
   },
   {
     "date": "2026-08-20",
+    "release_id": 465,
+    "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
+  },
+  {
+    "date": "2026-08-20",
     "release_id": 503,
     "release_name": "Zillow Home Value Index (ZHVI)"
   },
@@ -88,11 +123,6 @@
     "date": "2026-08-20",
     "release_id": 742,
     "release_name": "Bankrate Monitor (BRM) National Index"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 319,
-    "release_name": "BIS Effective Exchange Rate Indices"
   },
   {
     "date": "2026-08-20",
@@ -146,26 +176,6 @@
   },
   {
     "date": "2026-08-20",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 477,
-    "release_name": "Monthly State Retail Sales"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
-  },
-  {
-    "date": "2026-08-20",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
   },
@@ -173,11 +183,6 @@
     "date": "2026-08-20",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 190,
-    "release_name": "Primary Mortgage Market Survey"
   },
   {
     "date": "2026-08-20",
@@ -198,11 +203,6 @@
     "date": "2026-08-20",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 465,
-    "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
   },
   {
     "date": "2026-08-21",
