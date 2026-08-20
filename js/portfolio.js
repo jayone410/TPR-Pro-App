@@ -15,8 +15,11 @@ HELPER
 function getSelectedPortfolioAccounts() {
 
     if(
-        typeof getSelectedAccounts !== "function" ||
-        !Array.isArray(selectedAccountIds)
+        typeof getSelectedAccounts !==
+            "function" ||
+        !Array.isArray(
+            selectedAccountIds
+        )
     ) {
 
         return [];
@@ -24,12 +27,39 @@ function getSelectedPortfolioAccounts() {
     }
 
 
-    return getSelectedAccounts(
-        selectedAccountIds
+    const selectedAccounts =
+        getSelectedAccounts(
+            selectedAccountIds
+        );
+
+
+    return selectedAccounts.filter(
+        account => {
+
+            if(
+                typeof isAccountActive ===
+                "function"
+            ) {
+
+                return isAccountActive(
+                    account
+                );
+
+            }
+
+
+            return (
+                String(
+                    account?.lifecycleStatus ||
+                    "active"
+                ).toLowerCase() ===
+                "active"
+            );
+
+        }
     );
 
 }
-
 
 function formatPortfolioMoney(value) {
 
