@@ -4250,3 +4250,38 @@ RESPONSIVE
     }
 
 }
+
+/* ========================================
+   ACCOUNT LIFECYCLE
+======================================== */
+
+.account-lifecycle-lost,
+.account-lifecycle-closed,
+.account-lifecycle-archived {
+
+    opacity: .48;
+
+}
+
+
+.account-lifecycle-lost:hover,
+.account-lifecycle-closed:hover,
+.account-lifecycle-archived:hover {
+
+    opacity: .72;
+
+}
+
+
+.account-status-lost {
+
+    background:
+        rgba(148,163,184,.10);
+
+    color:
+        #94a3b8;
+
+    border:
+        1px solid rgba(148,163,184,.20);
+
+}
