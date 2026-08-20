@@ -6,6 +6,11 @@
   },
   {
     "date": "2026-08-20",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-08-20",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -81,6 +86,11 @@
   },
   {
     "date": "2026-08-20",
+    "release_id": 738,
+    "release_name": "Quits and Layoffs to Nonemployment Based on the Consumer Population Survey (CPS)"
+  },
+  {
+    "date": "2026-08-20",
     "release_id": 2,
     "release_name": "Risk-On Risk-Off Index"
   },
@@ -98,6 +108,11 @@
     "date": "2026-08-20",
     "release_id": 492,
     "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-08-20",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-08-20",
@@ -133,11 +148,6 @@
     "date": "2026-08-20",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
   },
   {
     "date": "2026-08-20",
@@ -198,11 +208,6 @@
     "date": "2026-08-20",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-08-20",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-08-21",
