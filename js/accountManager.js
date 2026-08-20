@@ -52,6 +52,7 @@ function refreshAccountUI() {
 }
 
 
+
 /*
 =========================================
 INITIALISIERUNG
@@ -756,6 +757,108 @@ function getAccountStatus(account) {
 
 }
 
+/*
+=========================================
+ACCOUNT LIFECYCLE
+=========================================
+*/
+
+function getAccountLifecycleState(
+    account
+) {
+
+    const status =
+        String(
+            account?.lifecycleStatus ||
+            "active"
+        ).toLowerCase();
+
+
+    if(
+        [
+            "active",
+            "lost",
+            "closed",
+            "archived"
+        ].includes(
+            status
+        )
+    ) {
+
+        return status;
+
+    }
+
+
+    return "active";
+
+}
+
+
+
+function isAccountActive(
+    account
+) {
+
+    return (
+        getAccountLifecycleState(
+            account
+        ) ===
+        "active"
+    );
+
+}
+
+
+
+function getAccountLifecycleLabel(
+    account
+) {
+
+    const status =
+        getAccountLifecycleState(
+            account
+        );
+
+
+    const labels = {
+
+        active:
+            "ACTIVE",
+
+        lost:
+            "LOST",
+
+        closed:
+            "CLOSED",
+
+        archived:
+            "ARCHIVED"
+
+    };
+
+
+    return (
+        labels[status] ||
+        "ACTIVE"
+    );
+
+}
+
+
+
+function getAccountLifecycleClass(
+    account
+) {
+
+    return (
+        "account-lifecycle-" +
+        getAccountLifecycleState(
+            account
+        )
+    );
+
+}
 
 /*
 =========================================
@@ -823,6 +926,105 @@ function renderAccounts() {
 
     }
 
+    function setAccountLifecycleStatus(
+    accountId,
+    newStatus
+) {
+
+    const account =
+        getAccount(
+            accountId
+        );
+
+
+    if(!account) {
+
+        return false;
+
+    }
+
+
+    const allowedStatuses = [
+        "active",
+        "lost",
+        "closed",
+        "archived"
+    ];
+
+
+    const cleanStatus =
+        String(
+            newStatus
+        ).toLowerCase();
+
+
+    if(
+        !allowedStatuses.includes(
+            cleanStatus
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    account.lifecycleStatus =
+        cleanStatus;
+
+
+    account.lifecycleUpdatedAt =
+        new Date()
+            .toISOString();
+
+
+    if(
+        cleanStatus !==
+        "active"
+    ) {
+
+        account.closedAt =
+            new Date()
+                .toISOString();
+
+
+        /*
+        Deaktivierte Accounts auch
+        aus der aktiven Auswahl entfernen.
+        */
+
+        selectedAccountIds =
+            selectedAccountIds.filter(
+                id =>
+                    id !==
+                    account.id
+            );
+
+
+        saveSelectedAccountIds(
+            selectedAccountIds
+        );
+
+    }
+    else {
+
+        account.closedAt =
+            null;
+
+    }
+
+
+    updateAccount(
+        account
+    );
+
+
+    refreshAccountUI();
+
+
+    return true;
+
+}
 
     /*
     =====================================
@@ -867,10 +1069,34 @@ function renderAccounts() {
                 );
 
 
-            const status =
-                getAccountLifecycleStatus(
+            const lifecycleState =
+                getAccountLifecycleState(
                     account
                 );
+            
+            
+            const status =
+                lifecycleState ===
+                    "active"
+            
+                    ? getAccountLifecycleStatus(
+                        account
+                    )
+            
+                    : {
+            
+                        level:
+                            "lost",
+            
+                        icon:
+                            "●",
+            
+                        text:
+                            getAccountLifecycleLabel(
+                                account
+                            )
+            
+                    };
 
 
             const balance =
@@ -1069,7 +1295,20 @@ function renderAccounts() {
                         ⚙️
                     </button>
 
-
+                    <button
+                        class="lifecycleAccountButton"
+                        data-account-id="${account.id}"
+                        title="Account deaktivieren"
+                    >
+                        ${
+                            getAccountLifecycleStatus(
+                                account
+                            ) === "active"
+                                ? "⏸️"
+                                : "▶️"
+                        }
+                    </button>
+                    
                     <button
                         class="deleteAccountButton"
                         data-account-id="${account.id}"
@@ -1093,6 +1332,11 @@ function renderAccounts() {
                     "tr"
                 );
 
+            row.classList.add(
+                getAccountLifecycleClass(
+                    account
+                )
+            );
 
             detailsRow.id =
                 "accountDetails-" +
@@ -1702,6 +1946,123 @@ document
         }
     );
 
+
+    /*
+=====================================
+ACCOUNT LIFECYCLE
+=====================================
+*/
+
+document
+    .querySelectorAll(
+        ".lifecycleAccountButton"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const id =
+                        button.dataset
+                            .accountId;
+
+
+                    const account =
+                        getAccount(
+                            id
+                        );
+
+
+                    if(!account) {
+
+                        return;
+
+                    }
+
+
+                    const currentStatus =
+                        getAccountLifecycleState(
+                            account
+                        );
+
+
+                    /*
+                    =====================================
+                    ACTIVE -> LOST
+                    =====================================
+                    */
+
+                    if(
+                        currentStatus ===
+                        "active"
+                    ) {
+
+                        const tradeCount =
+                            Array.isArray(
+                                account.trades
+                            )
+                                ? account.trades.length
+                                : 0;
+
+
+                        const confirmed =
+                            confirm(
+                                `Account "${account.accountName}" als LOST markieren?\n\n` +
+                                `${tradeCount} gespeicherte Trades bleiben vollständig erhalten.\n\n` +
+                                `Der Account wird künftig nicht mehr als aktiver Trading-Account behandelt.`
+                            );
+
+
+                        if(!confirmed) {
+
+                            return;
+
+                        }
+
+
+                        setAccountLifecycleStatus(
+                            id,
+                            "lost"
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    /*
+                    =====================================
+                    LOST / CLOSED / ARCHIVED -> ACTIVE
+                    =====================================
+                    */
+
+                    const confirmed =
+                        confirm(
+                            `Account "${account.accountName}" wieder aktivieren?`
+                        );
+
+
+                    if(!confirmed) {
+
+                        return;
+
+                    }
+
+
+                    setAccountLifecycleStatus(
+                        id,
+                        "active"
+                    );
+
+                }
+            );
+
+        }
+    );
+    
     /*
     =====================================
     LÖSCHEN
