@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-08-21",
+    "release_id": 305,
+    "release_name": "Swiss National Bank Monthly Statistical Bulletin"
+  },
+  {
+    "date": "2026-08-21",
     "release_id": 200,
     "release_name": "CBOE Market Statistics"
   },
@@ -168,11 +173,6 @@
     "date": "2026-08-21",
     "release_id": 400,
     "release_name": "St. Louis Fed Economic News Index"
-  },
-  {
-    "date": "2026-08-21",
-    "release_id": 305,
-    "release_name": "Swiss National Bank Monthly Statistical Bulletin"
   },
   {
     "date": "2026-08-21",
