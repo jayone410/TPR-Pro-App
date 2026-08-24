@@ -46,6 +46,11 @@
   },
   {
     "date": "2026-08-24",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-08-24",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
   },
@@ -53,6 +58,11 @@
     "date": "2026-08-24",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-24",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
   },
   {
     "date": "2026-08-24",
@@ -141,11 +151,6 @@
   },
   {
     "date": "2026-08-24",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
-  },
-  {
-    "date": "2026-08-24",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
   },
@@ -158,11 +163,6 @@
     "date": "2026-08-24",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-08-24",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
   },
   {
     "date": "2026-08-24",
