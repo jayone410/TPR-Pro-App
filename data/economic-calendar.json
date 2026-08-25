@@ -46,6 +46,11 @@
   },
   {
     "date": "2026-08-25",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-08-25",
     "release_id": 21,
     "release_name": "H.6 Money Stock Measures"
   },
@@ -63,6 +68,16 @@
     "date": "2026-08-25",
     "release_id": 148,
     "release_name": "Housing Units Authorized By Building Permits"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-08-25",
@@ -191,23 +206,8 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-08-25",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-08-25",
