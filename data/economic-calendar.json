@@ -1,13 +1,98 @@
 [
   {
     "date": "2026-08-25",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-08-25",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-08-25",
+    "release_id": 378,
+    "release_name": "Federal Funds Data"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 183,
+    "release_name": "Gasoline and Diesel Fuel Update"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 504,
+    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 171,
+    "release_name": "House Price Index"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 148,
+    "release_name": "Housing Units Authorized By Building Permits"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 27,
+    "release_name": "New Residential Construction"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 97,
+    "release_name": "New Residential Sales"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 287,
+    "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 352,
+    "release_name": "Nonmanufacturing Business Outlook Survey"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 375,
+    "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 445,
+    "release_name": "Secured Overnight Financing Rate Data"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 483,
+    "release_name": "SOFR Averages and Index Data"
+  },
+  {
+    "date": "2026-08-25",
     "release_id": 492,
     "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
   },
   {
     "date": "2026-08-25",
@@ -36,26 +121,6 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 378,
-    "release_name": "Federal Funds Data"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 183,
-    "release_name": "Gasoline and Diesel Fuel Update"
-  },
-  {
-    "date": "2026-08-25",
     "release_id": 18,
     "release_name": "H.15 Selected Interest Rates"
   },
@@ -63,21 +128,6 @@
     "date": "2026-08-25",
     "release_id": 21,
     "release_name": "H.6 Money Stock Measures"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 504,
-    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 171,
-    "release_name": "House Price Index"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 148,
-    "release_name": "Housing Units Authorized By Building Permits"
   },
   {
     "date": "2026-08-25",
@@ -106,11 +156,6 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
-  },
-  {
-    "date": "2026-08-25",
     "release_id": 63,
     "release_name": "M2 Related Series"
   },
@@ -126,33 +171,8 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 27,
-    "release_name": "New Residential Construction"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 97,
-    "release_name": "New Residential Sales"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 287,
-    "release_name": "Nikkei Indexes"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 352,
-    "release_name": "Nonmanufacturing Business Outlook Survey"
-  },
-  {
-    "date": "2026-08-25",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 375,
-    "release_name": "Overnight Bank Funding Rate Data"
   },
   {
     "date": "2026-08-25",
@@ -163,21 +183,6 @@
     "date": "2026-08-25",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 445,
-    "release_name": "Secured Overnight Financing Rate Data"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 483,
-    "release_name": "SOFR Averages and Index Data"
   },
   {
     "date": "2026-08-25",
@@ -193,11 +198,6 @@
     "date": "2026-08-25",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
   },
   {
     "date": "2026-08-25",
