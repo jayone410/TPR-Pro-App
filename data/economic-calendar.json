@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-08-25",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-08-25",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -26,6 +31,11 @@
   },
   {
     "date": "2026-08-25",
+    "release_id": 21,
+    "release_name": "H.6 Money Stock Measures"
+  },
+  {
+    "date": "2026-08-25",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
@@ -41,8 +51,23 @@
   },
   {
     "date": "2026-08-25",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-08-25",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-08-25",
@@ -91,8 +116,18 @@
   },
   {
     "date": "2026-08-25",
+    "release_id": 199,
+    "release_name": "S&P Cotality Case-Shiller Home Price Indices"
+  },
+  {
+    "date": "2026-08-25",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-08-25",
+    "release_id": 271,
+    "release_name": "Weekly Financial Statements of the Eurosystem"
   },
   {
     "date": "2026-08-25",
@@ -106,11 +141,6 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
-  },
-  {
-    "date": "2026-08-25",
     "release_id": 72,
     "release_name": "Daily Treasury Inflation-Indexed Securities"
   },
@@ -121,13 +151,13 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
+    "release_id": 482,
+    "release_name": "FDIC Quarterly Banking Profile"
   },
   {
     "date": "2026-08-25",
-    "release_id": 21,
-    "release_name": "H.6 Money Stock Measures"
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
   },
   {
     "date": "2026-08-25",
@@ -146,23 +176,8 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-08-25",
     "release_id": 63,
     "release_name": "M2 Related Series"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-08-25",
@@ -186,11 +201,6 @@
   },
   {
     "date": "2026-08-25",
-    "release_id": 199,
-    "release_name": "S&P Cotality Case-Shiller Home Price Indices"
-  },
-  {
-    "date": "2026-08-25",
     "release_id": 189,
     "release_name": "Standard & Poors"
   },
@@ -198,11 +208,6 @@
     "date": "2026-08-25",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-08-25",
-    "release_id": 271,
-    "release_name": "Weekly Financial Statements of the Eurosystem"
   },
   {
     "date": "2026-08-26",
