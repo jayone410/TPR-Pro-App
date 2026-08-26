@@ -1,8 +1,88 @@
 [
   {
     "date": "2026-08-26",
+    "release_id": 221,
+    "release_name": "Chicago Fed National Financial Conditions Index"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-08-26",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 378,
+    "release_name": "Federal Funds Data"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 53,
+    "release_name": "Gross Domestic Product"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 504,
+    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 476,
+    "release_name": "Job Postings on Indeed"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 95,
+    "release_name": "Manufacturer's Shipments, Inventories, and Orders (M3) Survey"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 193,
+    "release_name": "Money Velocity"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 287,
+    "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 375,
+    "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 54,
+    "release_name": "Personal Income and Outlays"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 445,
+    "release_name": "Secured Overnight Financing Rate Data"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 483,
+    "release_name": "SOFR Averages and Index Data"
   },
   {
     "date": "2026-08-26",
@@ -11,13 +91,28 @@
   },
   {
     "date": "2026-08-26",
-    "release_id": 200,
-    "release_name": "CBOE Market Statistics"
+    "release_id": 93,
+    "release_name": "Supplemental Estimates, Motor Vehicles"
   },
   {
     "date": "2026-08-26",
-    "release_id": 221,
-    "release_name": "Chicago Fed National Financial Conditions Index"
+    "release_id": 281,
+    "release_name": "Supplemental Estimates, Underlying Detail Tables"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 282,
+    "release_name": "Supplemental Estimates, Underlying Detail Tables, Spliced Series"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-08-26",
+    "release_id": 200,
+    "release_name": "CBOE Market Statistics"
   },
   {
     "date": "2026-08-26",
@@ -46,38 +141,13 @@
   },
   {
     "date": "2026-08-26",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 378,
-    "release_name": "Federal Funds Data"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-08-26",
     "release_id": 386,
     "release_name": "GDPNow"
   },
   {
     "date": "2026-08-26",
-    "release_id": 53,
-    "release_name": "Gross Domestic Product"
-  },
-  {
-    "date": "2026-08-26",
     "release_id": 18,
     "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 504,
-    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-08-26",
@@ -106,21 +176,6 @@
   },
   {
     "date": "2026-08-26",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 95,
-    "release_name": "Manufacturer's Shipments, Inventories, and Orders (M3) Survey"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 193,
-    "release_name": "Money Velocity"
-  },
-  {
-    "date": "2026-08-26",
     "release_id": 427,
     "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
@@ -136,43 +191,13 @@
   },
   {
     "date": "2026-08-26",
-    "release_id": 287,
-    "release_name": "Nikkei Indexes"
-  },
-  {
-    "date": "2026-08-26",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
   },
   {
     "date": "2026-08-26",
-    "release_id": 375,
-    "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 54,
-    "release_name": "Personal Income and Outlays"
-  },
-  {
-    "date": "2026-08-26",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 445,
-    "release_name": "Secured Overnight Financing Rate Data"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 483,
-    "release_name": "SOFR Averages and Index Data"
   },
   {
     "date": "2026-08-26",
@@ -196,21 +221,6 @@
   },
   {
     "date": "2026-08-26",
-    "release_id": 93,
-    "release_name": "Supplemental Estimates, Motor Vehicles"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 281,
-    "release_name": "Supplemental Estimates, Underlying Detail Tables"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 282,
-    "release_name": "Supplemental Estimates, Underlying Detail Tables, Spliced Series"
-  },
-  {
-    "date": "2026-08-26",
     "release_id": 459,
     "release_name": "Survey of Business Uncertainty"
   },
@@ -223,11 +233,6 @@
     "date": "2026-08-26",
     "release_id": 323,
     "release_name": "Trimmed Mean PCE Inflation Rate"
-  },
-  {
-    "date": "2026-08-26",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
   },
   {
     "date": "2026-08-27",
