@@ -1,15 +1,5 @@
 [
   {
-    "date": "2026-08-29",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-08-29",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
     "date": "2026-08-30",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
@@ -1008,5 +998,15 @@
     "date": "2026-09-05",
     "release_id": 1033,
     "release_name": "Select time series based on the U.S. Survey of Working Arrangements and Attitudes (SWAA)"
+  },
+  {
+    "date": "2026-09-06",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-09-06",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
   }
 ]
