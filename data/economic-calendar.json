@@ -1,8 +1,23 @@
 [
   {
     "date": "2026-08-31",
+    "release_id": 488,
+    "release_name": "Brave-Butters-Kelley Indexes"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-08-31",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 378,
+    "release_name": "Federal Funds Data"
   },
   {
     "date": "2026-08-31",
@@ -16,6 +31,11 @@
   },
   {
     "date": "2026-08-31",
+    "release_id": 239,
+    "release_name": "International Financial Statistics"
+  },
+  {
+    "date": "2026-08-31",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
   },
@@ -23,6 +43,16 @@
     "date": "2026-08-31",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 375,
+    "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
   },
   {
     "date": "2026-08-31",
@@ -38,11 +68,6 @@
     "date": "2026-08-31",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 488,
-    "release_name": "Brave-Butters-Kelley Indexes"
   },
   {
     "date": "2026-08-31",
@@ -71,16 +96,6 @@
   },
   {
     "date": "2026-08-31",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 378,
-    "release_name": "Federal Funds Data"
-  },
-  {
-    "date": "2026-08-31",
     "release_id": 17,
     "release_name": "H.10 Foreign Exchange Rates"
   },
@@ -103,11 +118,6 @@
     "date": "2026-08-31",
     "release_id": 304,
     "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 239,
-    "release_name": "International Financial Statistics"
   },
   {
     "date": "2026-08-31",
@@ -141,18 +151,8 @@
   },
   {
     "date": "2026-08-31",
-    "release_id": 375,
-    "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-08-31",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
   },
   {
     "date": "2026-08-31",
