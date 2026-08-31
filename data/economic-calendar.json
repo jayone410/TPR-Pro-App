@@ -31,8 +31,28 @@
   },
   {
     "date": "2026-08-31",
+    "release_id": 17,
+    "release_name": "H.10 Foreign Exchange Rates"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-08-31",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-08-31",
@@ -53,6 +73,11 @@
     "date": "2026-08-31",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 355,
+    "release_name": "Minimum Wage Rates"
   },
   {
     "date": "2026-08-31",
@@ -121,33 +146,8 @@
   },
   {
     "date": "2026-08-31",
-    "release_id": 17,
-    "release_name": "H.10 Foreign Exchange Rates"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-08-31",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 355,
-    "release_name": "Minimum Wage Rates"
   },
   {
     "date": "2026-08-31",
