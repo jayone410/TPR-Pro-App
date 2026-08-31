@@ -6,6 +6,11 @@
   },
   {
     "date": "2026-08-31",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-08-31",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -36,8 +41,23 @@
   },
   {
     "date": "2026-08-31",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-08-31",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-08-31",
@@ -66,6 +86,16 @@
   },
   {
     "date": "2026-08-31",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
+  },
+  {
+    "date": "2026-08-31",
+    "release_id": 374,
+    "release_name": "Texas Manufacturing Outlook Survey"
+  },
+  {
+    "date": "2026-08-31",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
   },
@@ -78,11 +108,6 @@
     "date": "2026-08-31",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
   },
   {
     "date": "2026-08-31",
@@ -121,23 +146,8 @@
   },
   {
     "date": "2026-08-31",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-08-31",
     "release_id": 355,
     "release_name": "Minimum Wage Rates"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-08-31",
@@ -158,16 +168,6 @@
     "date": "2026-08-31",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 374,
-    "release_name": "Texas Manufacturing Outlook Survey"
   },
   {
     "date": "2026-09-01",
