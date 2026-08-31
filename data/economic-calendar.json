@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-08-31",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-08-31",
     "release_id": 488,
     "release_name": "Brave-Butters-Kelley Indexes"
   },
@@ -33,11 +38,6 @@
     "date": "2026-08-31",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-08-31",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-08-31",
