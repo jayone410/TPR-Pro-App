@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-09-01",
+    "release_id": 354,
+    "release_name": "An Arbitrage-Free Three-Factor Term Structure Model and the Recent Behavior of Long-Term Yields and Distant-Horizon Forward Rates"
+  },
+  {
+    "date": "2026-09-01",
     "release_id": 86,
     "release_name": "Commercial Paper"
   },
@@ -36,6 +41,11 @@
   },
   {
     "date": "2026-09-01",
+    "release_id": 15,
+    "release_name": "G.5 Foreign Exchange Rates"
+  },
+  {
+    "date": "2026-09-01",
     "release_id": 183,
     "release_name": "Gasoline and Diesel Fuel Update"
   },
@@ -46,8 +56,23 @@
   },
   {
     "date": "2026-09-01",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-09-01",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-01",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-09-01",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-01",
@@ -111,6 +136,11 @@
   },
   {
     "date": "2026-09-01",
+    "release_id": 245,
+    "release_name": "Summary Measures of the Foreign Exchange Value of the Dollar"
+  },
+  {
+    "date": "2026-09-01",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
   },
@@ -166,23 +196,13 @@
   },
   {
     "date": "2026-09-01",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-01",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
   },
   {
     "date": "2026-09-01",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-09-01",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
+    "release_id": 249,
+    "release_name": "Income and Poverty in the United States"
   },
   {
     "date": "2026-09-01",
@@ -208,11 +228,6 @@
     "date": "2026-09-01",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-09-01",
-    "release_id": 245,
-    "release_name": "Summary Measures of the Foreign Exchange Value of the Dollar"
   },
   {
     "date": "2026-09-01",
