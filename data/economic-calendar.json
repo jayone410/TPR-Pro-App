@@ -36,8 +36,23 @@
   },
   {
     "date": "2026-09-02",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-09-02",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-02",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-09-02",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-02",
@@ -63,6 +78,11 @@
     "date": "2026-09-02",
     "release_id": 95,
     "release_name": "Manufacturer's Shipments, Inventories, and Orders (M3) Survey"
+  },
+  {
+    "date": "2026-09-02",
+    "release_id": 113,
+    "release_name": "Metropolitan Area Employment and Unemployment"
   },
   {
     "date": "2026-09-02",
@@ -116,6 +136,11 @@
   },
   {
     "date": "2026-09-02",
+    "release_id": 187,
+    "release_name": "St. Louis Fed Financial Stress Index"
+  },
+  {
+    "date": "2026-09-02",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
   },
@@ -123,6 +148,11 @@
     "date": "2026-09-02",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-09-02",
+    "release_id": 116,
+    "release_name": "Unemployment in States and Local Areas (all other areas)"
   },
   {
     "date": "2026-09-02",
@@ -151,28 +181,13 @@
   },
   {
     "date": "2026-09-02",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-02",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
   },
   {
     "date": "2026-09-02",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-09-02",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-09-02",
-    "release_id": 113,
-    "release_name": "Metropolitan Area Employment and Unemployment"
+    "release_id": 249,
+    "release_name": "Income and Poverty in the United States"
   },
   {
     "date": "2026-09-02",
@@ -193,21 +208,6 @@
     "date": "2026-09-02",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-09-02",
-    "release_id": 187,
-    "release_name": "St. Louis Fed Financial Stress Index"
-  },
-  {
-    "date": "2026-09-02",
-    "release_id": 116,
-    "release_name": "Unemployment in States and Local Areas (all other areas)"
-  },
-  {
-    "date": "2026-09-02",
-    "release_id": 234,
-    "release_name": "World Development Indicators"
   },
   {
     "date": "2026-09-03",
