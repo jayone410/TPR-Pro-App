@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-09-02",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-09-02",
     "release_id": 194,
     "release_name": "ADP National Employment Report"
   },
@@ -43,11 +48,6 @@
     "date": "2026-09-02",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-09-02",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-09-02",
