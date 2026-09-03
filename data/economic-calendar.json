@@ -6,6 +6,11 @@
   },
   {
     "date": "2026-09-03",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -26,13 +31,33 @@
   },
   {
     "date": "2026-09-03",
+    "release_id": 386,
+    "release_name": "GDPNow"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-09-03",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-09-03",
@@ -43,6 +68,11 @@
     "date": "2026-09-03",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 190,
+    "release_name": "Primary Mortgage Market Survey"
   },
   {
     "date": "2026-09-03",
@@ -71,6 +101,11 @@
   },
   {
     "date": "2026-09-03",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
   },
@@ -91,6 +126,11 @@
   },
   {
     "date": "2026-09-03",
+    "release_id": 465,
+    "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 200,
     "release_name": "CBOE Market Statistics"
   },
@@ -101,11 +141,6 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
-  },
-  {
-    "date": "2026-09-03",
     "release_id": 72,
     "release_name": "Daily Treasury Inflation-Indexed Securities"
   },
@@ -113,11 +148,6 @@
     "date": "2026-09-03",
     "release_id": 197,
     "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 386,
-    "release_name": "GDPNow"
   },
   {
     "date": "2026-09-03",
@@ -141,6 +171,11 @@
   },
   {
     "date": "2026-09-03",
+    "release_id": 249,
+    "release_name": "Income and Poverty in the United States"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 185,
     "release_name": "Interest Rate on Reserve Balances"
   },
@@ -151,18 +186,8 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
+    "release_id": 476,
+    "release_name": "Job Postings on Indeed"
   },
   {
     "date": "2026-09-03",
@@ -173,11 +198,6 @@
     "date": "2026-09-03",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 190,
-    "release_name": "Primary Mortgage Market Survey"
   },
   {
     "date": "2026-09-03",
@@ -193,16 +213,6 @@
     "date": "2026-09-03",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 465,
-    "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
   },
   {
     "date": "2026-09-04",
