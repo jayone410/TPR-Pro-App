@@ -36,8 +36,28 @@
   },
   {
     "date": "2026-09-03",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 20,
+    "release_name": "H.4.1 Factors Affecting Reserve Balances"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-03",
@@ -83,6 +103,11 @@
     "date": "2026-09-03",
     "release_id": 2,
     "release_name": "Risk-On Risk-Off Index"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 100,
+    "release_name": "Seasonal Credit Rate"
   },
   {
     "date": "2026-09-03",
@@ -151,16 +176,6 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 20,
-    "release_name": "H.4.1 Factors Affecting Reserve Balances"
-  },
-  {
-    "date": "2026-09-03",
     "release_id": 462,
     "release_name": "Housing Inventory Core Metrics"
   },
@@ -176,21 +191,6 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 476,
-    "release_name": "Job Postings on Indeed"
-  },
-  {
-    "date": "2026-09-03",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
   },
@@ -201,13 +201,18 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
+    "release_id": 455,
+    "release_name": "Quarterly Summary of State & Local Tax Revenue"
   },
   {
     "date": "2026-09-03",
-    "release_id": 100,
-    "release_name": "Seasonal Credit Rate"
+    "release_id": 450,
+    "release_name": "Quarterly Survey of Public Pensions"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-09-03",
