@@ -6,6 +6,46 @@
   },
   {
     "date": "2026-09-03",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 504,
+    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 287,
+    "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 445,
+    "release_name": "Secured Overnight Financing Rate Data"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 483,
+    "release_name": "SOFR Averages and Index Data"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-09-03",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-09-03",
     "release_id": 742,
     "release_name": "Bankrate Monitor (BRM) National Index"
   },
@@ -46,11 +86,6 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-09-03",
     "release_id": 386,
     "release_name": "GDPNow"
   },
@@ -63,11 +98,6 @@
     "date": "2026-09-03",
     "release_id": 20,
     "release_name": "H.4.1 Factors Affecting Reserve Balances"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 504,
-    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-09-03",
@@ -101,11 +131,6 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
-  },
-  {
-    "date": "2026-09-03",
     "release_id": 427,
     "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
@@ -113,11 +138,6 @@
     "date": "2026-09-03",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 287,
-    "release_name": "Nikkei Indexes"
   },
   {
     "date": "2026-09-03",
@@ -156,21 +176,6 @@
   },
   {
     "date": "2026-09-03",
-    "release_id": 445,
-    "release_name": "Secured Overnight Financing Rate Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 483,
-    "release_name": "SOFR Averages and Index Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
-  },
-  {
-    "date": "2026-09-03",
     "release_id": 189,
     "release_name": "Standard & Poors"
   },
@@ -178,11 +183,6 @@
     "date": "2026-09-03",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
   },
   {
     "date": "2026-09-03",
