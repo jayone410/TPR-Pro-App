@@ -1,225 +1,5 @@
 [
   {
-    "date": "2026-09-03",
-    "release_id": 742,
-    "release_name": "Bankrate Monitor (BRM) National Index"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 378,
-    "release_name": "Federal Funds Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 386,
-    "release_name": "GDPNow"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 20,
-    "release_name": "H.4.1 Factors Affecting Reserve Balances"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 504,
-    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 287,
-    "release_name": "Nikkei Indexes"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 375,
-    "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 190,
-    "release_name": "Primary Mortgage Market Survey"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 47,
-    "release_name": "Productivity and Costs"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 100,
-    "release_name": "Seasonal Credit Rate"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 445,
-    "release_name": "Secured Overnight Financing Rate Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 483,
-    "release_name": "SOFR Averages and Index Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 180,
-    "release_name": "Unemployment Insurance Weekly Claims Report"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 51,
-    "release_name": "U.S. International Trade in Goods and Services"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 449,
-    "release_name": "U.S. Trade in Goods by State, by NAICS-Based Product"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 465,
-    "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 200,
-    "release_name": "CBOE Market Statistics"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 72,
-    "release_name": "Daily Treasury Inflation-Indexed Securities"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 462,
-    "release_name": "Housing Inventory Core Metrics"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 209,
-    "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 249,
-    "release_name": "Income and Poverty in the United States"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 328,
-    "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 473,
-    "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 455,
-    "release_name": "Quarterly Summary of State & Local Tax Revenue"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 450,
-    "release_name": "Quarterly Survey of Public Pensions"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-09-03",
-    "release_id": 189,
-    "release_name": "Standard & Poors"
-  },
-  {
     "date": "2026-09-04",
     "release_id": 200,
     "release_name": "CBOE Market Statistics"
@@ -1068,5 +848,225 @@
     "date": "2026-09-10",
     "release_id": 52,
     "release_name": "Z.1 Financial Accounts of the United States"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 454,
+    "release_name": "Average Price Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 443,
+    "release_name": "Business Formation Statistics"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 200,
+    "release_name": "CBOE Market Statistics"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 10,
+    "release_name": "Consumer Price Index"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 315,
+    "release_name": "Current Median CPI"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 72,
+    "release_name": "Daily Treasury Inflation-Indexed Securities"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 378,
+    "release_name": "Federal Funds Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 769,
+    "release_name": "Fujita, Moscarini, and Postel-Vinay Employer-to-Employer Transition Probability"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 22,
+    "release_name": "H.8 Assets and Liabilities of Commercial Banks in the United States"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 504,
+    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 209,
+    "release_name": "ICE BofA Indices"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 383,
+    "release_name": "Market Value of U.S. Government Debt"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 363,
+    "release_name": "Monthly Treasury Statement"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 328,
+    "release_name": "Nasdaq Daily Index Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 287,
+    "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 473,
+    "release_name": "Optimal Blue Mortgage Market Indices"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 375,
+    "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 345,
+    "release_name": "Research Consumer Price Index"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 445,
+    "release_name": "Secured Overnight Financing Rate Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 483,
+    "release_name": "SOFR Averages and Index Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 189,
+    "release_name": "Standard & Poors"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 469,
+    "release_name": "State Unemployment Insurance Weekly Claims Report"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 313,
+    "release_name": "Sticky Price CPI"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 400,
+    "release_name": "St. Louis Fed Economic News Index"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 736,
+    "release_name": "Visa Spending Momentum Index"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 468,
+    "release_name": "Weekly Business Formation Statistics"
   }
 ]
