@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-09-07",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-09-07",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
   },
@@ -8,6 +13,11 @@
     "date": "2026-09-07",
     "release_id": 101,
     "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-09-07",
+    "release_id": 239,
+    "release_name": "International Financial Statistics"
   },
   {
     "date": "2026-09-07",
@@ -36,18 +46,8 @@
   },
   {
     "date": "2026-09-07",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-09-07",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-09-07",
-    "release_id": 239,
-    "release_name": "International Financial Statistics"
   },
   {
     "date": "2026-09-07",
