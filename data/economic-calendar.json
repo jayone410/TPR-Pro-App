@@ -1,16 +1,6 @@
 [
   {
     "date": "2026-09-07",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-09-07",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-09-07",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
   },
@@ -18,6 +8,36 @@
     "date": "2026-09-07",
     "release_id": 101,
     "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-09-07",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-09-07",
+    "release_id": 267,
+    "release_name": "National Accounts - GDP (Eurostat)"
+  },
+  {
+    "date": "2026-09-07",
+    "release_id": 287,
+    "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-09-07",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-09-07",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-09-07",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
   },
   {
     "date": "2026-09-07",
@@ -36,33 +56,13 @@
   },
   {
     "date": "2026-09-07",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
-  },
-  {
-    "date": "2026-09-07",
-    "release_id": 267,
-    "release_name": "National Accounts - GDP (Eurostat)"
-  },
-  {
-    "date": "2026-09-07",
     "release_id": 269,
     "release_name": "National Accounts of Japan"
   },
   {
     "date": "2026-09-07",
-    "release_id": 287,
-    "release_name": "Nikkei Indexes"
-  },
-  {
-    "date": "2026-09-07",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-09-07",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
   },
   {
     "date": "2026-09-08",
