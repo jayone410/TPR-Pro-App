@@ -36,6 +36,11 @@
   },
   {
     "date": "2026-09-07",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-09-07",
     "release_id": 492,
     "release_name": "SONIA Interest Rate Benchmark"
   },
@@ -58,11 +63,6 @@
     "date": "2026-09-07",
     "release_id": 269,
     "release_name": "National Accounts of Japan"
-  },
-  {
-    "date": "2026-09-07",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-09-08",
