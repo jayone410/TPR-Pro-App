@@ -11,6 +11,11 @@
   },
   {
     "date": "2026-09-08",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-09-08",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -91,6 +96,11 @@
   },
   {
     "date": "2026-09-08",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-09-08",
     "release_id": 2,
     "release_name": "Risk-On Risk-Off Index"
   },
@@ -141,11 +151,6 @@
   },
   {
     "date": "2026-09-08",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-09-08",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
   },
@@ -163,11 +168,6 @@
     "date": "2026-09-08",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-09-08",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-09-08",
