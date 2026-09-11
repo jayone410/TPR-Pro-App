@@ -11,6 +11,11 @@
   },
   {
     "date": "2026-09-11",
+    "release_id": 280,
+    "release_name": "Cass Freight Index Report"
+  },
+  {
+    "date": "2026-09-11",
     "release_id": 86,
     "release_name": "Commercial Paper"
   },
@@ -23,6 +28,11 @@
     "date": "2026-09-11",
     "release_id": 315,
     "release_name": "Current Median CPI"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
   },
   {
     "date": "2026-09-11",
@@ -81,6 +91,11 @@
   },
   {
     "date": "2026-09-11",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
+  },
+  {
+    "date": "2026-09-11",
     "release_id": 4,
     "release_name": "Kansas City Fed Policy Rate Skew"
   },
@@ -113,6 +128,11 @@
     "date": "2026-09-11",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-09-11",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-09-11",
@@ -201,16 +221,6 @@
   },
   {
     "date": "2026-09-11",
-    "release_id": 453,
-    "release_name": "Distributional Financial Accounts"
-  },
-  {
-    "date": "2026-09-11",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-09-11",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
   },
@@ -218,11 +228,6 @@
     "date": "2026-09-11",
     "release_id": 249,
     "release_name": "Income and Poverty in the United States"
-  },
-  {
-    "date": "2026-09-11",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-11",
@@ -238,11 +243,6 @@
     "date": "2026-09-11",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-09-11",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-09-11",
