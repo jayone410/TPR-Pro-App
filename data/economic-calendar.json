@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-09-12",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-09-12",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-09-12",
-    "release_id": 249,
-    "release_name": "Income and Poverty in the United States"
-  },
-  {
     "date": "2026-09-13",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
@@ -966,6 +951,16 @@
   },
   {
     "date": "2026-09-19",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-09-20",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-09-20",
     "release_id": 101,
     "release_name": "FOMC Press Release"
   }
