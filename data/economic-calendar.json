@@ -6,6 +6,11 @@
   },
   {
     "date": "2026-09-14",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-09-14",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -26,8 +31,28 @@
   },
   {
     "date": "2026-09-14",
+    "release_id": 17,
+    "release_name": "H.10 Foreign Exchange Rates"
+  },
+  {
+    "date": "2026-09-14",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-09-14",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-14",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-09-14",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-14",
@@ -63,6 +88,11 @@
     "date": "2026-09-14",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-09-14",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-09-14",
@@ -116,38 +146,8 @@
   },
   {
     "date": "2026-09-14",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-09-14",
-    "release_id": 17,
-    "release_name": "H.10 Foreign Exchange Rates"
-  },
-  {
-    "date": "2026-09-14",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-14",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-09-14",
-    "release_id": 249,
-    "release_name": "Income and Poverty in the United States"
-  },
-  {
-    "date": "2026-09-14",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-09-14",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-14",
@@ -158,11 +158,6 @@
     "date": "2026-09-14",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-09-14",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-09-14",
