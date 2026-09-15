@@ -1,13 +1,83 @@
 [
   {
     "date": "2026-09-15",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 321,
+    "release_name": "Empire State Manufacturing Survey"
+  },
+  {
+    "date": "2026-09-15",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-09-15",
+    "release_id": 378,
+    "release_name": "Federal Funds Data"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 183,
+    "release_name": "Gasoline and Diesel Fuel Update"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 504,
+    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 375,
+    "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 445,
+    "release_name": "Secured Overnight Financing Rate Data"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 483,
+    "release_name": "SOFR Averages and Index Data"
+  },
+  {
+    "date": "2026-09-15",
     "release_id": 492,
     "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-09-15",
+    "release_id": 271,
+    "release_name": "Weekly Financial Statements of the Eurosystem"
   },
   {
     "date": "2026-09-15",
@@ -36,38 +106,8 @@
   },
   {
     "date": "2026-09-15",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 321,
-    "release_name": "Empire State Manufacturing Survey"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 378,
-    "release_name": "Federal Funds Data"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 183,
-    "release_name": "Gasoline and Diesel Fuel Update"
-  },
-  {
-    "date": "2026-09-15",
     "release_id": 18,
     "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 504,
-    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-09-15",
@@ -96,16 +136,6 @@
   },
   {
     "date": "2026-09-15",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
-  },
-  {
-    "date": "2026-09-15",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
   },
@@ -116,28 +146,8 @@
   },
   {
     "date": "2026-09-15",
-    "release_id": 375,
-    "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-09-15",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 445,
-    "release_name": "Secured Overnight Financing Rate Data"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 483,
-    "release_name": "SOFR Averages and Index Data"
   },
   {
     "date": "2026-09-15",
@@ -148,16 +158,6 @@
     "date": "2026-09-15",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
-  },
-  {
-    "date": "2026-09-15",
-    "release_id": 271,
-    "release_name": "Weekly Financial Statements of the Eurosystem"
   },
   {
     "date": "2026-09-16",
