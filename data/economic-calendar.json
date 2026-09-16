@@ -21,6 +21,11 @@
   },
   {
     "date": "2026-09-16",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-09-16",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -46,8 +51,23 @@
   },
   {
     "date": "2026-09-16",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-09-16",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-16",
@@ -78,6 +98,11 @@
     "date": "2026-09-16",
     "release_id": 427,
     "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 342,
+    "release_name": "Natural Gas Spot and Futures Prices (NYMEX)"
   },
   {
     "date": "2026-09-16",
@@ -116,88 +141,8 @@
   },
   {
     "date": "2026-09-16",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 188,
-    "release_name": "U.S. Import and Export Price Indexes"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 200,
-    "release_name": "CBOE Market Statistics"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 72,
-    "release_name": "Daily Treasury Inflation-Indexed Securities"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 209,
-    "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 328,
-    "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 342,
-    "release_name": "Natural Gas Spot and Futures Prices (NYMEX)"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 473,
-    "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-09-16",
     "release_id": 212,
     "release_name": "Spot Prices"
-  },
-  {
-    "date": "2026-09-16",
-    "release_id": 189,
-    "release_name": "Standard & Poors"
   },
   {
     "date": "2026-09-16",
@@ -218,6 +163,66 @@
     "date": "2026-09-16",
     "release_id": 3,
     "release_name": "Treasury International Capital: Continuous Securities Long Term (CSLT)"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 188,
+    "release_name": "U.S. Import and Export Price Indexes"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 200,
+    "release_name": "CBOE Market Statistics"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 72,
+    "release_name": "Daily Treasury Inflation-Indexed Securities"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 209,
+    "release_name": "ICE BofA Indices"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 328,
+    "release_name": "Nasdaq Daily Index Data"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 473,
+    "release_name": "Optimal Blue Mortgage Market Indices"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 450,
+    "release_name": "Quarterly Survey of Public Pensions"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-09-16",
+    "release_id": 189,
+    "release_name": "Standard & Poors"
   },
   {
     "date": "2026-09-17",
