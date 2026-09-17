@@ -1,53 +1,18 @@
 [
   {
     "date": "2026-09-17",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 503,
-    "release_name": "Zillow Home Value Index (ZHVI)"
-  },
-  {
-    "date": "2026-09-17",
     "release_id": 742,
     "release_name": "Bankrate Monitor (BRM) National Index"
   },
   {
     "date": "2026-09-17",
-    "release_id": 200,
-    "release_name": "CBOE Market Statistics"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 72,
-    "release_name": "Daily Treasury Inflation-Indexed Securities"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-09-17",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-09-17",
@@ -66,16 +31,6 @@
   },
   {
     "date": "2026-09-17",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 20,
-    "release_name": "H.4.1 Factors Affecting Reserve Balances"
-  },
-  {
-    "date": "2026-09-17",
     "release_id": 251,
     "release_name": "Harmonized Indices of Consumer Prices (HICP)"
   },
@@ -83,21 +38,6 @@
     "date": "2026-09-17",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 209,
-    "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-09-17",
@@ -126,11 +66,6 @@
   },
   {
     "date": "2026-09-17",
-    "release_id": 328,
-    "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-09-17",
     "release_id": 27,
     "release_name": "New Residential Construction"
   },
@@ -138,11 +73,6 @@
     "date": "2026-09-17",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 473,
-    "release_name": "Optimal Blue Mortgage Market Indices"
   },
   {
     "date": "2026-09-17",
@@ -156,18 +86,8 @@
   },
   {
     "date": "2026-09-17",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-09-17",
     "release_id": 2,
     "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 100,
-    "release_name": "Seasonal Credit Rate"
   },
   {
     "date": "2026-09-17",
@@ -181,13 +101,8 @@
   },
   {
     "date": "2026-09-17",
-    "release_id": 189,
-    "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-09-17",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
   },
   {
     "date": "2026-09-17",
@@ -203,6 +118,91 @@
     "date": "2026-09-17",
     "release_id": 465,
     "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 503,
+    "release_name": "Zillow Home Value Index (ZHVI)"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 200,
+    "release_name": "CBOE Market Statistics"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 72,
+    "release_name": "Daily Treasury Inflation-Indexed Securities"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 20,
+    "release_name": "H.4.1 Factors Affecting Reserve Balances"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 209,
+    "release_name": "ICE BofA Indices"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 328,
+    "release_name": "Nasdaq Daily Index Data"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 473,
+    "release_name": "Optimal Blue Mortgage Market Indices"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 100,
+    "release_name": "Seasonal Credit Rate"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 189,
+    "release_name": "Standard & Poors"
+  },
+  {
+    "date": "2026-09-17",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-09-18",
