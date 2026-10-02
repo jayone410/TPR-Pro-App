@@ -6,6 +6,11 @@
   },
   {
     "date": "2026-10-02",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-10-02",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -31,8 +36,28 @@
   },
   {
     "date": "2026-10-02",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-10-02",
+    "release_id": 22,
+    "release_name": "H.8 Assets and Liabilities of Commercial Banks in the United States"
+  },
+  {
+    "date": "2026-10-02",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-10-02",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-10-02",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-10-02",
@@ -111,6 +136,16 @@
   },
   {
     "date": "2026-10-02",
+    "release_id": 93,
+    "release_name": "Supplemental Estimates, Motor Vehicles"
+  },
+  {
+    "date": "2026-10-02",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
+  },
+  {
+    "date": "2026-10-02",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
   },
@@ -131,33 +166,8 @@
   },
   {
     "date": "2026-10-02",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-10-02",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-10-02",
-    "release_id": 22,
-    "release_name": "H.8 Assets and Liabilities of Commercial Banks in the United States"
-  },
-  {
-    "date": "2026-10-02",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-10-02",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-10-02",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-10-02",
@@ -178,11 +188,6 @@
     "date": "2026-10-02",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-10-02",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-10-03",
