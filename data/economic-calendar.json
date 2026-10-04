@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-10-03",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-10-03",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-10-03",
-    "release_id": 81,
-    "release_name": "Fiscal Year Budget Data"
-  },
-  {
     "date": "2026-10-04",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
@@ -941,6 +926,16 @@
   },
   {
     "date": "2026-10-10",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-10-11",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-10-11",
     "release_id": 101,
     "release_name": "FOMC Press Release"
   }
