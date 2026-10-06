@@ -1,6 +1,21 @@
 [
   {
     "date": "2026-10-06",
+    "release_id": 354,
+    "release_name": "An Arbitrage-Free Three-Factor Term Structure Model and the Recent Behavior of Long-Term Yields and Distant-Horizon Forward Rates"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 402,
+    "release_name": "Corporate Bond Yield Curve"
+  },
+  {
+    "date": "2026-10-06",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -21,13 +36,48 @@
   },
   {
     "date": "2026-10-06",
+    "release_id": 183,
+    "release_name": "Gasoline and Diesel Fuel Update"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 386,
+    "release_name": "GDPNow"
+  },
+  {
+    "date": "2026-10-06",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-10-06",
+    "release_id": 341,
+    "release_name": "Kansas City Fed Labor Market Conditions Indicators"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-10-06",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 471,
+    "release_name": "Manufactured Housing Survey"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-10-06",
@@ -38,6 +88,11 @@
     "date": "2026-10-06",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
   },
   {
     "date": "2026-10-06",
@@ -56,6 +111,11 @@
   },
   {
     "date": "2026-10-06",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
+  },
+  {
+    "date": "2026-10-06",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
   },
@@ -63,6 +123,11 @@
     "date": "2026-10-06",
     "release_id": 51,
     "release_name": "U.S. International Trade in Goods and Services"
+  },
+  {
+    "date": "2026-10-06",
+    "release_id": 449,
+    "release_name": "U.S. Trade in Goods by State, by NAICS-Based Product"
   },
   {
     "date": "2026-10-06",
@@ -76,11 +141,6 @@
   },
   {
     "date": "2026-10-06",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
-  },
-  {
-    "date": "2026-10-06",
     "release_id": 72,
     "release_name": "Daily Treasury Inflation-Indexed Securities"
   },
@@ -91,13 +151,13 @@
   },
   {
     "date": "2026-10-06",
-    "release_id": 183,
-    "release_name": "Gasoline and Diesel Fuel Update"
+    "release_id": 461,
+    "release_name": "Energy-Related CO2 Emissions by State"
   },
   {
     "date": "2026-10-06",
-    "release_id": 386,
-    "release_name": "GDPNow"
+    "release_id": 81,
+    "release_name": "Fiscal Year Budget Data"
   },
   {
     "date": "2026-10-06",
@@ -121,31 +181,6 @@
   },
   {
     "date": "2026-10-06",
-    "release_id": 341,
-    "release_name": "Kansas City Fed Labor Market Conditions Indicators"
-  },
-  {
-    "date": "2026-10-06",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-10-06",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-10-06",
-    "release_id": 471,
-    "release_name": "Manufactured Housing Survey"
-  },
-  {
-    "date": "2026-10-06",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
-  },
-  {
-    "date": "2026-10-06",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
   },
@@ -161,23 +196,8 @@
   },
   {
     "date": "2026-10-06",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-10-06",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-10-06",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
-  },
-  {
-    "date": "2026-10-06",
-    "release_id": 449,
-    "release_name": "U.S. Trade in Goods by State, by NAICS-Based Product"
   },
   {
     "date": "2026-10-06",
