@@ -1,33 +1,8 @@
 [
   {
     "date": "2026-10-07",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 266,
-    "release_name": "Bank of Japan Accounts"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 200,
-    "release_name": "CBOE Market Statistics"
-  },
-  {
-    "date": "2026-10-07",
     "release_id": 221,
     "release_name": "Chicago Fed National Financial Conditions Index"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
   },
   {
     "date": "2026-10-07",
@@ -36,18 +11,13 @@
   },
   {
     "date": "2026-10-07",
-    "release_id": 72,
-    "release_name": "Daily Treasury Inflation-Indexed Securities"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-10-07",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-10-07",
@@ -61,33 +31,13 @@
   },
   {
     "date": "2026-10-07",
-    "release_id": 14,
-    "release_name": "G.19 Consumer Credit"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
+    "release_id": 447,
+    "release_name": "FR Y-14M Large Bank Credit Card and Mortgage Data"
   },
   {
     "date": "2026-10-07",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 209,
-    "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-10-07",
@@ -111,11 +61,6 @@
   },
   {
     "date": "2026-10-07",
-    "release_id": 328,
-    "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-10-07",
     "release_id": 342,
     "release_name": "Natural Gas Spot and Futures Prices (NYMEX)"
   },
@@ -126,18 +71,8 @@
   },
   {
     "date": "2026-10-07",
-    "release_id": 473,
-    "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-10-07",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-10-07",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-10-07",
@@ -156,13 +91,18 @@
   },
   {
     "date": "2026-10-07",
-    "release_id": 212,
-    "release_name": "Spot Prices"
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
   },
   {
     "date": "2026-10-07",
-    "release_id": 189,
-    "release_name": "Standard & Poors"
+    "release_id": 394,
+    "release_name": "Spliced Oil Price"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 212,
+    "release_name": "Spot Prices"
   },
   {
     "date": "2026-10-07",
@@ -178,6 +118,86 @@
     "date": "2026-10-07",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 266,
+    "release_name": "Bank of Japan Accounts"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 200,
+    "release_name": "CBOE Market Statistics"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 72,
+    "release_name": "Daily Treasury Inflation-Indexed Securities"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 81,
+    "release_name": "Fiscal Year Budget Data"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 14,
+    "release_name": "G.19 Consumer Credit"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 209,
+    "release_name": "ICE BofA Indices"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 328,
+    "release_name": "Nasdaq Daily Index Data"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 473,
+    "release_name": "Optimal Blue Mortgage Market Indices"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 189,
+    "release_name": "Standard & Poors"
+  },
+  {
+    "date": "2026-10-07",
+    "release_id": 234,
+    "release_name": "World Development Indicators"
   },
   {
     "date": "2026-10-08",
