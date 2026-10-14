@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-10-14",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-10-14",
     "release_id": 454,
     "release_name": "Average Price Data"
   },
@@ -48,11 +53,6 @@
     "date": "2026-10-14",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-10-14",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-10-14",
