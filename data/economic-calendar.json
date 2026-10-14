@@ -26,6 +26,11 @@
   },
   {
     "date": "2026-10-14",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-10-14",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -51,6 +56,11 @@
   },
   {
     "date": "2026-10-14",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-10-14",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
@@ -58,6 +68,21 @@
     "date": "2026-10-14",
     "release_id": 487,
     "release_name": "Index of Global Real Economic Activity"
+  },
+  {
+    "date": "2026-10-14",
+    "release_id": 500,
+    "release_name": "Inflation Expectations"
+  },
+  {
+    "date": "2026-10-14",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-10-14",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-10-14",
@@ -93,6 +118,16 @@
     "date": "2026-10-14",
     "release_id": 23,
     "release_name": "Ramp AI Index"
+  },
+  {
+    "date": "2026-10-14",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-10-14",
+    "release_id": 345,
+    "release_name": "Research Consumer Price Index"
   },
   {
     "date": "2026-10-14",
@@ -161,38 +196,13 @@
   },
   {
     "date": "2026-10-14",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-10-14",
     "release_id": 81,
     "release_name": "Fiscal Year Budget Data"
   },
   {
     "date": "2026-10-14",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-10-14",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-10-14",
-    "release_id": 500,
-    "release_name": "Inflation Expectations"
-  },
-  {
-    "date": "2026-10-14",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-10-14",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-10-14",
@@ -203,16 +213,6 @@
     "date": "2026-10-14",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-10-14",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-10-14",
-    "release_id": 345,
-    "release_name": "Research Consumer Price Index"
   },
   {
     "date": "2026-10-14",
