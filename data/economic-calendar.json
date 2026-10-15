@@ -21,6 +21,11 @@
   },
   {
     "date": "2026-10-15",
+    "release_id": 86,
+    "release_name": "Commercial Paper"
+  },
+  {
+    "date": "2026-10-15",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
   },
@@ -51,8 +56,28 @@
   },
   {
     "date": "2026-10-15",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 20,
+    "release_name": "H.4.1 Factors Affecting Reserve Balances"
+  },
+  {
+    "date": "2026-10-15",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-10-15",
@@ -61,8 +86,23 @@
   },
   {
     "date": "2026-10-15",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
+  },
+  {
+    "date": "2026-10-15",
     "release_id": 484,
     "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 205,
+    "release_name": "Main Economic Indicators"
   },
   {
     "date": "2026-10-15",
@@ -83,6 +123,11 @@
     "date": "2026-10-15",
     "release_id": 427,
     "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 342,
+    "release_name": "Natural Gas Spot and Futures Prices (NYMEX)"
   },
   {
     "date": "2026-10-15",
@@ -111,6 +156,11 @@
   },
   {
     "date": "2026-10-15",
+    "release_id": 100,
+    "release_name": "Seasonal Credit Rate"
+  },
+  {
+    "date": "2026-10-15",
     "release_id": 445,
     "release_name": "Secured Overnight Financing Rate Data"
   },
@@ -131,6 +181,16 @@
   },
   {
     "date": "2026-10-15",
+    "release_id": 212,
+    "release_name": "Spot Prices"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
+  },
+  {
+    "date": "2026-10-15",
     "release_id": 1105,
     "release_name": "Tri-Party General Collateral Rate Data"
   },
@@ -141,8 +201,18 @@
   },
   {
     "date": "2026-10-15",
+    "release_id": 426,
+    "release_name": "U.S. Treasury-Owned Gold"
+  },
+  {
+    "date": "2026-10-15",
     "release_id": 465,
     "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 470,
+    "release_name": "World Uncertainty Index"
   },
   {
     "date": "2026-10-15",
@@ -161,11 +231,6 @@
   },
   {
     "date": "2026-10-15",
-    "release_id": 86,
-    "release_name": "Commercial Paper"
-  },
-  {
-    "date": "2026-10-15",
     "release_id": 72,
     "release_name": "Daily Treasury Inflation-Indexed Securities"
   },
@@ -176,13 +241,8 @@
   },
   {
     "date": "2026-10-15",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 20,
-    "release_name": "H.4.1 Factors Affecting Reserve Balances"
+    "release_id": 81,
+    "release_name": "Fiscal Year Budget Data"
   },
   {
     "date": "2026-10-15",
@@ -191,33 +251,8 @@
   },
   {
     "date": "2026-10-15",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
-  },
-  {
-    "date": "2026-10-15",
     "release_id": 328,
     "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 342,
-    "release_name": "Natural Gas Spot and Futures Prices (NYMEX)"
   },
   {
     "date": "2026-10-15",
@@ -231,23 +266,8 @@
   },
   {
     "date": "2026-10-15",
-    "release_id": 100,
-    "release_name": "Seasonal Credit Rate"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 212,
-    "release_name": "Spot Prices"
-  },
-  {
-    "date": "2026-10-15",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-10-16",
