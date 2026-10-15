@@ -1,6 +1,21 @@
 [
   {
     "date": "2026-10-15",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-10-15",
+    "release_id": 503,
+    "release_name": "Zillow Home Value Index (ZHVI)"
+  },
+  {
+    "date": "2026-10-15",
     "release_id": 9,
     "release_name": "Advance Monthly Sales for Retail and Food Services"
   },
@@ -53,11 +68,6 @@
     "date": "2026-10-15",
     "release_id": 321,
     "release_name": "Empire State Manufacturing Survey"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-10-15",
@@ -206,11 +216,6 @@
   },
   {
     "date": "2026-10-15",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
-  },
-  {
-    "date": "2026-10-15",
     "release_id": 212,
     "release_name": "Spot Prices"
   },
@@ -238,11 +243,6 @@
     "date": "2026-10-15",
     "release_id": 465,
     "release_name": "Weekly Economic Index (Lewis-Mertens-Stock)"
-  },
-  {
-    "date": "2026-10-15",
-    "release_id": 503,
-    "release_name": "Zillow Home Value Index (ZHVI)"
   },
   {
     "date": "2026-10-16",
