@@ -1,8 +1,78 @@
 [
   {
     "date": "2026-10-16",
+    "release_id": 322,
+    "release_name": "Business Leaders Survey"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 279,
+    "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-10-16",
     "release_id": 502,
     "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 378,
+    "release_name": "Federal Funds Data"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 13,
+    "release_name": "G.17 Industrial Production and Capacity Utilization"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 251,
+    "release_name": "Harmonized Indices of Consumer Prices (HICP)"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 504,
+    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 484,
+    "release_name": "Key ECB Interest Rates"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 427,
+    "release_name": "Moody's Daily Corporate Bond Yield Averages"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 287,
+    "release_name": "Nikkei Indexes"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 375,
+    "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 2,
+    "release_name": "Risk-On Risk-Off Index"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 445,
+    "release_name": "Secured Overnight Financing Rate Data"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 483,
+    "release_name": "SOFR Averages and Index Data"
   },
   {
     "date": "2026-10-16",
@@ -11,8 +81,23 @@
   },
   {
     "date": "2026-10-16",
-    "release_id": 322,
-    "release_name": "Business Leaders Survey"
+    "release_id": 469,
+    "release_name": "State Unemployment Insurance Weekly Claims Report"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 400,
+    "release_name": "St. Louis Fed Economic News Index"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 1105,
+    "release_name": "Tri-Party General Collateral Rate Data"
+  },
+  {
+    "date": "2026-10-16",
+    "release_id": 188,
+    "release_name": "U.S. Import and Export Price Indexes"
   },
   {
     "date": "2026-10-16",
@@ -41,26 +126,6 @@
   },
   {
     "date": "2026-10-16",
-    "release_id": 279,
-    "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 378,
-    "release_name": "Federal Funds Data"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 13,
-    "release_name": "G.17 Industrial Production and Capacity Utilization"
-  },
-  {
-    "date": "2026-10-16",
     "release_id": 18,
     "release_name": "H.15 Selected Interest Rates"
   },
@@ -68,16 +133,6 @@
     "date": "2026-10-16",
     "release_id": 22,
     "release_name": "H.8 Assets and Liabilities of Commercial Banks in the United States"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 251,
-    "release_name": "Harmonized Indices of Consumer Prices (HICP)"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 504,
-    "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-10-16",
@@ -106,18 +161,8 @@
   },
   {
     "date": "2026-10-16",
-    "release_id": 484,
-    "release_name": "Key ECB Interest Rates"
-  },
-  {
-    "date": "2026-10-16",
     "release_id": 363,
     "release_name": "Monthly Treasury Statement"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 427,
-    "release_name": "Moody's Daily Corporate Bond Yield Averages"
   },
   {
     "date": "2026-10-16",
@@ -126,18 +171,8 @@
   },
   {
     "date": "2026-10-16",
-    "release_id": 287,
-    "release_name": "Nikkei Indexes"
-  },
-  {
-    "date": "2026-10-16",
     "release_id": 473,
     "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 375,
-    "release_name": "Overnight Bank Funding Rate Data"
   },
   {
     "date": "2026-10-16",
@@ -146,33 +181,8 @@
   },
   {
     "date": "2026-10-16",
-    "release_id": 2,
-    "release_name": "Risk-On Risk-Off Index"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 445,
-    "release_name": "Secured Overnight Financing Rate Data"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 483,
-    "release_name": "SOFR Averages and Index Data"
-  },
-  {
-    "date": "2026-10-16",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 469,
-    "release_name": "State Unemployment Insurance Weekly Claims Report"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 400,
-    "release_name": "St. Louis Fed Economic News Index"
   },
   {
     "date": "2026-10-16",
@@ -188,16 +198,6 @@
     "date": "2026-10-16",
     "release_id": 3,
     "release_name": "Treasury International Capital: Continuous Securities Long Term (CSLT)"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 1105,
-    "release_name": "Tri-Party General Collateral Rate Data"
-  },
-  {
-    "date": "2026-10-16",
-    "release_id": 188,
-    "release_name": "U.S. Import and Export Price Indexes"
   },
   {
     "date": "2026-10-17",
