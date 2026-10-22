@@ -41,8 +41,38 @@
   },
   {
     "date": "2026-10-22",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-10-22",
+    "release_id": 20,
+    "release_name": "H.4.1 Factors Affecting Reserve Balances"
+  },
+  {
+    "date": "2026-10-22",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
+  },
+  {
+    "date": "2026-10-22",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-10-22",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
+  },
+  {
+    "date": "2026-10-22",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-10-22",
+    "release_id": 739,
+    "release_name": "Kansas City Fed Policy Rate Uncertainty"
   },
   {
     "date": "2026-10-22",
@@ -63,6 +93,11 @@
     "date": "2026-10-22",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
+  },
+  {
+    "date": "2026-10-22",
+    "release_id": 365,
+    "release_name": "Primary Commodity Prices"
   },
   {
     "date": "2026-10-22",
@@ -88,6 +123,11 @@
     "date": "2026-10-22",
     "release_id": 492,
     "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-10-22",
+    "release_id": 379,
+    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-10-22",
@@ -121,38 +161,13 @@
   },
   {
     "date": "2026-10-22",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-10-22",
-    "release_id": 20,
-    "release_name": "H.4.1 Factors Affecting Reserve Balances"
+    "release_id": 81,
+    "release_name": "Fiscal Year Budget Data"
   },
   {
     "date": "2026-10-22",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-10-22",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-10-22",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-10-22",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
-  },
-  {
-    "date": "2026-10-22",
-    "release_id": 739,
-    "release_name": "Kansas City Fed Policy Rate Uncertainty"
   },
   {
     "date": "2026-10-22",
@@ -166,11 +181,6 @@
   },
   {
     "date": "2026-10-22",
-    "release_id": 365,
-    "release_name": "Primary Commodity Prices"
-  },
-  {
-    "date": "2026-10-22",
     "release_id": 242,
     "release_name": "Recession Indicators Series"
   },
@@ -178,11 +188,6 @@
     "date": "2026-10-22",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-10-22",
-    "release_id": 379,
-    "release_name": "Temporary Open Market Operations"
   },
   {
     "date": "2026-10-23",
