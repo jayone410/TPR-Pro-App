@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-10-24",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-10-24",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-10-24",
-    "release_id": 81,
-    "release_name": "Fiscal Year Budget Data"
-  },
-  {
     "date": "2026-10-25",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
@@ -1038,5 +1023,25 @@
     "date": "2026-10-31",
     "release_id": 209,
     "release_name": "ICE BofA Indices"
+  },
+  {
+    "date": "2026-11-01",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-11-01",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-11-01",
+    "release_id": 349,
+    "release_name": "Transportation Services Index and Seasonally-Adjusted Transportation Data"
+  },
+  {
+    "date": "2026-11-01",
+    "release_id": 274,
+    "release_name": "University of Louisville and Oklahoma State University: LoDI National Index"
   }
 ]
