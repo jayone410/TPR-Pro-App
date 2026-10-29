@@ -1,6 +1,11 @@
 [
   {
     "date": "2026-10-29",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-10-29",
     "release_id": 742,
     "release_name": "Bankrate Monitor (BRM) National Index"
   },
@@ -43,11 +48,6 @@
     "date": "2026-10-29",
     "release_id": 330,
     "release_name": "Educational Attainment"
-  },
-  {
-    "date": "2026-10-29",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-10-29",
