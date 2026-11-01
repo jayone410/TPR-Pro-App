@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-10-31",
-    "release_id": 101,
-    "release_name": "FOMC Press Release"
-  },
-  {
-    "date": "2026-10-31",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
-  },
-  {
-    "date": "2026-10-31",
-    "release_id": 209,
-    "release_name": "ICE BofA Indices"
-  },
-  {
     "date": "2026-11-01",
     "release_id": 441,
     "release_name": "Coinbase Cryptocurrencies"
@@ -996,6 +981,16 @@
   },
   {
     "date": "2026-11-07",
+    "release_id": 101,
+    "release_name": "FOMC Press Release"
+  },
+  {
+    "date": "2026-11-08",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-11-08",
     "release_id": 101,
     "release_name": "FOMC Press Release"
   }
