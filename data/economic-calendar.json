@@ -1,23 +1,8 @@
 [
   {
     "date": "2026-11-02",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
-  },
-  {
-    "date": "2026-11-02",
     "release_id": 488,
     "release_name": "Brave-Butters-Kelley Indexes"
-  },
-  {
-    "date": "2026-11-02",
-    "release_id": 200,
-    "release_name": "CBOE Market Statistics"
-  },
-  {
-    "date": "2026-11-02",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
   },
   {
     "date": "2026-11-02",
@@ -31,18 +16,13 @@
   },
   {
     "date": "2026-11-02",
-    "release_id": 72,
-    "release_name": "Daily Treasury Inflation-Indexed Securities"
-  },
-  {
-    "date": "2026-11-02",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-11-02",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-11-02",
@@ -66,11 +46,6 @@
   },
   {
     "date": "2026-11-02",
-    "release_id": 17,
-    "release_name": "H.10 Foreign Exchange Rates"
-  },
-  {
-    "date": "2026-11-02",
     "release_id": 18,
     "release_name": "H.15 Selected Interest Rates"
   },
@@ -81,18 +56,8 @@
   },
   {
     "date": "2026-11-02",
-    "release_id": 209,
-    "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-11-02",
     "release_id": 185,
     "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-11-02",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
   },
   {
     "date": "2026-11-02",
@@ -121,33 +86,13 @@
   },
   {
     "date": "2026-11-02",
-    "release_id": 328,
-    "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-11-02",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
   },
   {
     "date": "2026-11-02",
-    "release_id": 473,
-    "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-11-02",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-11-02",
-    "release_id": 206,
-    "release_name": "Quarterly National Accounts"
-  },
-  {
-    "date": "2026-11-02",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
   },
   {
     "date": "2026-11-02",
@@ -166,6 +111,11 @@
   },
   {
     "date": "2026-11-02",
+    "release_id": 191,
+    "release_name": "Senior Loan Officer Opinion Survey on Bank Lending Practices"
+  },
+  {
+    "date": "2026-11-02",
     "release_id": 483,
     "release_name": "SOFR Averages and Index Data"
   },
@@ -176,8 +126,8 @@
   },
   {
     "date": "2026-11-02",
-    "release_id": 189,
-    "release_name": "Standard & Poors"
+    "release_id": 469,
+    "release_name": "State Unemployment Insurance Weekly Claims Report"
   },
   {
     "date": "2026-11-02",
@@ -203,6 +153,76 @@
     "date": "2026-11-02",
     "release_id": 261,
     "release_name": "U.S. Recession Probabilities"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 200,
+    "release_name": "CBOE Market Statistics"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 72,
+    "release_name": "Daily Treasury Inflation-Indexed Securities"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 103,
+    "release_name": "Discount Rate Meeting Minutes"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 482,
+    "release_name": "FDIC Quarterly Banking Profile"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 17,
+    "release_name": "H.10 Foreign Exchange Rates"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 209,
+    "release_name": "ICE BofA Indices"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 328,
+    "release_name": "Nasdaq Daily Index Data"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 473,
+    "release_name": "Optimal Blue Mortgage Market Indices"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 206,
+    "release_name": "Quarterly National Accounts"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-11-02",
+    "release_id": 189,
+    "release_name": "Standard & Poors"
   },
   {
     "date": "2026-11-03",
