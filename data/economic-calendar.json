@@ -1,23 +1,8 @@
 [
   {
     "date": "2026-11-10",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
-  },
-  {
-    "date": "2026-11-10",
     "release_id": 454,
     "release_name": "Average Price Data"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 200,
-    "release_name": "CBOE Market Statistics"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 441,
-    "release_name": "Coinbase Cryptocurrencies"
   },
   {
     "date": "2026-11-10",
@@ -41,18 +26,13 @@
   },
   {
     "date": "2026-11-10",
-    "release_id": 72,
-    "release_name": "Daily Treasury Inflation-Indexed Securities"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 197,
-    "release_name": "Dow Jones Averages"
-  },
-  {
-    "date": "2026-11-10",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-11-10",
@@ -71,38 +51,13 @@
   },
   {
     "date": "2026-11-10",
-    "release_id": 18,
-    "release_name": "H.15 Selected Interest Rates"
-  },
-  {
-    "date": "2026-11-10",
     "release_id": 504,
     "release_name": "Historical Overnight AMERIBOR Unsecured Interest Rate"
   },
   {
     "date": "2026-11-10",
-    "release_id": 209,
-    "release_name": "ICE BofA Indices"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 185,
-    "release_name": "Interest Rate on Reserve Balances"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 304,
-    "release_name": "Interest Rate Spreads"
-  },
-  {
-    "date": "2026-11-10",
     "release_id": 341,
     "release_name": "Kansas City Fed Labor Market Conditions Indicators"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 4,
-    "release_name": "Kansas City Fed Policy Rate Skew"
   },
   {
     "date": "2026-11-10",
@@ -121,33 +76,13 @@
   },
   {
     "date": "2026-11-10",
-    "release_id": 328,
-    "release_name": "Nasdaq Daily Index Data"
-  },
-  {
-    "date": "2026-11-10",
     "release_id": 287,
     "release_name": "Nikkei Indexes"
   },
   {
     "date": "2026-11-10",
-    "release_id": 473,
-    "release_name": "Optimal Blue Mortgage Market Indices"
-  },
-  {
-    "date": "2026-11-10",
     "release_id": 375,
     "release_name": "Overnight Bank Funding Rate Data"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 242,
-    "release_name": "Recession Indicators Series"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 345,
-    "release_name": "Research Consumer Price Index"
   },
   {
     "date": "2026-11-10",
@@ -171,16 +106,6 @@
   },
   {
     "date": "2026-11-10",
-    "release_id": 189,
-    "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-11-10",
-    "release_id": 313,
-    "release_name": "Sticky Price CPI"
-  },
-  {
-    "date": "2026-11-10",
     "release_id": 379,
     "release_name": "Temporary Open Market Operations"
   },
@@ -193,6 +118,86 @@
     "date": "2026-11-10",
     "release_id": 271,
     "release_name": "Weekly Financial Statements of the Eurosystem"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 200,
+    "release_name": "CBOE Market Statistics"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 441,
+    "release_name": "Coinbase Cryptocurrencies"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 72,
+    "release_name": "Daily Treasury Inflation-Indexed Securities"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 197,
+    "release_name": "Dow Jones Averages"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 18,
+    "release_name": "H.15 Selected Interest Rates"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 209,
+    "release_name": "ICE BofA Indices"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 185,
+    "release_name": "Interest Rate on Reserve Balances"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 304,
+    "release_name": "Interest Rate Spreads"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 4,
+    "release_name": "Kansas City Fed Policy Rate Skew"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 328,
+    "release_name": "Nasdaq Daily Index Data"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 473,
+    "release_name": "Optimal Blue Mortgage Market Indices"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 242,
+    "release_name": "Recession Indicators Series"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 345,
+    "release_name": "Research Consumer Price Index"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 189,
+    "release_name": "Standard & Poors"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 313,
+    "release_name": "Sticky Price CPI"
+  },
+  {
+    "date": "2026-11-10",
+    "release_id": 234,
+    "release_name": "World Development Indicators"
   },
   {
     "date": "2026-11-11",
