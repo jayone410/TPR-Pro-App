@@ -11,8 +11,18 @@
   },
   {
     "date": "2026-11-15",
+    "release_id": 482,
+    "release_name": "FDIC Quarterly Banking Profile"
+  },
+  {
+    "date": "2026-11-15",
     "release_id": 269,
     "release_name": "National Accounts of Japan"
+  },
+  {
+    "date": "2026-11-15",
+    "release_id": 637,
+    "release_name": "Wage Growth Tracker"
   },
   {
     "date": "2026-11-16",
