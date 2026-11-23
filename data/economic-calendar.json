@@ -1,6 +1,21 @@
 [
   {
     "date": "2026-11-23",
+    "release_id": 502,
+    "release_name": "Euro Short Term Rate"
+  },
+  {
+    "date": "2026-11-23",
+    "release_id": 492,
+    "release_name": "SONIA Interest Rate Benchmark"
+  },
+  {
+    "date": "2026-11-23",
+    "release_id": 305,
+    "release_name": "Swiss National Bank Monthly Statistical Bulletin"
+  },
+  {
+    "date": "2026-11-23",
     "release_id": 200,
     "release_name": "CBOE Market Statistics"
   },
@@ -38,11 +53,6 @@
     "date": "2026-11-23",
     "release_id": 279,
     "release_name": "Economic Policy Uncertainty"
-  },
-  {
-    "date": "2026-11-23",
-    "release_id": 502,
-    "release_name": "Euro Short Term Rate"
   },
   {
     "date": "2026-11-23",
@@ -146,18 +156,8 @@
   },
   {
     "date": "2026-11-23",
-    "release_id": 492,
-    "release_name": "SONIA Interest Rate Benchmark"
-  },
-  {
-    "date": "2026-11-23",
     "release_id": 189,
     "release_name": "Standard & Poors"
-  },
-  {
-    "date": "2026-11-23",
-    "release_id": 305,
-    "release_name": "Swiss National Bank Monthly Statistical Bulletin"
   },
   {
     "date": "2026-11-23",
